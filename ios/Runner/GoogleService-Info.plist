@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>542959380849-ede3ivkvgv153ojgs76asuhg4cs8hnu0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.542959380849-ede3ivkvgv153ojgs76asuhg4cs8hnu0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>542959380849-ssureptoc60mvictk6sdhnh1seneskuo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCoRFtXmNCn8vUc7Tr-5ieOdTy84lQg6rw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>542959380849</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.atanApp</string>
+	<key>PROJECT_ID</key>
+	<string>tugas-akhir-8fdd1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tugas-akhir-8fdd1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:542959380849:ios:dd582b686f024aed9beed0</string>
+</dict>
+</plist>
