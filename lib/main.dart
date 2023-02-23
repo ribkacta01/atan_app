@@ -37,7 +37,7 @@ class AtanApp extends StatelessWidget {
           if (snap.connectionState == ConnectionState.done) {
             return Sizer(builder: (context, orientation, deviceType) {
               return FutureBuilder(
-                  future: Future.delayed(Duration(microseconds: 10)),
+                  future: Future.delayed(Duration(seconds: 2)),
                   builder: (context, snap) {
                     if (snap.connectionState == ConnectionState.done) {
                       return AnnotatedRegion(

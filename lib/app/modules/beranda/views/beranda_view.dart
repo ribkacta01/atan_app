@@ -20,6 +20,7 @@ class BerandaView extends GetView<BerandaController> {
     final authC = Get.put(AuthController());
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           left: 20,
@@ -103,7 +104,7 @@ class BerandaView extends GetView<BerandaController> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            SizedBox(width: 7.w),
+                            SizedBox(width: 5.w),
                             Text(
                               "10 Januari 2023",
                               style: TextStyle(
@@ -205,7 +206,7 @@ class BerandaView extends GetView<BerandaController> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         padding: EdgeInsets.only(
-                            left: 0.8.w, top: 1.5.h, bottom: 0.1.h),
+                            left: 0.8.w, top: 2.h, bottom: 0.1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -218,7 +219,7 @@ class BerandaView extends GetView<BerandaController> {
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     )),
-                                SizedBox(height: 2.h),
+                                SizedBox(height: 1.5.h),
                                 Text("Tenggat : 20 Februari 2023",
                                     style: TextStyle(
                                       fontSize: 15,
@@ -251,7 +252,7 @@ class BerandaView extends GetView<BerandaController> {
                         ),
                       ),
                       padding: EdgeInsets.only(bottom: 1.h));
-                })
+                }),
           ],
         ),
       ),
