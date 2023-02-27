@@ -27,7 +27,7 @@ class AuthController extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  //UserModel userData = UserModel();
+  var userData = UserModel().obs;
 
   Future<void> firstInitialized() async {
     await autoLogin().then((value) {
@@ -83,11 +83,7 @@ class AuthController extends GetxController {
 
       log("$userCredential");
 
-      isAuth.value = true;
-
-      await Get.offAllNamed(Routes.HOME);
-
-//inisiasi collection yg akan dipakai
+      //inisiasi collection yg akan dipakai
       CollectionReference users = firestore.collection("users");
 
       DateTime now = DateTime.now();
@@ -115,6 +111,26 @@ class AuthController extends GetxController {
               userCredential!.user!.metadata.lastSignInTime?.toIso8601String(),
         });
       }
+
+      final checkUserData = checkuser.data() as Map<String, dynamic>;
+
+      userData(UserModel(
+          uid: userCredential!.user!.uid,
+          name: _currentUser!.displayName,
+          email: _currentUser!.email,
+          photoUrl: _currentUser!.photoUrl,
+          roles: checkUserData['roles'],
+          creationTime:
+              userCredential!.user!.metadata.creationTime!.toIso8601String(),
+          lastSignInTime:
+              userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
+          updatedTime: now.toIso8601String()));
+
+      userData.refresh();
+
+      isAuth.value = true;
+
+      await Get.offAllNamed(Routes.HOME);
     } else {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -147,9 +163,9 @@ class AuthController extends GetxController {
   //           UserModel.fromJson(snap.data()!));
   // }
 
-  Future<DocumentSnapshot<Object?>> getUserRole() async {
-    String? emailUser = auth.currentUser!.email;
-    DocumentReference userss = firestore.collection("users").doc(emailUser);
-    return userss.get();
-  }
+  // Future<DocumentSnapshot<Object?>> getUserRole() async {
+  //   String? emailUser = auth.currentUser!.email;
+  //   DocumentReference userss = firestore.collection("users").doc(emailUser);
+  //   return userss.get();
+  // }
 }

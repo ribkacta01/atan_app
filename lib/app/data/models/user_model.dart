@@ -30,7 +30,7 @@ class UserModel {
         updatedTime: json['updatedTime']);
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       "uid": uid,
       "name": name,
