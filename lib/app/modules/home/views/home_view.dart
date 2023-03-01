@@ -52,11 +52,6 @@ class HomeView extends GetView<HomeController> {
     //         // log("$roles");
     if (authC.userData.value.roles != "pemilik_usaha") {
       return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: HexColor("#0B0C2B"),
-          child: Icon(PhosphorIcons.plus),
-        ),
         body: Obx(() => pages[controller.currentIndex.value]),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(color: Colors.white, boxShadow: [

@@ -12,6 +12,17 @@ class TugasView extends GetView<TugasController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 0.5.h),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: HexColor("#0B0C2B"),
+            child: Icon(PhosphorIcons.plus),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -104,10 +115,90 @@ class TugasView extends GetView<TugasController> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 50.h,
-              width: 200.h,
-            ),
+            ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(top: 0.000001),
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 2.h,
+                    ),
+                    child: Material(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          margin: EdgeInsets.only(right: 4.w, left: 4.w),
+                          height: 38.h,
+                          decoration: BoxDecoration(
+                            color: HexColor("#BFC0D2"),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25)),
+                                child: Image.asset(
+                                  "assets/images/menjahit.png",
+                                  width: 90.w,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 1.h, right: 5.w, left: 5.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Ribka",
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              color: HexColor("#0B0C2B"),
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          "Divisi Jahit",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: HexColor("#0B0C2B"),
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 2.h),
+                                      child: Text(
+                                        "20/02/2023",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: HexColor("#0B0C2B"),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
           ],
         ),
       ),
