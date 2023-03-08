@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../controller/auth_controller.dart';
 import '../../../util/Loading.dart';
@@ -183,7 +184,21 @@ class BerandaView extends GetView<BerandaController> {
                   height: 9.h,
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.dialog(Dialog(
+                        child: Container(
+                          padding: EdgeInsets.all(1.h),
+                          height: 40.h,
+                          child: SfDateRangePicker(
+                            view: DateRangePickerView.year,
+                            selectionMode: DateRangePickerSelectionMode.range,
+                            showActionButtons: true,
+                            onCancel: () => Get.back(),
+                            onSubmit: (obj) {},
+                          ),
+                        ),
+                      ));
+                    },
                     icon: Icon(
                       PhosphorIcons.slidersHorizontal,
                       color: HexColor("#0B0C2B"),

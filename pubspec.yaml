@@ -17,8 +17,10 @@ dependencies:
   google_sign_in: ^5.4.4
   hexcolor: ^3.0.1
   icons_plus: ^4.0.0
+  image_picker: ^0.8.6+4
   phosphor_flutter: ^1.4.0
   sizer: ^2.0.15
+  syncfusion_flutter_datepicker: ^20.4.52
 
 dev_dependencies:
   flutter_lints: ^2.0.0

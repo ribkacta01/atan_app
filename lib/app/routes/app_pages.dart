@@ -4,6 +4,8 @@ import '../modules/beranda/bindings/beranda_binding.dart';
 import '../modules/beranda/views/beranda_view.dart';
 import '../modules/berandaBos/bindings/beranda_bos_binding.dart';
 import '../modules/berandaBos/views/beranda_bos_view.dart';
+import '../modules/edit_profKry/bindings/edit_prof_kry_binding.dart';
+import '../modules/edit_profKry/views/edit_prof_kry_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/keranjang/bindings/keranjang_binding.dart';
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.SPLASH_SCREEN,
       page: () => const SplashScreenView(),
       binding: SplashScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROF_KRY,
+      page: () => const EditProfKryView(),
+      binding: EditProfKryBinding(),
     ),
   ];
 }

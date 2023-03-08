@@ -7,6 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controller/auth_controller.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/profil_controller.dart';
 
 class ProfilView extends GetView<ProfilController> {
@@ -125,7 +126,9 @@ class ProfilView extends GetView<ProfilController> {
                         width: 40.w,
                         height: 4.h,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(Routes.EDIT_PROF_KRY);
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

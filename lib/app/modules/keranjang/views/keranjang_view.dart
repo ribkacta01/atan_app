@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../controllers/keranjang_controller.dart';
 
@@ -92,7 +93,22 @@ class KeranjangView extends GetView<KeranjangController> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20, bottom: 15),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.dialog(Dialog(
+                            child: Container(
+                              padding: EdgeInsets.all(1.h),
+                              height: 40.h,
+                              child: SfDateRangePicker(
+                                view: DateRangePickerView.year,
+                                selectionMode:
+                                    DateRangePickerSelectionMode.range,
+                                showActionButtons: true,
+                                onCancel: () => Get.back(),
+                                onSubmit: (obj) {},
+                              ),
+                            ),
+                          ));
+                        },
                         child: Text(
                           "Filter",
                           style: TextStyle(

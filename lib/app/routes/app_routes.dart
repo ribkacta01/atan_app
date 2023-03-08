@@ -15,6 +15,7 @@ abstract class Routes {
   static const PROFIL = _Paths.PROFIL;
   static const PROFIL_BOS = _Paths.PROFIL_BOS;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const EDIT_PROF_KRY = _Paths.EDIT_PROF_KRY;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const PROFIL = '/profil';
   static const PROFIL_BOS = '/profil-bos';
   static const SPLASH_SCREEN = '/splash-screen';
+  static const EDIT_PROF_KRY = '/edit-prof-kry';
 }

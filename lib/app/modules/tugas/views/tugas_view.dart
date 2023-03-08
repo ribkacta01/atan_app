@@ -4,20 +4,25 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../controllers/tugas_controller.dart';
 
 class TugasView extends GetView<TugasController> {
   const TugasView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final c = Get.put(TugasController());
     return Scaffold(
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: 0.5.h),
         child: Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              c.pickImage();
+            },
             backgroundColor: HexColor("#0B0C2B"),
             child: Icon(PhosphorIcons.plus),
           ),
@@ -102,7 +107,21 @@ class TugasView extends GetView<TugasController> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, bottom: 15),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.dialog(Dialog(
+                        child: Container(
+                          padding: EdgeInsets.all(1.h),
+                          height: 40.h,
+                          child: SfDateRangePicker(
+                            view: DateRangePickerView.month,
+                            selectionMode: DateRangePickerSelectionMode.range,
+                            showActionButtons: true,
+                            onCancel: () => Get.back(),
+                            onSubmit: (obj) {},
+                          ),
+                        ),
+                      ));
+                    },
                     child: Text(
                       "Filter",
                       style: TextStyle(
