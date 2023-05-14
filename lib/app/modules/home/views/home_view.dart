@@ -41,63 +41,65 @@ class HomeView extends GetView<HomeController> {
       ProfilBosView()
     ];
 
-    // return FutureBuilder<DocumentSnapshot<Object?>>(
-    //     future: authC.getUserRole(),
-    //     builder: (context, snap) {
-    //       if (snap.connectionState == ConnectionState.waiting) {
-    //         return const Loading();
-    //       }
-    //       if (snap.hasData) {
-    //         // var roles = snap.data!.get("roles");
-    //         // log("$roles");
-    if (authC.userData.value.roles != "pemilik_usaha") {
-      return Scaffold(
-        body: Obx(() => pages[controller.currentIndex.value]),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(1),
-                blurRadius: 7,
-                offset: Offset(0, 4))
-          ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              navBarItem(context, PhosphorIcons.houseBold, 0),
-              navBarItem(context, PhosphorIcons.shoppingCartSimpleBold, 1),
-              navBarItem(context, PhosphorIcons.notePencilBold, 2),
-              navBarItem(context, PhosphorIcons.userBold, 3),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return Scaffold(
-        body: Obx(() => pages2[controller.currentIndex.value]),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(1),
-                blurRadius: 7,
-                offset: Offset(0, 4))
-          ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              navBarItem(context, PhosphorIcons.houseBold, 0),
-              navBarItem(context, PhosphorIcons.shoppingCartSimpleBold, 1),
-              navBarItem(context, PhosphorIcons.notePencilBold, 2),
-              navBarItem(context, PhosphorIcons.usersThreeBold, 3),
-              navBarItem(context, PhosphorIcons.userBold, 4),
-            ],
-          ),
-        ),
-      );
-    }
-    //   } else {
-    //     return Loading();
-    //   }
-    // });
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: authC.getUserRoles(),
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const Loading();
+          }
+          if (snap.hasData) {
+            var roles = snap.data!.get("roles");
+            log("$roles");
+            if (roles != "pemilik_usaha") {
+              return Scaffold(
+                body: Obx(() => pages[controller.currentIndex.value]),
+                bottomNavigationBar: Container(
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(1),
+                        blurRadius: 7,
+                        offset: Offset(0, 4))
+                  ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      navBarItem(context, PhosphorIcons.houseBold, 0),
+                      navBarItem(
+                          context, PhosphorIcons.shoppingCartSimpleBold, 1),
+                      navBarItem(context, PhosphorIcons.notePencilBold, 2),
+                      navBarItem(context, PhosphorIcons.userBold, 3),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return Scaffold(
+                body: Obx(() => pages2[controller.currentIndex.value]),
+                bottomNavigationBar: Container(
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(1),
+                        blurRadius: 7,
+                        offset: Offset(0, 4))
+                  ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      navBarItem(context, PhosphorIcons.houseBold, 0),
+                      navBarItem(
+                          context, PhosphorIcons.shoppingCartSimpleBold, 1),
+                      navBarItem(context, PhosphorIcons.notePencilBold, 2),
+                      navBarItem(context, PhosphorIcons.usersThreeBold, 3),
+                      navBarItem(context, PhosphorIcons.userBold, 4),
+                    ],
+                  ),
+                ),
+              );
+            }
+          } else {
+            return Loading();
+          }
+        });
   }
 
   Widget navBarItem(BuildContext context, IconData icon, int index) {

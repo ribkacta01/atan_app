@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class OlahDataPegawaiController extends GetxController {
-  //TODO: Implement OlahDataPegawaiController
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Map<String, dynamic>>> olah() async* {
+    yield* firestore.collection("users").snapshots();
+  }
 
   final count = 0.obs;
   @override

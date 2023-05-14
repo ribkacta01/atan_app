@@ -1,6 +1,19 @@
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class TugasBosController extends GetxController {
+  var isChanged = (-1).obs;
+  var isVisible = false.obs;
+
+  void showWidgetWithDelay() async {}
+
+  void toggleExpanded(int index) async {
+    isChanged.value = isChanged.value == index ? -1 : index;
+    if (isChanged.value == index) {
+      await Future.delayed(Duration(milliseconds: 250));
+      isVisible.value = true;
+    }
+  }
   //TODO: Implement TugasBosController
 
   final count = 0.obs;

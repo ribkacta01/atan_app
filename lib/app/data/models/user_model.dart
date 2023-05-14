@@ -7,6 +7,8 @@ class UserModel {
   String? creationTime;
   String? lastSignInTime;
   String? updatedTime;
+  String? gender;
+  String? divisi;
 
   UserModel(
       {this.uid,
@@ -16,6 +18,8 @@ class UserModel {
       this.roles,
       this.creationTime,
       this.lastSignInTime,
+      this.divisi,
+      this.gender,
       this.updatedTime});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +29,8 @@ class UserModel {
         email: json['email'],
         photoUrl: json['photoUrl'],
         roles: json['roles'],
+        divisi: json['divisi'],
+        gender: json['gender'],
         creationTime: json['creationTime'],
         lastSignInTime: json['lastSignInTime'],
         updatedTime: json['updatedTime']);
@@ -37,6 +43,8 @@ class UserModel {
       "email": email,
       "photoUrl": photoUrl,
       "roles": roles,
+      "gender": gender,
+      "divisi": divisi,
       "creationTime": creationTime,
       "lastSignInTime": lastSignInTime,
       "updatedTime": updatedTime

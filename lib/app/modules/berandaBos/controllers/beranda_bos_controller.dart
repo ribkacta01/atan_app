@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class BerandaBosController extends GetxController {
-  //TODO: Implement BerandaBosController
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  Stream<DocumentSnapshot<Map<String, dynamic>>> berandaBos() async* {
+    var email = auth.currentUser!.email;
+    yield* firestore.collection("users").doc(email).snapshots();
+  }
 
   final count = 0.obs;
   @override

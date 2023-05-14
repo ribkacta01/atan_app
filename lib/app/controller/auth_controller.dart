@@ -29,6 +29,11 @@ class AuthController extends GetxController {
 
   var userData = UserModel().obs;
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserRoles() async* {
+    var email = auth.currentUser!.email;
+    yield* firestore.collection("users").doc(email).snapshots();
+  }
+
   Future<void> firstInitialized() async {
     await autoLogin().then((value) {
       if (value) {

@@ -13,12 +13,14 @@ import 'app/modules/splash_screen/views/splash_screen_view.dart';
 import 'app/routes/app_pages.dart';
 import 'app/util/Loading.dart';
 import 'firebase_options.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(AtanApp());
+  await initializeDateFormatting('id_ID', null)
+      .then((value) => runApp(AtanApp()));
 }
 
 class AtanApp extends StatelessWidget {
