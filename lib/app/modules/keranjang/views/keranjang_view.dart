@@ -158,7 +158,8 @@ class KeranjangView extends GetView<KeranjangController> {
                                     child: Material(
                                       child: InkWell(
                                         onTap: () {
-                                          Get.toNamed(Routes.ITEM_PESANAN_KRY);
+                                          Get.toNamed(Routes.ITEM_PESANAN_KRY,
+                                              arguments: data);
                                         },
                                         child: Container(
                                           // margin: EdgeInsets.only(left: 12, right: 12),
@@ -230,8 +231,10 @@ class KeranjangView extends GetView<KeranjangController> {
                                                     enableFeedback: true,
                                                     hoverColor: Colors.amber,
                                                     onPressed: () {
-                                                      Get.toNamed(Routes
-                                                          .ITEM_PESANAN_KRY);
+                                                      Get.toNamed(
+                                                          Routes
+                                                              .ITEM_PESANAN_KRY,
+                                                          arguments: data);
                                                     },
                                                     icon: Icon(
                                                       PhosphorIcons.caretRight,

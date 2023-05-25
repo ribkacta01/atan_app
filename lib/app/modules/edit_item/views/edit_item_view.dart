@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +9,27 @@ import 'package:sizer/sizer.dart';
 
 import '../../../util/Loading.dart';
 import '../../../util/color.dart';
-import '../controllers/tambah_item_controller.dart';
+import '../controllers/edit_item_controller.dart';
 
-class TambahItemView extends GetView<TambahItemController> {
-  const TambahItemView({Key? key}) : super(key: key);
+class EditItemView extends GetView<EditItemController> {
+  const EditItemView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var docName = Get.arguments;
-    log('$docName');
     final authC = Get.put(AuthController());
-    final addC = Get.put(TambahItemController());
+    final editC = Get.put(EditItemController());
+
+    //argument dari item_pesanan_kry_view
+    var doc = Get.arguments[0];
+    //argument dari Perencanaan view
+    var docP = Get.arguments[1];
+    var docName = '${doc['Nama Barang']} - ${doc['Keterangan']}';
+    var docNameP = '${docP['nama']} - ${docP['date']}';
+    print(docName);
+    print(docNameP);
+    editC.namaEdit.text = doc['Nama Barang'];
+    editC.jmldit.text = doc['Jumlah Barang'];
+    editC.kettEdit.text = doc['Keterangan'];
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -72,7 +81,7 @@ class TambahItemView extends GetView<TambahItemController> {
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "Perencanaan Produksi Anda Disini ",
+                                    "Item Produksi Anda Disini ",
                                     style: TextStyle(
                                       fontSize: 19,
                                       color: HexColor("#0B0C2B"),
@@ -98,7 +107,7 @@ class TambahItemView extends GetView<TambahItemController> {
                         Padding(
                           padding: EdgeInsets.only(left: 17),
                           child: Text(
-                            "Tambahkan Daftar Item Kebutuhan Pesanan",
+                            "Ubah Daftar Item Kebutuhan Pesanan",
                             style: TextStyle(
                               fontSize: 22,
                               color: HexColor("#0B0C2B"),
@@ -110,12 +119,12 @@ class TambahItemView extends GetView<TambahItemController> {
                         Center(
                             child: Column(children: [
                           Form(
-                              key: addC.nameKey.value,
+                              key: editC.nameKey.value,
                               child: Container(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(
-                                  controller: addC.namaEdit,
+                                  controller: editC.namaEdit,
                                   decoration: InputDecoration(
                                     fillColor: HexColor("#BFC0D2"),
                                     filled: true,
@@ -138,17 +147,17 @@ class TambahItemView extends GetView<TambahItemController> {
                                   ),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                  validator: addC.namaValidator,
+                                  validator: editC.namaValidator,
                                 ),
                               )),
                           SizedBox(height: 2.5.h),
                           Form(
-                              key: addC.jmlKey.value,
+                              key: editC.jmlKey.value,
                               child: Container(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(
-                                  controller: addC.jmldit,
+                                  controller: editC.jmldit,
                                   decoration: InputDecoration(
                                     fillColor: HexColor("#BFC0D2"),
                                     filled: true,
@@ -171,17 +180,17 @@ class TambahItemView extends GetView<TambahItemController> {
                                   ),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                  validator: addC.jmlValidator,
+                                  validator: editC.jmlValidator,
                                 ),
                               )),
                           SizedBox(height: 2.5.h),
                           Form(
-                              key: addC.ketKey.value,
+                              key: editC.ketKey.value,
                               child: Container(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(
-                                  controller: addC.kettEdit,
+                                  controller: editC.kettEdit,
                                   decoration: InputDecoration(
                                     fillColor: HexColor("#BFC0D2"),
                                     filled: true,
@@ -204,7 +213,7 @@ class TambahItemView extends GetView<TambahItemController> {
                                   ),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                  validator: addC.ketValidator,
+                                  validator: editC.ketValidator,
                                 ),
                               )),
                           SizedBox(
@@ -218,14 +227,18 @@ class TambahItemView extends GetView<TambahItemController> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: TextButton(
                               onPressed: () {
-                                if (addC.nameKey.value.currentState!
+                                if (editC.nameKey.value.currentState!
                                         .validate() &&
-                                    addC.jmlKey.value.currentState!
+                                    editC.jmlKey.value.currentState!
                                         .validate() &&
-                                    addC.ketKey.value.currentState!
+                                    editC.ketKey.value.currentState!
                                         .validate()) {
-                                  addC.addItem(docName, addC.namaEdit.text,
-                                      addC.jmldit.text, addC.kettEdit.text);
+                                  editC.edit(
+                                      docName,
+                                      docNameP,
+                                      editC.namaEdit.text,
+                                      editC.kettEdit.text,
+                                      editC.jmldit.text);
                                 }
                               },
                               child: Text(

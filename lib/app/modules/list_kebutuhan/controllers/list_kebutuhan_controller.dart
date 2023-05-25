@@ -1,7 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class ListKebutuhanController extends GetxController {
-  //TODO: Implement ListKebutuhanController
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Map<String, dynamic>>> list(String docName) async* {
+    yield* firestore
+        .collection("Perencanaan")
+        .doc(docName)
+        .collection('Kebutuhan')
+        .snapshots();
+  }
 
   final count = 0.obs;
   @override

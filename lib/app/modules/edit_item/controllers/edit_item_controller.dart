@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
 
-class TambahItemController extends GetxController {
+class EditItemController extends GetxController {
   final namaValidator = RequiredValidator(errorText: "Nama Tidak Boleh Kosong");
   final jmlValidator = RequiredValidator(errorText: "Jumlah Harus Diisi");
   final ketValidator = RequiredValidator(errorText: "Keterangan Harus Diisi");
@@ -23,14 +23,12 @@ class TambahItemController extends GetxController {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> addItem(
-      String docName, String nama, String jumlah, String ket) async {
+  Future<void> edit(
+      String doc, String docP, String nama, String ket, String jumlah) async {
     try {
-      CollectionReference perencanaan = firestore
-          .collection("Perencanaan")
-          .doc(docName)
-          .collection('Kebutuhan');
-      await perencanaan.doc(nama + ' - ' + ket).set(
+      CollectionReference perencanaan =
+          firestore.collection("Perencanaan").doc(docP).collection('Kebutuhan');
+      await perencanaan.doc(doc).update(
           {'Nama Barang': nama, 'Jumlah Barang': jumlah, 'Keterangan': ket});
 
       Get.dialog(Dialog(
@@ -52,7 +50,7 @@ class TambahItemController extends GetxController {
                   height: 3.h,
                 ),
                 Text(
-                  'Item Ditambahkan!',
+                  'Item Diperbarui!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: white,
@@ -87,15 +85,47 @@ class TambahItemController extends GetxController {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: bluePrimary,
         child: Container(
-          width: 193.93,
-          height: 194.73,
+          width: 350,
+          height: 336,
           child: Column(
             children: [
-              Icon(
-                PhosphorIcons.xCircle,
-                color: white,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Icon(
+                  PhosphorIcons.xCircleFill,
+                  color: white,
+                  size: 110,
+                ),
               ),
-              Text("$e")
+              SizedBox(
+                height: 3.h,
+              ),
+              Text(
+                "Terjadi Kesalahan!",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: white,
+                ),
+              ),
+              SizedBox(
+                height: 1.5.h,
+              ),
+              Text(
+                "Tidak Dapat Mengubah Data",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: white,
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Text(
+                "$e",
+                style: TextStyle(
+                  color: white,
+                ),
+              ),
             ],
           ),
         ),

@@ -223,7 +223,10 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                 IconButton(
                                                     enableFeedback: true,
                                                     hoverColor: Colors.amber,
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      olahC.delKry(
+                                                          data['email']);
+                                                    },
                                                     icon: Icon(
                                                       PhosphorIcons.trashFill,
                                                       color:

@@ -4,6 +4,8 @@ import '../modules/beranda/bindings/beranda_binding.dart';
 import '../modules/beranda/views/beranda_view.dart';
 import '../modules/berandaBos/bindings/beranda_bos_binding.dart';
 import '../modules/berandaBos/views/beranda_bos_view.dart';
+import '../modules/edit_item/bindings/edit_item_binding.dart';
+import '../modules/edit_item/views/edit_item_view.dart';
 import '../modules/edit_pegawai/bindings/edit_pegawai_binding.dart';
 import '../modules/edit_pegawai/views/edit_pegawai_view.dart';
 import '../modules/edit_profBos/bindings/edit_prof_bos_binding.dart';
@@ -155,6 +157,11 @@ class AppPages {
       name: _Paths.TAMBAH_ITEM,
       page: () => const TambahItemView(),
       binding: TambahItemBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_ITEM,
+      page: () => const EditItemView(),
+      binding: EditItemBinding(),
     ),
   ];
 }

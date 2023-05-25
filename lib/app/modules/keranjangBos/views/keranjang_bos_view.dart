@@ -226,7 +226,8 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                       child: Material(
                                         child: InkWell(
                                           onTap: () {
-                                            Get.toNamed(Routes.LIST_KEBUTUHAN);
+                                            Get.toNamed(Routes.LIST_KEBUTUHAN,
+                                                arguments: data);
                                           },
                                           child: Container(
                                             // margin: EdgeInsets.only(left: 12, right: 12),
@@ -305,8 +306,10 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                       enableFeedback: true,
                                                       hoverColor: Colors.amber,
                                                       onPressed: () {
-                                                        Get.toNamed(Routes
-                                                            .LIST_KEBUTUHAN);
+                                                        Get.toNamed(
+                                                            Routes
+                                                                .LIST_KEBUTUHAN,
+                                                            arguments: data);
                                                       },
                                                       icon: Icon(
                                                         PhosphorIcons

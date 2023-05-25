@@ -27,9 +27,7 @@ class TugasView extends GetView<TugasController> {
         child: Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton(
-            onPressed: () {
-              c.pickImage();
-            },
+            onPressed: () => c.uploadImage(),
             backgroundColor: HexColor("#0B0C2B"),
             child: Icon(PhosphorIcons.plus),
           ),

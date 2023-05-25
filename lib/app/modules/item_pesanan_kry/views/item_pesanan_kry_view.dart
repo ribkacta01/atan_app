@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,10 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
   const ItemPesananKryView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var doc = Get.arguments;
+    var docName = '${doc['nama']} - ${doc['date']}';
     final authC = Get.put(AuthController());
+    final itemC = Get.put(ItemPesananKryController());
     return Scaffold(
         floatingActionButton: Padding(
           padding: EdgeInsets.only(bottom: 0.5.h),
@@ -24,7 +29,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
               onPressed: () {
-                Get.toNamed(Routes.TAMBAH_ITEM);
+                Get.toNamed(Routes.TAMBAH_ITEM, arguments: docName);
               },
               backgroundColor: HexColor("#0B0C2B"),
               child: Icon(PhosphorIcons.plus),
@@ -115,117 +120,156 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                           ),
                         ),
                         SizedBox(height: 2.h),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.only(top: 2, bottom: 7),
-                            itemCount: 8,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 2.h),
-                                child: Material(
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      // margin: EdgeInsets.only(left: 12, right: 12),
-                                      height: 11.h,
-                                      width: 304.w,
-                                      decoration: BoxDecoration(
-                                        color: HexColor("#BFC0D2"),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 3.w,
-                                            bottom: 0.1.h,
-                                            right: 3.w),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              height: 8.h,
-                                              width: 8.h,
-                                              child: Center(
-                                                child: Icon(
-                                                  PhosphorIcons.checkBold,
-                                                  size: 35,
-                                                  color: HexColor("#0B0C2B"),
-                                                ),
-                                              ),
+                        StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                            stream: itemC.item(docName),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Loading();
+                              }
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.only(top: 2, bottom: 7),
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    Map<String, dynamic> data =
+                                        snapshot.data!.docs[index].data();
+                                    var docNameItem =
+                                        '${data['Nama Barang']} - ${data['Keterangan']}';
+                                    if (snapshot.data == null ||
+                                        snapshot.data!.docs.length == 0) {
+                                      return Center(
+                                        child: Text('Data Kosong'),
+                                      );
+                                    }
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: 2.h),
+                                      child: Material(
+                                        child: InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: 12, right: 12),
+                                            height: 11.h,
+                                            width: 304.w,
+                                            decoration: BoxDecoration(
+                                              color: HexColor("#BFC0D2"),
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
                                             ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 1.5.h,
-                                                      right: 5,
-                                                      bottom: 1),
-                                                  child: Text("Kain Drift",
-                                                      style: TextStyle(
-                                                        fontSize: 18,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 3.w,
+                                                  bottom: 0.1.h,
+                                                  right: 3.w),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    height: 8.h,
+                                                    width: 8.h,
+                                                    child: Center(
+                                                      child: Icon(
+                                                        PhosphorIcons.checkBold,
+                                                        size: 35,
                                                         color:
                                                             HexColor("#0B0C2B"),
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 1.5.h,
+                                                                right: 5,
+                                                                bottom: 1),
+                                                        child: Text(
+                                                            data['Nama Barang'],
+                                                            style: TextStyle(
+                                                              fontSize: 18,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            )),
+                                                      ),
+                                                      SizedBox(height: 1.h),
+                                                      Text(data['Keterangan'],
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            color: HexColor(
+                                                                "#0B0C2B"),
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          )),
+                                                      SizedBox(height: 1.h),
+                                                      Text(
+                                                          data['Jumlah Barang'],
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            color: HexColor(
+                                                                "#0B0C2B"),
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          )),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 2.w),
+                                                  IconButton(
+                                                      enableFeedback: true,
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            Routes.EDIT_ITEM,
+                                                            arguments: [
+                                                              data,
+                                                              doc
+                                                            ]);
+                                                      },
+                                                      icon: Icon(
+                                                        PhosphorIcons
+                                                            .pencilSimpleFill,
+                                                        color:
+                                                            HexColor("#0B0C2B"),
                                                       )),
-                                                ),
-                                                SizedBox(height: 1.h),
-                                                Text("Warna Merah",
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    )),
-                                                SizedBox(height: 1.h),
-                                                Text("2 roll",
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    )),
-                                              ],
+                                                  IconButton(
+                                                      enableFeedback: true,
+                                                      hoverColor: Colors.amber,
+                                                      onPressed: () {
+                                                        itemC.delItem(
+                                                          docNameItem,
+                                                          docName,
+                                                        );
+                                                      },
+                                                      icon: Icon(
+                                                        PhosphorIcons.trashFill,
+                                                        color:
+                                                            HexColor("#0B0C2B"),
+                                                      )),
+                                                ],
+                                              ),
                                             ),
-                                            SizedBox(width: 2.w),
-                                            IconButton(
-                                                enableFeedback: true,
-                                                hoverColor: Colors.amber,
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  PhosphorIcons
-                                                      .pencilSimpleFill,
-                                                  color: HexColor("#0B0C2B"),
-                                                )),
-                                            IconButton(
-                                                enableFeedback: true,
-                                                hoverColor: Colors.amber,
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  PhosphorIcons.plusBold,
-                                                  color: HexColor("#0B0C2B"),
-                                                )),
-                                          ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              );
+                                    );
+                                  });
                             }),
                       ]);
                 })));
