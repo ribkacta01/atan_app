@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:atan_app/app/modules/berandaBos/views/beranda_bos_view.dart';
+import 'package:atan_app/app/modules/tambah_foto/controllers/tambah_foto_controller.dart';
+import 'package:atan_app/app/modules/tugas/controllers/tugas_controller.dart';
+import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -20,6 +23,8 @@ class BerandaView extends GetView<BerandaController> {
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
     final berandaC = Get.put(BerandaController());
+    final c = Get.put(TugasController());
+    final addP = Get.put(TambahFotoController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -90,96 +95,129 @@ class BerandaView extends GetView<BerandaController> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(left: 5, right: 5, top: 20),
-                      height: 33.6.h,
-                      width: 304.w,
-                      decoration: BoxDecoration(
-                        color: HexColor("#BFC0D2"),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                textDirection: TextDirection.ltr,
-                                children: [
-                                  Text(
-                                    "Pesanan Bapak Tulus",
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      color: HexColor("#0B0C2B"),
-                                      fontWeight: FontWeight.w500,
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: berandaC.tugas(data.get('divisi')),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Loading();
+                        }
+                        var dataTgs = snapshot.data!;
+                        return Container(
+                            margin: EdgeInsets.only(left: 5, right: 5, top: 20),
+                            height: 50.h,
+                            width: 304.w,
+                            decoration: BoxDecoration(
+                              color: HexColor("#BFC0D2"),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Segera Selesaikan Tugasmu!",
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                            color: HexColor("#0B0C2B"),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  Text(
-                                    "10 Januari 2023",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: HexColor("#0B0C2B"),
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5.h),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(
-                                      top: 0.1.h, bottom: 0.1.h),
-                                  itemCount: 3,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        textDirection: TextDirection.ltr,
-                                        children: [
-                                          Column(
+                                    SizedBox(height: 5.h),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      padding: EdgeInsets.only(
+                                          top: 0.1.h, bottom: 0.1.h),
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        Map<String, dynamic> listData =
+                                            snapshot.data!.docs[index].data();
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Divisi Jahit",
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: HexColor("#0B0C2B"),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              SizedBox(height: 1.h),
-                                              Text(
-                                                "Lanjutkan Menjahit",
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: HexColor("#0B0C2B"),
-                                                  fontWeight: FontWeight.w400,
-                                                ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${listData['Nama Pemesan']}",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: HexColor(
+                                                              "#0B0C2B"),
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 1.h),
+                                                      Text(
+                                                        "Tenggat Pesanan : ${listData['Tanggal Tenggat']}",
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: HexColor(
+                                                              "#0B0C2B"),
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 1.h),
+                                                      Text(
+                                                        "${listData['Keterangan']}",
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: HexColor(
+                                                              "#0B0C2B"),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        c.uploadImage(
+                                                            '${listData['id']}');
+                                                      },
+                                                      icon: Icon(
+                                                        PhosphorIcons.camera,
+                                                        size: 25,
+                                                        color: bluePrimary,
+                                                      ))
+                                                ],
                                               ),
                                             ],
                                           ),
-                                          Icon(
-                                            PhosphorIcons.circleBold,
-                                            size: 15,
-                                            color: HexColor("#0B0C2B"),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                            ],
-                          ))),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                )));
+                      }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,69 +257,104 @@ class BerandaView extends GetView<BerandaController> {
                           ))
                     ],
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.only(top: 2, bottom: 5),
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              height: 10.h,
-                              width: 304.w,
-                              decoration: BoxDecoration(
-                                color: HexColor("#BFC0D2"),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              padding: EdgeInsets.only(
-                                  left: 0.8.w, top: 2.h, bottom: 0.1.h),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text("Pesanan Bapak Tulus",
-                                          style: TextStyle(
-                                            fontSize: 21,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                      SizedBox(height: 1.5.h),
-                                      Text("Tenggat : 20 Februari 2023",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                    ],
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: berandaC.tugas(data.get('divisi')),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Loading();
+                        }
+                        var dataRiwayat = snapshot.data!;
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 2, bottom: 5),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> listRiwayat =
+                                  snapshot.data!.docs[index].data();
+                              return Padding(
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 5, right: 5),
+                                    height: 10.h,
+                                    width: 304.w,
+                                    decoration: BoxDecoration(
+                                      color: HexColor("#BFC0D2"),
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        left: 0.8.w, top: 2.h, bottom: 0.1.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                                "Pesanan ${listRiwayat['Nama Pemesan']}",
+                                                style: TextStyle(
+                                                  fontSize: 21,
+                                                  color: HexColor("#0B0C2B"),
+                                                  fontWeight: FontWeight.w500,
+                                                )),
+                                            SizedBox(height: 1.5.h),
+                                            Text(
+                                                "Tenggat : ${listRiwayat['Tanggal Tenggat']}",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: HexColor("#0B0C2B"),
+                                                  fontWeight: FontWeight.w500,
+                                                )),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                top: 1.5.h,
+                                              ),
+                                              child: listRiwayat['Status'] !=
+                                                      'Selesai'
+                                                  ? Text(
+                                                      "${listRiwayat['Status']}",
+                                                      style: TextStyle(
+                                                        fontSize: 21,
+                                                        color: redError,
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                      ))
+                                                  : Column(
+                                                      children: [
+                                                        Text("Belum",
+                                                            style: TextStyle(
+                                                              fontSize: 21,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                            )),
+                                                        Text("Selesai",
+                                                            style: TextStyle(
+                                                              fontSize: 21,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                            )),
+                                                      ],
+                                                    ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Column(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 0.4.h, bottom: 0.3.h),
-                                        child: Text("Belum",
-                                            style: TextStyle(
-                                              fontSize: 21,
-                                              color: HexColor("#0B0C2B"),
-                                              fontWeight: FontWeight.w800,
-                                            )),
-                                      ),
-                                      Text("Selesai",
-                                          style: TextStyle(
-                                            fontSize: 21,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w800,
-                                          )),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            padding: EdgeInsets.only(bottom: 1.h));
+                                  padding: EdgeInsets.only(bottom: 1.h));
+                            });
                       }),
                 ],
               );

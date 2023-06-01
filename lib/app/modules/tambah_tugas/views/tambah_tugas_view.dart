@@ -113,34 +113,76 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                   child: Container(
                                     height: 7.h,
                                     width: 82.w,
-                                    child: TextFormField(
-                                      controller: tambahC.namaEdit,
-                                      decoration: InputDecoration(
-                                        fillColor: HexColor("#BFC0D2"),
-                                        filled: true,
-                                        errorBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            borderSide: BorderSide(
-                                                color: HexColor("#FF0000"))),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            borderSide: BorderSide(
-                                                color: HexColor("#BFC0D2"))),
-                                        hintText: "Nama Pemesan",
-                                        errorStyle: TextStyle(
-                                            color: Colors.white,
-                                            background: Paint()
-                                              ..strokeWidth = 16
-                                              ..color = HexColor("#FF0000")
-                                              ..style = PaintingStyle.stroke
-                                              ..strokeJoin = StrokeJoin.round),
-                                        helperText: ' ',
+                                    child: DropdownSearch<String>(
+                                      clearButtonProps: ClearButtonProps(
+                                          isVisible: true, color: bluePrimary),
+                                      items: tambahC.listTUgas,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          tambahC.namaEdit.text = value;
+                                        }
+                                      },
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          fillColor: grey1,
+                                          filled: true,
+                                          hintText: "Nama Pemesan",
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: HexColor("#5B5B6E"))),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: BorderSide(
+                                                  width: 1, color: grey2)),
+                                        ),
                                       ),
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      validator: tambahC.namaValidator,
+                                      popupProps: PopupProps.menu(
+                                          fit: FlexFit.loose,
+                                          menuProps: MenuProps(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 0,
+                                          ),
+                                          containerBuilder:
+                                              (context, popupWidget) {
+                                            return Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 1.h)),
+                                                Flexible(
+                                                    child: Container(
+                                                  child: popupWidget,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      border: Border.all(
+                                                        color:
+                                                            HexColor("#BFC0D2"),
+                                                        width: 0.3.w,
+                                                      )),
+                                                ))
+                                              ],
+                                            );
+                                          },
+                                          scrollbarProps: ScrollbarProps(
+                                              trackVisibility: true,
+                                              trackColor: Colors.black),
+                                          constraints: BoxConstraints(
+                                            maxHeight: 20.h,
+                                          )),
                                     ),
                                   )),
                               SizedBox(height: 1.5.h),
@@ -235,6 +277,96 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           validator: tambahC.dateValidator,
+                                        ),
+                                      )),
+                                  SizedBox(height: 1.5.h),
+                                  Form(
+                                      key: tambahC.tenggatKey.value,
+                                      child: Container(
+                                        height: 7.h,
+                                        width: 82.w,
+                                        child: TextFormField(
+                                          readOnly: true,
+                                          controller: tambahC.selectedDate.value
+                                                  .isAtSameMomentAs(
+                                                      DateTime.now())
+                                              ? TextEditingController(text: '')
+                                              : tambahC.tenggatEdit,
+                                          decoration: InputDecoration(
+                                            suffixIcon: Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 3.w),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  Get.dialog(Dialog(
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(1.h),
+                                                      height: 40.h,
+                                                      child: SfDateRangePicker(
+                                                        view:
+                                                            DateRangePickerView
+                                                                .month,
+                                                        selectionMode:
+                                                            DateRangePickerSelectionMode
+                                                                .single,
+                                                        showActionButtons: true,
+                                                        onCancel: () =>
+                                                            Get.back(),
+                                                        onSelectionChanged: tambahC
+                                                            .selectDateTenggat,
+                                                        controller: tambahC
+                                                            .datePesanController,
+                                                        onSubmit: (value) {
+                                                          if (value != null) {
+                                                            tambahC
+                                                                .selectDateTenggat;
+                                                            Get.back();
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ));
+                                                },
+                                                icon: Icon(
+                                                    PhosphorIcons.calendar),
+                                                color: HexColor("#0B0C2B"),
+                                              ),
+                                            ),
+                                            fillColor: HexColor("#BFC0D2"),
+                                            filled: true,
+                                            errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        HexColor("#FF0000"))),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                borderSide: BorderSide(
+                                                    color: HexColor("#5B5B6E"),
+                                                    width: 2)),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                borderSide: BorderSide(
+                                                    color:
+                                                        HexColor("#BFC0D2"))),
+                                            hintText: "Pilih Tenggat Pesanan",
+                                            errorStyle: TextStyle(
+                                                color: Colors.white,
+                                                background: Paint()
+                                                  ..strokeWidth = 16
+                                                  ..color = HexColor("#FF0000")
+                                                  ..style = PaintingStyle.stroke
+                                                  ..strokeJoin =
+                                                      StrokeJoin.round),
+                                            helperText: ' ',
+                                          ),
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          validator: tambahC.tenggatValidator,
                                         ),
                                       )),
                                   SizedBox(height: 1.5.h),
@@ -385,6 +517,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                           tambahC.addTugas(
                                               tambahC.namaEdit.text,
                                               tambahC.dateEdit.text,
+                                              tambahC.tenggatEdit.text,
                                               tambahC.divEdit.text,
                                               tambahC.ketEdit.text);
                                         }

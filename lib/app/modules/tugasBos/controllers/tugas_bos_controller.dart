@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class TugasBosController extends GetxController {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   var isChanged = (-1).obs;
   var isVisible = false.obs;
 

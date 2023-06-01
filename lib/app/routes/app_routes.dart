@@ -25,6 +25,7 @@ abstract class Routes {
   static const EDIT_PEGAWAI = _Paths.EDIT_PEGAWAI;
   static const TAMBAH_ITEM = _Paths.TAMBAH_ITEM;
   static const EDIT_ITEM = _Paths.EDIT_ITEM;
+  static const TAMBAH_FOTO = _Paths.TAMBAH_FOTO;
 }
 
 abstract class _Paths {
@@ -51,4 +52,5 @@ abstract class _Paths {
   static const EDIT_PEGAWAI = '/edit-pegawai';
   static const TAMBAH_ITEM = '/tambah-item';
   static const EDIT_ITEM = '/edit-item';
+  static const TAMBAH_FOTO = '/tambah-foto';
 }

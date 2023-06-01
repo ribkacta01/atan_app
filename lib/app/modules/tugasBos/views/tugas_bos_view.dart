@@ -10,6 +10,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../controller/auth_controller.dart';
 import '../../../util/Loading.dart';
+import '../../../util/color.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/tugas_bos_controller.dart';
 
@@ -174,6 +175,10 @@ class TugasBosView extends GetView<TugasBosController> {
                       padding: EdgeInsets.only(top: 0.h),
                       itemCount: 5,
                       itemBuilder: (context, index) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Loading();
+                        }
                         return GestureDetector(
                             onTap: () {
                               tugasC.toggleExpanded(index);
@@ -226,14 +231,14 @@ class TugasBosView extends GetView<TugasBosController> {
                                               child: Text("Belum",
                                                   style: TextStyle(
                                                     fontSize: 21,
-                                                    color: HexColor("#0B0C2B"),
+                                                    color: redError,
                                                     fontWeight: FontWeight.w800,
                                                   )),
                                             ),
                                             Text("Selesai",
                                                 style: TextStyle(
                                                   fontSize: 21,
-                                                  color: HexColor("#0B0C2B"),
+                                                  color: redError,
                                                   fontWeight: FontWeight.w800,
                                                 )),
                                           ],

@@ -32,6 +32,8 @@ import '../modules/profilBos/bindings/profil_bos_binding.dart';
 import '../modules/profilBos/views/profil_bos_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/tambah_foto/bindings/tambah_foto_binding.dart';
+import '../modules/tambah_foto/views/tambah_foto_view.dart';
 import '../modules/tambah_item/bindings/tambah_item_binding.dart';
 import '../modules/tambah_item/views/tambah_item_view.dart';
 import '../modules/tambah_pegawai/bindings/tambah_pegawai_binding.dart';
@@ -162,6 +164,11 @@ class AppPages {
       name: _Paths.EDIT_ITEM,
       page: () => const EditItemView(),
       binding: EditItemBinding(),
+    ),
+    GetPage(
+      name: _Paths.TAMBAH_FOTO,
+      page: () => const TambahFotoView(),
+      binding: TambahFotoBinding(),
     ),
   ];
 }

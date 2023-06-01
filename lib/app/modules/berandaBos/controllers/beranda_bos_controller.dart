@@ -10,6 +10,13 @@ class BerandaBosController extends GetxController {
     yield* firestore.collection("users").doc(email).snapshots();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasPeg() async* {
+    yield* firestore
+        .collection("Tugas")
+        .orderBy('Tanggal Pesan', descending: true)
+        .snapshots();
+  }
+
   final count = 0.obs;
   @override
   void onInit() {

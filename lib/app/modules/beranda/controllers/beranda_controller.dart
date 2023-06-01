@@ -5,11 +5,19 @@ import 'package:get/get.dart';
 class BerandaController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> beranda() async* {
     var email = auth.currentUser!.email;
     yield* firestore.collection("users").doc(email).snapshots();
   }
-  //TODO: Implement BerandaController
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugas(String dataDiv) async* {
+    yield* firestore
+        .collection("Tugas")
+        .where('Status', isEqualTo: 'Belum Selesai')
+        .where('Divisi', isEqualTo: dataDiv)
+        .snapshots();
+  }
 
   final count = 0.obs;
   @override

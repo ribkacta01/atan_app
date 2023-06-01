@@ -1,4 +1,6 @@
 import 'package:atan_app/app/controller/auth_controller.dart';
+import 'package:atan_app/app/modules/beranda/controllers/beranda_controller.dart';
+import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -20,19 +22,9 @@ class TugasView extends GetView<TugasController> {
     final c = Get.put(TugasController());
     final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
+    final homeC = Get.put(BerandaController());
 
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 0.5.h),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: FloatingActionButton(
-            onPressed: () => c.uploadImage(),
-            backgroundColor: HexColor("#0B0C2B"),
-            child: Icon(PhosphorIcons.plus),
-          ),
-        ),
-      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -149,92 +141,172 @@ class TugasView extends GetView<TugasController> {
                       ),
                     ],
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.only(top: 0.000001),
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 2.h,
-                          ),
-                          child: Material(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                margin: EdgeInsets.only(right: 4.w, left: 4.w),
-                                height: 38.h,
-                                decoration: BoxDecoration(
-                                  color: HexColor("#BFC0D2"),
-                                  borderRadius: BorderRadius.circular(25),
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: homeC.tugas(data.get('divisi')),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Loading();
+                        }
+                        var dataFoto = snapshot.data!;
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 0.000001),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> dataList =
+                                  snapshot.data!.docs[index].data();
+
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: 2.h,
                                 ),
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(25),
-                                          topRight: Radius.circular(25)),
-                                      child: Image.asset(
-                                        "assets/images/menjahit.png",
-                                        width: 90.w,
+                                child: Material(
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          right: 4.w, left: 4.w),
+                                      height: 67.h,
+                                      decoration: BoxDecoration(
+                                        color: HexColor("#BFC0D2"),
+                                        borderRadius: BorderRadius.circular(25),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 1.h, right: 5.w, left: 5.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      child: Column(
                                         children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Ribka",
-                                                style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: HexColor("#0B0C2B"),
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              SizedBox(
-                                                height: 1.h,
-                                              ),
-                                              Text(
-                                                "Divisi Jahit",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: HexColor("#0B0C2B"),
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            ],
-                                          ),
+                                          ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(25),
+                                                  topRight:
+                                                      Radius.circular(25)),
+                                              child: dataList['photo'] != ''
+                                                  ? Image.network(
+                                                      "${dataList['photo']}",
+                                                      width: 90.w,
+                                                    )
+                                                  : Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 25.h),
+                                                          child: Icon(
+                                                              PhosphorIcons
+                                                                  .cameraSlashBold,
+                                                              color:
+                                                                  bluePrimary,
+                                                              size: 90),
+                                                        ),
+                                                        SizedBox(height: 2.h),
+                                                        Text(
+                                                          "Belum Ada Foto",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  bluePrimary,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        SizedBox(height: 1.h),
+                                                        Text(
+                                                          "Tambahkan Foto Tugas ${dataList['Nama Pemesan']}",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  bluePrimary,
+                                                              fontSize: 15),
+                                                        ),
+                                                        SizedBox(height: 1.h),
+                                                        Text(
+                                                          "Untuk Ditampilkan Disini",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  bluePrimary,
+                                                              fontSize: 15),
+                                                        )
+                                                      ],
+                                                    )),
                                           Padding(
-                                            padding: EdgeInsets.only(top: 2.h),
-                                            child: Text(
-                                              "20/02/2023",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: HexColor("#0B0C2B"),
-                                                  fontWeight: FontWeight.w500),
+                                            padding: EdgeInsets.only(
+                                                top: 3.h,
+                                                right: 5.w,
+                                                left: 5.w),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    dataList['photo'] != ''
+                                                        ? Text(
+                                                            "${data['name']}",
+                                                            style: TextStyle(
+                                                                fontSize: 25,
+                                                                color: HexColor(
+                                                                    "#0B0C2B"),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        : Text(''),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    dataList['photo'] != ''
+                                                        ? Text(
+                                                            "${data['divisi']}",
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                color: HexColor(
+                                                                    "#0B0C2B"),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        : Text(''),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 2.h),
+                                                  child: dataList['photo'] != ''
+                                                      ? Text(
+                                                          "${dataList['photoDateTime']}",
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        )
+                                                      : Text(''),
+                                                )
+                                              ],
                                             ),
                                           )
                                         ],
                                       ),
-                                    )
-                                  ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        );
+                              );
+                            });
                       }),
                 ],
               );

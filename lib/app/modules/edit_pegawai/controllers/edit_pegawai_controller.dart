@@ -97,15 +97,47 @@ class EditPegawaiController extends GetxController {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: bluePrimary,
         child: Container(
-          width: 193.93,
-          height: 194.73,
+          width: 350,
+          height: 336,
           child: Column(
             children: [
-              Icon(
-                PhosphorIcons.xCircle,
-                color: white,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Icon(
+                  PhosphorIcons.xCircle,
+                  color: white,
+                  size: 110,
+                ),
               ),
-              Text("$e")
+              SizedBox(
+                height: 3.h,
+              ),
+              Text(
+                "Terjadi Kesalahan!",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: white,
+                ),
+              ),
+              SizedBox(
+                height: 1.5.h,
+              ),
+              Text(
+                "Tidak Dapat Mengubah Data",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: white,
+                ),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Text(
+                "$e",
+                style: TextStyle(
+                  color: white,
+                ),
+              ),
             ],
           ),
         ),
