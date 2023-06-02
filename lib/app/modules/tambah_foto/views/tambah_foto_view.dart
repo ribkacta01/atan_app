@@ -149,7 +149,10 @@ class TambahFotoView extends GetView<TambahFotoController> {
                               borderRadius: BorderRadius.circular(10)),
                           child: TextButton(
                             onPressed: () {
-                              c.simpanFoto(doc);
+                              if (tambahc.ketKey.value.currentState!
+                                  .validate()) {
+                                c.simpanFoto(doc, tambahc.ketEdit.text);
+                              }
                             },
                             child: Text(
                               "Simpan",

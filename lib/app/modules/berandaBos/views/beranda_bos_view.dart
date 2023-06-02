@@ -210,14 +210,14 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                       ),
                                                       SizedBox(height: 1.h),
                                                       Text(
-                                                        "Yang Diunggah Pegawai",
+                                                        "${dataPoto['Divisi']} Belum Mengunggah Progress",
                                                         style: TextStyle(
                                                             color: bluePrimary,
                                                             fontSize: 15),
                                                       ),
                                                       SizedBox(height: 1.h),
                                                       Text(
-                                                        "Untuk Tugas ${dataPoto['Nama Pemesan']}",
+                                                        "Untuk Pesanan ${dataPoto['Nama Pemesan']}",
                                                         style: TextStyle(
                                                             color: bluePrimary,
                                                             fontSize: 15),
@@ -312,7 +312,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                     dataPoto['photo'] != ''
                                                         ? Container(
                                                             height: 0.5.h,
-                                                            width: 73.w,
+                                                            width: 72.w,
                                                             color: bluePrimary,
                                                           )
                                                         : Text(''),
@@ -323,7 +323,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                 ),
                                                 dataPoto['photo'] != ''
                                                     ? Text(
-                                                        "${dataPoto['Nama Pemesan']}",
+                                                        "Pesanan ${dataPoto['Nama Pemesan']}",
                                                         style: TextStyle(
                                                             fontSize: 20,
                                                             color: HexColor(
@@ -338,7 +338,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                 ),
                                                 dataPoto['photo'] != ''
                                                     ? Text(
-                                                        "Menjahit 10 Baju",
+                                                        "${dataPoto['detail']}",
                                                         style: TextStyle(
                                                             fontSize: 20,
                                                             color: HexColor(

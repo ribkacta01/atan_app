@@ -47,7 +47,7 @@ class TugasController extends GetxController {
     }
   }
 
-  Future<void> simpanFoto(String id) async {
+  Future<void> simpanFoto(String id, String detail) async {
     if (filePath.value != null) {
       final file = File(filePath.value!.path);
       final fileName = path.basename(file.path);
@@ -57,7 +57,7 @@ class TugasController extends GetxController {
         final snapshot = await uploadTask.whenComplete(() {});
         final downloadURL = await snapshot.ref.getDownloadURL();
 
-        await saveImageUrlToFirestore(id, downloadURL);
+        await saveImageUrlToFirestore(id, downloadURL, detail);
 
         Get.dialog(Dialog(
             shape:
@@ -117,13 +117,15 @@ class TugasController extends GetxController {
     }
   }
 
-  Future<void> saveImageUrlToFirestore(String id, String imageUrl) async {
+  Future<void> saveImageUrlToFirestore(
+      String id, String imageUrl, String detail) async {
     try {
       DateTime now = DateTime.now();
       String formattedDate = DateFormat('yyyy/MM/dd').format(now);
       await firestore.collection('Tugas').doc(id).update({
         'photo': imageUrl,
         'photoDateTime': formattedDate,
+        'detail': detail,
       });
     } catch (e) {
       print(e);

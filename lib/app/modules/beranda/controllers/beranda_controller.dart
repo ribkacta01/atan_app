@@ -19,6 +19,14 @@ class BerandaController extends GetxController {
         .snapshots();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasDone(String dataDiv) async* {
+    yield* firestore
+        .collection("Tugas")
+        .where('Status', isEqualTo: 'Selesai')
+        .where('Divisi', isEqualTo: dataDiv)
+        .snapshots();
+  }
+
   final count = 0.obs;
   @override
   void onInit() {

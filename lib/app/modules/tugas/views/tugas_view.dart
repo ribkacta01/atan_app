@@ -149,6 +149,20 @@ class TugasView extends GetView<TugasController> {
                           return Loading();
                         }
                         var dataFoto = snapshot.data!;
+                        if (dataFoto.docs.isEmpty) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 25.h),
+                            child: Center(
+                              child: Text(
+                                "Belum Ada Tugas yang Harus diunggah",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: redError,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          );
+                        }
                         return ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -168,7 +182,7 @@ class TugasView extends GetView<TugasController> {
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           right: 4.w, left: 4.w),
-                                      height: 67.h,
+                                      height: 70.h,
                                       decoration: BoxDecoration(
                                         color: HexColor("#BFC0D2"),
                                         borderRadius: BorderRadius.circular(25),
@@ -217,7 +231,7 @@ class TugasView extends GetView<TugasController> {
                                                         ),
                                                         SizedBox(height: 1.h),
                                                         Text(
-                                                          "Tambahkan Foto Tugas ${dataList['Nama Pemesan']}",
+                                                          "Segera Update Progress Pesanan ${dataList['Nama Pemesan']}",
                                                           style: TextStyle(
                                                               color:
                                                                   bluePrimary,
@@ -296,7 +310,64 @@ class TugasView extends GetView<TugasController> {
                                                                       .w500),
                                                         )
                                                       : Text(''),
-                                                )
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                right: 5.w, left: 5.w),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: 1.5.h,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    dataList['photo'] != ''
+                                                        ? Container(
+                                                            height: 0.5.h,
+                                                            width: 73.w,
+                                                            color: bluePrimary,
+                                                          )
+                                                        : Text(''),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 1.5.h,
+                                                ),
+                                                dataList['photo'] != ''
+                                                    ? Text(
+                                                        "Pesanan ${dataList['Nama Pemesan']}",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: HexColor(
+                                                                "#0B0C2B"),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      )
+                                                    : Text(''),
+                                                SizedBox(
+                                                  height: 1.h,
+                                                ),
+                                                dataList['photo'] != ''
+                                                    ? Text(
+                                                        "${dataList['detail']}",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            color: HexColor(
+                                                                "#0B0C2B"),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      )
+                                                    : Text(''),
                                               ],
                                             ),
                                           )

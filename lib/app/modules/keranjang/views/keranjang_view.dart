@@ -188,12 +188,17 @@ class KeranjangView extends GetView<KeranjangController> {
                                                   height: 8.h,
                                                   width: 8.h,
                                                   child: Center(
-                                                    child: Icon(
-                                                      PhosphorIcons
-                                                          .dotsThreeOutlineFill,
-                                                      size: 35,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        cartC.delData(
+                                                            '${data['nama']} - ${data['date']}');
+                                                      },
+                                                      icon: Icon(
+                                                          PhosphorIcons
+                                                              .trashSimple,
+                                                          size: 35,
+                                                          color: HexColor(
+                                                              "#0B0C2B")),
                                                     ),
                                                   ),
                                                 ),

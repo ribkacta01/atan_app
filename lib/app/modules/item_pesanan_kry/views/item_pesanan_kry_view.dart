@@ -137,8 +137,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                         snapshot.data!.docs[index].data();
                                     var docNameItem =
                                         '${data['Nama Barang']} - ${data['Keterangan']}';
-                                    if (snapshot.data == null ||
-                                        snapshot.data!.docs.length == 0) {
+                                    if (docNameItem == '') {
                                       return Center(
                                         child: Text('Data Kosong'),
                                       );

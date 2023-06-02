@@ -111,112 +111,130 @@ class BerandaView extends GetView<BerandaController> {
                               color: HexColor("#BFC0D2"),
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Segera Selesaikan Tugasmu!",
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
+                            child: dataTgs.docs.isEmpty
+                                ? Center(
+                                    child: Text(
+                                      "Belum Ada Tugas yang Ditambahkan",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: bluePrimary,
+                                          fontWeight: FontWeight.w500),
                                     ),
-                                    SizedBox(height: 5.h),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      padding: EdgeInsets.only(
-                                          top: 0.1.h, bottom: 0.1.h),
-                                      itemCount: snapshot.data!.docs.length,
-                                      itemBuilder: (context, index) {
-                                        Map<String, dynamic> listData =
-                                            snapshot.data!.docs[index].data();
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Row(
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Segera Selesaikan Tugasmu!",
+                                              style: TextStyle(
+                                                fontSize: 25,
+                                                color: HexColor("#0B0C2B"),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 5.h),
+                                        ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                          padding: EdgeInsets.only(
+                                              top: 0.1.h, bottom: 0.1.h),
+                                          itemCount: snapshot.data!.docs.length,
+                                          itemBuilder: (context, index) {
+                                            Map<String, dynamic> listData =
+                                                snapshot.data!.docs[index]
+                                                    .data();
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                textDirection:
-                                                    TextDirection.ltr,
+                                                    MainAxisAlignment.start,
                                                 children: [
-                                                  Column(
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
-                                                            .start,
+                                                            .center,
+                                                    textDirection:
+                                                        TextDirection.ltr,
                                                     children: [
-                                                      Text(
-                                                        "${listData['Nama Pemesan']}",
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "${listData['Nama Pemesan']}",
+                                                            style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 1.h),
+                                                          Text(
+                                                            "Tenggat Pesanan : ${listData['Tanggal Tenggat']}",
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 1.h),
+                                                          Text(
+                                                            "${listData['Keterangan']}",
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: HexColor(
+                                                                  "#0B0C2B"),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      SizedBox(height: 1.h),
-                                                      Text(
-                                                        "Tenggat Pesanan : ${listData['Tanggal Tenggat']}",
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 1.h),
-                                                      Text(
-                                                        "${listData['Keterangan']}",
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            c.uploadImage(
+                                                                '${listData['id']}');
+                                                          },
+                                                          icon: Icon(
+                                                            PhosphorIcons
+                                                                .camera,
+                                                            size: 25,
+                                                            color: bluePrimary,
+                                                          ))
                                                     ],
                                                   ),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        c.uploadImage(
-                                                            '${listData['id']}');
-                                                      },
-                                                      icon: Icon(
-                                                        PhosphorIcons.camera,
-                                                        size: 25,
-                                                        color: bluePrimary,
-                                                      ))
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                )));
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    )));
                       }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -258,13 +276,25 @@ class BerandaView extends GetView<BerandaController> {
                     ],
                   ),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: berandaC.tugas(data.get('divisi')),
+                      stream: berandaC.tugasDone(data.get('divisi')),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Loading();
                         }
+
                         var dataRiwayat = snapshot.data!;
+                        if (dataRiwayat.docs.isEmpty) {
+                          return Center(
+                            child: Text(
+                              "Belum Ada Tugas Selesai",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: redError,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          );
+                        }
                         return ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -273,13 +303,14 @@ class BerandaView extends GetView<BerandaController> {
                             itemBuilder: (context, index) {
                               Map<String, dynamic> listRiwayat =
                                   snapshot.data!.docs[index].data();
+
                               return Padding(
                                   child: Container(
                                     margin: EdgeInsets.only(left: 5, right: 5),
                                     height: 10.h,
                                     width: 304.w,
                                     decoration: BoxDecoration(
-                                      color: HexColor("#BFC0D2"),
+                                      color: bluePrimary,
                                       borderRadius: BorderRadius.circular(25),
                                     ),
                                     padding: EdgeInsets.only(
@@ -296,7 +327,7 @@ class BerandaView extends GetView<BerandaController> {
                                                 "Pesanan ${listRiwayat['Nama Pemesan']}",
                                                 style: TextStyle(
                                                   fontSize: 21,
-                                                  color: HexColor("#0B0C2B"),
+                                                  color: grey1,
                                                   fontWeight: FontWeight.w500,
                                                 )),
                                             SizedBox(height: 1.5.h),
@@ -304,7 +335,7 @@ class BerandaView extends GetView<BerandaController> {
                                                 "Tenggat : ${listRiwayat['Tanggal Tenggat']}",
                                                 style: TextStyle(
                                                   fontSize: 15,
-                                                  color: HexColor("#0B0C2B"),
+                                                  color: grey1,
                                                   fontWeight: FontWeight.w500,
                                                 )),
                                           ],
@@ -315,38 +346,13 @@ class BerandaView extends GetView<BerandaController> {
                                               padding: EdgeInsets.only(
                                                 top: 1.5.h,
                                               ),
-                                              child: listRiwayat['Status'] !=
-                                                      'Selesai'
-                                                  ? Text(
-                                                      "${listRiwayat['Status']}",
-                                                      style: TextStyle(
-                                                        fontSize: 21,
-                                                        color: redError,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                      ))
-                                                  : Column(
-                                                      children: [
-                                                        Text("Belum",
-                                                            style: TextStyle(
-                                                              fontSize: 21,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                            )),
-                                                        Text("Selesai",
-                                                            style: TextStyle(
-                                                              fontSize: 21,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                            )),
-                                                      ],
-                                                    ),
+                                              child: Text(
+                                                  "${listRiwayat['Status']}",
+                                                  style: TextStyle(
+                                                    fontSize: 21,
+                                                    color: white,
+                                                    fontWeight: FontWeight.w800,
+                                                  )),
                                             ),
                                           ],
                                         ),
