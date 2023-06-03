@@ -1,5 +1,6 @@
 import 'package:atan_app/app/modules/berandaBos/controllers/beranda_bos_controller.dart';
 import 'package:atan_app/app/util/Loading.dart';
+import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -234,7 +235,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                             height: 11.h,
                                             width: 304.w,
                                             decoration: BoxDecoration(
-                                              color: HexColor("#BFC0D2"),
+                                              color: randomBlue(),
                                               borderRadius:
                                                   BorderRadius.circular(25),
                                             ),
@@ -283,8 +284,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                             data['nama'],
                                                             style: TextStyle(
                                                               fontSize: 21,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
+                                                              color: white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -294,8 +294,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                       Text(data['date'],
                                                           style: TextStyle(
                                                             fontSize: 20,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
@@ -314,8 +313,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                       icon: Icon(
                                                         PhosphorIcons
                                                             .caretRight,
-                                                        color:
-                                                            HexColor("#0B0C2B"),
+                                                        color: white,
                                                       )),
                                                 ],
                                               ),

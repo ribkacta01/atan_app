@@ -1,5 +1,6 @@
 import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:atan_app/app/routes/app_pages.dart';
+import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -166,7 +167,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                           height: 11.h,
                                           width: 304.w,
                                           decoration: BoxDecoration(
-                                            color: HexColor("#BFC0D2"),
+                                            color: generateRandomColor(),
                                             borderRadius:
                                                 BorderRadius.circular(25),
                                           ),
@@ -197,8 +198,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                           PhosphorIcons
                                                               .trashSimple,
                                                           size: 35,
-                                                          color: HexColor(
-                                                              "#0B0C2B")),
+                                                          color: bluePrimary),
                                                     ),
                                                   ),
                                                 ),
@@ -214,8 +214,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                       child: Text(data['nama'],
                                                           style: TextStyle(
                                                             fontSize: 21,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           )),
@@ -224,8 +223,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                     Text(data['date'],
                                                         style: TextStyle(
                                                           fontSize: 20,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
+                                                          color: white,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         )),
@@ -243,8 +241,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                     },
                                                     icon: Icon(
                                                       PhosphorIcons.caretRight,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
+                                                      color: white,
                                                     )),
                                               ],
                                             ),

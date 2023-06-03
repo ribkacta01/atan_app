@@ -145,7 +145,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                           height: 11.h,
                                           width: 304.w,
                                           decoration: BoxDecoration(
-                                            color: HexColor("#BFC0D2"),
+                                            color: randomize(),
                                             borderRadius:
                                                 BorderRadius.circular(25),
                                           ),
@@ -180,8 +180,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                       child: Text(data['name'],
                                                           style: TextStyle(
                                                             fontSize: 20,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           )),
@@ -190,8 +189,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     Text(data['divisi'],
                                                         style: TextStyle(
                                                           fontSize: 15,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
+                                                          color: white,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         )),
@@ -199,8 +197,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     Text(data['email'],
                                                         style: TextStyle(
                                                           fontSize: 13,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
+                                                          color: white,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         )),
@@ -217,8 +214,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     icon: Icon(
                                                       PhosphorIcons
                                                           .pencilSimpleFill,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
+                                                      color: white,
                                                     )),
                                                 IconButton(
                                                     enableFeedback: true,
@@ -229,8 +225,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     },
                                                     icon: Icon(
                                                       PhosphorIcons.trashFill,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
+                                                      color: white,
                                                     )),
                                               ],
                                             ),

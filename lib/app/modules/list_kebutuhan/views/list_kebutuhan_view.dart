@@ -140,7 +140,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                             height: 11.h,
                                             width: 304.w,
                                             decoration: BoxDecoration(
-                                              color: HexColor("#BFC0D2"),
+                                              color: randomize(),
                                               borderRadius:
                                                   BorderRadius.circular(25),
                                             ),
@@ -168,8 +168,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                       child: Icon(
                                                         PhosphorIcons.checkBold,
                                                         size: 35,
-                                                        color:
-                                                            HexColor("#0B0C2B"),
+                                                        color: bluePrimary,
                                                       ),
                                                     ),
                                                   ),
@@ -190,8 +189,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                             data['Nama Barang'],
                                                             style: TextStyle(
                                                               fontSize: 18,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
+                                                              color: white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
@@ -201,8 +199,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                       Text(data['Keterangan'],
                                                           style: TextStyle(
                                                             fontSize: 18,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
@@ -211,8 +208,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                           data['Jumlah Barang'],
                                                           style: TextStyle(
                                                             fontSize: 18,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
@@ -225,7 +221,8 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                       icon: Icon(
                                                         PhosphorIcons
                                                             .pencilSimpleFill,
-                                                        color: grey1,
+                                                        color:
+                                                            Colors.transparent,
                                                       )),
                                                 ],
                                               ),

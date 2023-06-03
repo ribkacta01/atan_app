@@ -22,274 +22,7 @@ class TugasBosView extends GetView<TugasBosController> {
     final tugasC = Get.put(TugasBosController());
     final home = Get.put(BerandaBosController());
 
-    var page = <Widget>[
-      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: tugasC.tugasProses(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Loading();
-            }
-
-            return ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(top: 0.h),
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> listData =
-                      snapshot.data!.docs[index].data();
-                  return GestureDetector(
-                      onTap: () {
-                        tugasC.toggleExpanded(index);
-                      },
-                      child: Obx(
-                        () => AnimatedContainer(
-                          duration: Duration(milliseconds: 100),
-                          margin: EdgeInsets.only(left: 5, right: 5, top: 20),
-                          height: tugasC.isChanged.value == index ? 50.h : 10.h,
-                          width: 304.w,
-                          decoration: BoxDecoration(
-                            color: HexColor("#BFC0D2"),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 0.8.w, top: 2.h, bottom: 0.1.h),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                          "Pesanan ${listData['Nama Pemesan']}",
-                                          style: TextStyle(
-                                            fontSize: 21,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                      SizedBox(height: 1.5.h),
-                                      Text(
-                                          "Tenggat : ${listData['Tanggal Tenggat']}",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 0.4.h, bottom: 0.3.h),
-                                        child: Text("${listData['Status']}",
-                                            style: TextStyle(
-                                              fontSize: 21,
-                                              color: redError,
-                                              fontWeight: FontWeight.w800,
-                                            )),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Visibility(
-                                  visible: tugasC.isChanged.value == index &&
-                                      tugasC.isVisible.value,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 40,
-                                      ),
-                                      TextButton(
-                                        child: Text(
-                                          "Ubah Ke Selesai",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: HexColor("#0B0C2B"),
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          tugasC.editStatus(
-                                              listData['id'], 'Selesai');
-                                        },
-                                      ),
-                                      SizedBox(height: 5.h),
-                                      StreamBuilder<
-                                              QuerySnapshot<
-                                                  Map<String, dynamic>>>(
-                                          stream: tugasC.tugasDiv(
-                                              listData['Nama Pemesan']),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Loading();
-                                            }
-                                            var dataTgs = snapshot.data!;
-                                            return ListView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    AlwaysScrollableScrollPhysics(),
-                                                padding: EdgeInsets.only(
-                                                    top: 0.1.h, bottom: 0.1.h),
-                                                itemCount:
-                                                    snapshot.data!.docs.length,
-                                                itemBuilder: (context, index) {
-                                                  Map<String, dynamic>
-                                                      listTugas = snapshot
-                                                          .data!.docs[index]
-                                                          .data();
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10,
-                                                            left: 18,
-                                                            right: 18,
-                                                            bottom: 6),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      textDirection:
-                                                          TextDirection.ltr,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "${listTugas['Divisi']}",
-                                                              style: TextStyle(
-                                                                fontSize: 20,
-                                                                color: HexColor(
-                                                                    "#0B0C2B"),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 1.h),
-                                                            Text(
-                                                              "Lanjutkan Menjahit",
-                                                              style: TextStyle(
-                                                                fontSize: 15,
-                                                                color: HexColor(
-                                                                    "#0B0C2B"),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Icon(
-                                                          PhosphorIcons
-                                                              .circleBold,
-                                                          size: 15,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                });
-                                          }),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ));
-                  ;
-                });
-          }),
-      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: tugasC.tugasDone(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Loading();
-          }
-          return ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 2, bottom: 5),
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> listSelesai =
-                    snapshot.data!.docs[index].data();
-
-                return Padding(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      height: 10.h,
-                      width: 304.w,
-                      decoration: BoxDecoration(
-                        color: HexColor("#BFC0D2"),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      padding:
-                          EdgeInsets.only(left: 0.8.w, top: 2.h, bottom: 0.1.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Pesanan ${listSelesai['Nama Pemesan']}",
-                                  style: TextStyle(
-                                    fontSize: 21,
-                                    color: HexColor("#0B0C2B"),
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                              SizedBox(height: 1.5.h),
-                              Text(
-                                  "Tenggat : ${listSelesai['Tanggal Tenggat']}",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: HexColor("#0B0C2B"),
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 1.5.h,
-                                ),
-                                child: Text("${listSelesai['Status']}",
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                      color: redError,
-                                      fontWeight: FontWeight.w800,
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    padding: EdgeInsets.only(bottom: 1.h));
-              });
-        },
-      ),
-    ];
+    var page = <Widget>[];
 
     return Scaffold(
       floatingActionButton: Padding(
@@ -443,324 +176,328 @@ class TugasBosView extends GetView<TugasBosController> {
                     ],
                   ),
 
-                  tugasC.currentIndex.value == 0
-                      ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          stream: tugasC.tugasProses(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Loading();
-                            }
+                  // tugasC.currentIndex.value == 0 ?
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: tugasC.tugasProses(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Loading();
+                        }
 
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.only(top: 0.h),
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  Map<String, dynamic> listData =
-                                      snapshot.data!.docs[index].data();
-                                  return GestureDetector(
-                                      onTap: () {
-                                        tugasC.toggleExpanded(index);
-                                      },
-                                      child: Obx(
-                                        () => AnimatedContainer(
-                                          duration: Duration(milliseconds: 100),
-                                          margin: EdgeInsets.only(
-                                              left: 5, right: 5, top: 20),
-                                          height:
-                                              tugasC.isChanged.value == index
-                                                  ? 50.h
-                                                  : 10.h,
-                                          width: 304.w,
-                                          decoration: BoxDecoration(
-                                            color: HexColor("#BFC0D2"),
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          padding: EdgeInsets.only(
-                                              left: 0.8.w,
-                                              top: 2.h,
-                                              bottom: 0.1.h),
-                                          child: Column(
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 0.h),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> listData =
+                                  snapshot.data!.docs[index].data();
+                              return GestureDetector(
+                                  onTap: () {
+                                    tugasC.toggleExpanded(index);
+                                  },
+                                  child: Obx(
+                                    () => AnimatedContainer(
+                                      duration: Duration(milliseconds: 100),
+                                      margin: EdgeInsets.only(
+                                          left: 5, right: 5, top: 20),
+                                      height: tugasC.isChanged.value == index
+                                          ? 50.h
+                                          : 10.h,
+                                      width: 304.w,
+                                      decoration: BoxDecoration(
+                                        color: randomColor(),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      padding: EdgeInsets.only(
+                                          left: 0.8.w, top: 2.h, bottom: 0.1.h),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                              Column(
                                                 children: [
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                          "Pesanan ${listData['Nama Pemesan']}",
-                                                          style: TextStyle(
-                                                            fontSize: 21,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          )),
-                                                      SizedBox(height: 1.5.h),
-                                                      Text(
-                                                          "Tenggat : ${listData['Tanggal Tenggat']}",
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          )),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 0.4.h,
-                                                                bottom: 0.3.h),
-                                                        child: Text(
-                                                            "${listData['Status']}",
-                                                            style: TextStyle(
-                                                              fontSize: 21,
-                                                              color: redError,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                            )),
-                                                      ),
-                                                    ],
+                                                  Text(
+                                                      "Pesanan ${listData['Nama Pemesan']}",
+                                                      style: TextStyle(
+                                                        fontSize: 21,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
+                                                  SizedBox(height: 1.5.h),
+                                                  Text(
+                                                      "Tenggat : ${listData['Tanggal Tenggat']}",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.4.h,
+                                                        bottom: 0.3.h),
+                                                    child: Text(
+                                                        "${listData['Status']}",
+                                                        style: TextStyle(
+                                                          fontSize: 21,
+                                                          color: brick,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        )),
                                                   ),
                                                 ],
                                               ),
-                                              Expanded(
-                                                child: Visibility(
-                                                  visible: tugasC.isChanged
-                                                              .value ==
-                                                          index &&
-                                                      tugasC.isVisible.value,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 40,
-                                                      ),
-                                                      TextButton(
-                                                        child: Text(
-                                                          "Ubah Ke Selesai",
-                                                          style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                          ),
-                                                        ),
-                                                        onPressed: () {
-                                                          tugasC.editStatus(
-                                                              listData['id'],
-                                                              'Selesai');
-                                                        },
-                                                      ),
-                                                      SizedBox(height: 5.h),
-                                                      StreamBuilder<
-                                                              QuerySnapshot<
-                                                                  Map<String,
-                                                                      dynamic>>>(
-                                                          stream: tugasC
-                                                              .tugasDiv(listData[
-                                                                  'Nama Pemesan']),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (snapshot
-                                                                    .connectionState ==
-                                                                ConnectionState
-                                                                    .waiting) {
-                                                              return Loading();
-                                                            }
-                                                            var dataTgs =
-                                                                snapshot.data!;
-                                                            return ListView
-                                                                .builder(
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    physics:
-                                                                        AlwaysScrollableScrollPhysics(),
-                                                                    padding: EdgeInsets.only(
-                                                                        top: 0.1
-                                                                            .h,
-                                                                        bottom: 0.1
-                                                                            .h),
-                                                                    itemCount: snapshot
-                                                                        .data!
-                                                                        .docs
-                                                                        .length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            index) {
-                                                                      Map<String,
-                                                                              dynamic>
-                                                                          listTugas =
-                                                                          snapshot
-                                                                              .data!
-                                                                              .docs[index]
-                                                                              .data();
-                                                                      return Padding(
-                                                                        padding: const EdgeInsets.only(
-                                                                            top:
-                                                                                10,
-                                                                            left:
-                                                                                18,
-                                                                            right:
-                                                                                18,
-                                                                            bottom:
-                                                                                6),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          textDirection:
-                                                                              TextDirection.ltr,
-                                                                          children: [
-                                                                            Column(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Text(
-                                                                                  "${listTugas['Divisi']}",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 20,
-                                                                                    color: HexColor("#0B0C2B"),
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(height: 1.h),
-                                                                                Text(
-                                                                                  "Lanjutkan Menjahit",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 15,
-                                                                                    color: HexColor("#0B0C2B"),
-                                                                                    fontWeight: FontWeight.w400,
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                            Icon(
-                                                                              PhosphorIcons.circleBold,
-                                                                              size: 15,
-                                                                              color: HexColor("#0B0C2B"),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    });
-                                                          }),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
                                             ],
                                           ),
-                                        ),
-                                      ));
-                                  ;
-                                });
-                          })
-                      : tugasC.currentIndex.value == 1
-                          ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                              stream: tugasC.tugasDone(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Loading();
-                                }
-                                return ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    padding: EdgeInsets.only(top: 2, bottom: 5),
-                                    itemCount: snapshot.data!.docs.length,
-                                    itemBuilder: (context, index) {
-                                      Map<String, dynamic> listSelesai =
-                                          snapshot.data!.docs[index].data();
-
-                                      return Padding(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                left: 5, right: 5),
-                                            height: 10.h,
-                                            width: 304.w,
-                                            decoration: BoxDecoration(
-                                              color: HexColor("#BFC0D2"),
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ),
-                                            padding: EdgeInsets.only(
-                                                left: 0.8.w,
-                                                top: 2.h,
-                                                bottom: 0.1.h),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Text(
-                                                        "Pesanan ${listSelesai['Nama Pemesan']}",
-                                                        style: TextStyle(
-                                                          fontSize: 21,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        )),
-                                                    SizedBox(height: 1.5.h),
-                                                    Text(
-                                                        "Tenggat : ${listSelesai['Tanggal Tenggat']}",
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: HexColor(
-                                                              "#0B0C2B"),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        )),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                        top: 1.5.h,
+                                          Expanded(
+                                            child: Visibility(
+                                              visible: tugasC.isChanged.value ==
+                                                      index &&
+                                                  tugasC.isVisible.value,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 40,
+                                                  ),
+                                                  TextButton(
+                                                    child: Text(
+                                                      "Ubah Ke Selesai",
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: bluePrimary,
+                                                        fontWeight:
+                                                            FontWeight.w800,
                                                       ),
-                                                      child: Text(
-                                                          "${listSelesai['Status']}",
-                                                          style: TextStyle(
-                                                            fontSize: 21,
-                                                            color: redError,
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                          )),
                                                     ),
-                                                  ],
-                                                ),
-                                              ],
+                                                    onPressed: () {
+                                                      tugasC.editStatus(
+                                                          listData['id'],
+                                                          'Selesai');
+                                                    },
+                                                  ),
+                                                  SizedBox(height: 5.h),
+                                                  StreamBuilder<
+                                                          QuerySnapshot<
+                                                              Map<String,
+                                                                  dynamic>>>(
+                                                      stream: tugasC.tugasDiv(
+                                                          listData[
+                                                              'Nama Pemesan']),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting) {
+                                                          return Loading();
+                                                        }
+                                                        var dataTgs =
+                                                            snapshot.data!;
+                                                        return ListView.builder(
+                                                            shrinkWrap: true,
+                                                            physics:
+                                                                AlwaysScrollableScrollPhysics(),
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 0.1.h,
+                                                                    bottom:
+                                                                        0.1.h),
+                                                            itemCount: snapshot
+                                                                .data!
+                                                                .docs
+                                                                .length,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  listTugas =
+                                                                  snapshot
+                                                                      .data!
+                                                                      .docs[
+                                                                          index]
+                                                                      .data();
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top: 10,
+                                                                        left:
+                                                                            18,
+                                                                        right:
+                                                                            18,
+                                                                        bottom:
+                                                                            6),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  textDirection:
+                                                                      TextDirection
+                                                                          .ltr,
+                                                                  children: [
+                                                                    Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Text(
+                                                                          "${listTugas['Divisi']}",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                20,
+                                                                            color:
+                                                                                white,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                1.h),
+                                                                        Text(
+                                                                          "${listTugas['detail']}",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            color:
+                                                                                white,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Icon(
+                                                                      PhosphorIcons
+                                                                          .circleBold,
+                                                                      size: 15,
+                                                                      color: HexColor(
+                                                                          "#0B0C2B"),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                      }),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          padding:
-                                              EdgeInsets.only(bottom: 1.h));
-                                    });
-                              },
-                            )
-                          : const SizedBox(
-                              height: 1,
-                            )
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                              ;
+                            });
+                      })
+                  // : tugasC.currentIndex.value == 1
+                  // ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  //     stream: tugasC.tugasDone(),
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.connectionState ==
+                  //           ConnectionState.waiting) {
+                  //         return Loading();
+                  //       }
+                  //       return ListView.builder(
+                  //           physics: NeverScrollableScrollPhysics(),
+                  //           padding: EdgeInsets.only(top: 2, bottom: 5),
+                  //           itemCount: snapshot.data!.docs.length,
+                  //           itemBuilder: (context, index) {
+                  //             Map<String, dynamic> listSelesai =
+                  //                 snapshot.data!.docs[index].data();
+
+                  //             return Padding(
+                  //                 child: Container(
+                  //                   margin: EdgeInsets.only(
+                  //                       left: 5, right: 5),
+                  //                   height: 10.h,
+                  //                   width: 304.w,
+                  //                   decoration: BoxDecoration(
+                  //                     color: brick,
+                  //                     borderRadius:
+                  //                         BorderRadius.circular(25),
+                  //                   ),
+                  //                   padding: EdgeInsets.only(
+                  //                       left: 0.8.w,
+                  //                       top: 2.h,
+                  //                       bottom: 0.1.h),
+                  //                   child: Row(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.spaceAround,
+                  //                     crossAxisAlignment:
+                  //                         CrossAxisAlignment.center,
+                  //                     children: [
+                  //                       Column(
+                  //                         children: [
+                  //                           Text(
+                  //                               "Pesanan ${listSelesai['Nama Pemesan']}",
+                  //                               style: TextStyle(
+                  //                                 fontSize: 21,
+                  //                                 color: HexColor(
+                  //                                     "#0B0C2B"),
+                  //                                 fontWeight:
+                  //                                     FontWeight.w500,
+                  //                               )),
+                  //                           SizedBox(height: 1.5.h),
+                  //                           Text(
+                  //                               "Tenggat : ${listSelesai['Tanggal Tenggat']}",
+                  //                               style: TextStyle(
+                  //                                 fontSize: 15,
+                  //                                 color: HexColor(
+                  //                                     "#0B0C2B"),
+                  //                                 fontWeight:
+                  //                                     FontWeight.w500,
+                  //                               )),
+                  //                         ],
+                  //                       ),
+                  //                       Column(
+                  //                         children: [
+                  //                           Padding(
+                  //                             padding: EdgeInsets.only(
+                  //                               top: 1.5.h,
+                  //                             ),
+                  //                             child: Text(
+                  //                                 "${listSelesai['Status']}",
+                  //                                 style: TextStyle(
+                  //                                   fontSize: 21,
+                  //                                   color: redError,
+                  //                                   fontWeight:
+                  //                                       FontWeight.w800,
+                  //                                 )),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 padding:
+                  //                     EdgeInsets.only(bottom: 1.h));
+                  //           });
+                  //     },
+                  //   )
+
                   // Obx(() => page[tugasC.currentIndex.value]),
                 ],
               );

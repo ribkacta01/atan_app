@@ -178,16 +178,30 @@ class BerandaView extends GetView<BerandaController> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            "${listData['Nama Pemesan']}",
-                                                            style: TextStyle(
-                                                              fontSize: 20,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
+                                                          Row(
+                                                            children: [
+                                                              Icon(
+                                                                PhosphorIcons
+                                                                    .circleFill,
+                                                                size: 6.sp,
+                                                                color:
+                                                                    bluePrimary,
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 2.w),
+                                                              Text(
+                                                                "${listData['Nama Pemesan']}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: HexColor(
+                                                                      "#0B0C2B"),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                           SizedBox(height: 1.h),
                                                           Text(

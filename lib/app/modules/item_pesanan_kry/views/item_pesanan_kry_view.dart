@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:atan_app/app/controller/auth_controller.dart';
+import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -152,7 +153,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                             height: 11.h,
                                             width: 304.w,
                                             decoration: BoxDecoration(
-                                              color: HexColor("#BFC0D2"),
+                                              color: randomBlue(),
                                               borderRadius:
                                                   BorderRadius.circular(25),
                                             ),
@@ -202,8 +203,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                             data['Nama Barang'],
                                                             style: TextStyle(
                                                               fontSize: 18,
-                                                              color: HexColor(
-                                                                  "#0B0C2B"),
+                                                              color: white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
@@ -213,8 +213,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       Text(data['Keterangan'],
                                                           style: TextStyle(
                                                             fontSize: 18,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
@@ -223,8 +222,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                           data['Jumlah Barang'],
                                                           style: TextStyle(
                                                             fontSize: 18,
-                                                            color: HexColor(
-                                                                "#0B0C2B"),
+                                                            color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
@@ -244,8 +242,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       icon: Icon(
                                                         PhosphorIcons
                                                             .pencilSimpleFill,
-                                                        color:
-                                                            HexColor("#0B0C2B"),
+                                                        color: white,
                                                       )),
                                                   IconButton(
                                                       enableFeedback: true,
@@ -258,8 +255,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       },
                                                       icon: Icon(
                                                         PhosphorIcons.trashFill,
-                                                        color:
-                                                            HexColor("#0B0C2B"),
+                                                        color: white,
                                                       )),
                                                 ],
                                               ),
