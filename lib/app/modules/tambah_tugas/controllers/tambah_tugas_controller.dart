@@ -33,7 +33,21 @@ class TambahTugasController extends GetxController {
   final selectedDate = DateTime.now().obs;
   final dateFormatter = DateFormat('d MMMM yyyy', 'id-ID');
 
+  // final CollectionReference<Map<String, dynamic>> collection =
+  //     FirebaseFirestore.instance.collection('Tugas');
+
   var listTUgas = <String>[].obs;
+
+  // void fetchlistTUgas(String query) {
+  //   collection
+  //       .where('nama', isGreaterThan: query)
+  //       .limit(5)
+  //       .get()
+  //       .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
+  //     listTUgas.value =
+  //         snapshot.docs.map((doc) => doc.data()['nama'] as String).toList();
+  //   });
+  // }
 
   Future dftTugas() async {
     final snapshot = await firestore.collection('Perencanaan').get();

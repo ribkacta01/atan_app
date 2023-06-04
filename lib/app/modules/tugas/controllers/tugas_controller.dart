@@ -19,31 +19,31 @@ class TugasController extends GetxController {
   final storage = FirebaseStorage.instance;
   final firestore = FirebaseFirestore.instance;
 
+  RxBool isButtonDisabled = false.obs;
+  RxSet<int> disabledIndexes = <int>{}.obs;
+
+  void disableIconButton(int index) {
+    disabledIndexes.add(index);
+  }
+
+  void enableIconButton(int index) {
+    disabledIndexes.remove(index);
+  }
+
   Rx<XFile?> filePath = Rx<XFile?>(null);
 
   Future<void> uploadImage(String id) async {
-    final pickedFile =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 75);
-    filePath.value = pickedFile;
+    if (disabledIndexes.isNotEmpty) {
+      final pickedFile =
+          await picker.pickImage(source: ImageSource.camera, imageQuality: 75);
+      filePath.value = pickedFile;
 
-    if (pickedFile != null) {
-      final file = File(pickedFile.path);
-      final fileName = path.basename(file.path);
+      if (pickedFile != null) {
+        final file = File(pickedFile.path);
+        final fileName = path.basename(file.path);
 
-      Get.toNamed(Routes.TAMBAH_FOTO, arguments: id);
-
-      // try {
-      //   final uploadTask = storage.ref().child(fileName).putFile(file);
-      //   final snapshot = await uploadTask.whenComplete(() {});
-      //   final downloadURL = await snapshot.ref.getDownloadURL();
-
-      //   await saveImageUrlToFirestore(downloadURL);
-
-      //   Get.snackbar('Sukses', 'Foto berhasil diupload');
-      // } catch (e) {
-      //   Get.snackbar('Error', 'Gagal mengupload foto');
-      //   print(e);
-      // }
+        Get.toNamed(Routes.TAMBAH_FOTO, arguments: id);
+      }
     }
   }
 

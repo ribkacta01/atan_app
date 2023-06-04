@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class KeranjangBosController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -12,6 +14,17 @@ class KeranjangBosController extends GetxController {
           (snapshot) => snapshot.docs,
         );
   }
+
+  late Stream<QuerySnapshot<Map<String, dynamic>>> olahSearch;
+
+  final TextEditingController searchController = TextEditingController();
+  final BehaviorSubject<String> searchQuery = BehaviorSubject<String>();
+
+  // RxString searchQuery = ''.obs;
+
+  RxList<Map<String, dynamic>> searchResults = <Map<String, dynamic>>[].obs;
+
+  var isSearching = false.obs;
 
   Future<void> loadMore() async {
     final snapshot = await collection

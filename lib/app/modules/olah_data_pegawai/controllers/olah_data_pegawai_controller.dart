@@ -2,15 +2,48 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
 
 class OlahDataPegawaiController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Stream<QuerySnapshot<Map<String, dynamic>>> olah() async* {
-    yield* firestore.collection("users").snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> olah() {
+    return searchQuery
+        .debounceTime(Duration(milliseconds: 500))
+        .switchMap((query) {
+      if (query.isEmpty) {
+        return firestore.collection("users").snapshots();
+      } else {
+        // String lowerCaseQuery = query.toLowerCase();
+        // String upperCaseQuery = query.toUpperCase();
+        return firestore
+            .collection("users")
+            .where("name", isGreaterThanOrEqualTo: query)
+            .where("name", isLessThanOrEqualTo: query + '\uf8ff')
+            .snapshots();
+      }
+    });
   }
+
+  late Stream<QuerySnapshot<Map<String, dynamic>>> olahSearch;
+
+  final TextEditingController searchController = TextEditingController();
+  final BehaviorSubject<String> searchQuery = BehaviorSubject<String>();
+
+  // RxString searchQuery = ''.obs;
+
+  RxList<Map<String, dynamic>> searchResults = <Map<String, dynamic>>[].obs;
+
+  var isSearching = false.obs;
+
+  // void onSearchChanged(String value) {
+  //   isSearching.value = true;
+  //   // Memperbarui nilai pencarian setiap kali pengguna mengetik
+  //   searchQuery.value = value;
+  //   olah(searchQuery.value);
+  // }
 
   Future<void> delKry(String docName) async {
     Get.dialog(Dialog(
@@ -94,6 +127,7 @@ class OlahDataPegawaiController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    searchQuery.add('');
   }
 
   @override
@@ -104,6 +138,8 @@ class OlahDataPegawaiController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    searchQuery.close();
+    searchController.dispose();
   }
 
   void increment() => count.value++;

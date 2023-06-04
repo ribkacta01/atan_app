@@ -100,6 +100,9 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                             height: 5.h,
                             width: 90.w,
                             child: TextFormField(
+                              controller: controller.searchController,
+                              onChanged: (value) =>
+                                  olahC.searchQuery.add(value),
                               decoration: InputDecoration(
                                 suffixIcon: Icon(PhosphorIcons.magnifyingGlass),
                                 iconColor: HexColor("#0B0C2B"),
@@ -125,12 +128,15 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                 ConnectionState.waiting) {
                               return Loading();
                             }
+
                             return ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.only(top: 2, bottom: 7),
                                 itemCount: snapshot.data!.docs.length,
                                 itemBuilder: (context, index) {
+                                  // Map<String, dynamic> data =
+                                  //     controller.searchResults[index];
                                   Map<String, dynamic> data =
                                       snapshot.data!.docs[index].data();
                                   var defaultImage =

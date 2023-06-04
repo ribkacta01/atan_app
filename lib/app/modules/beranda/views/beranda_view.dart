@@ -230,15 +230,31 @@ class BerandaView extends GetView<BerandaController> {
                                                         ],
                                                       ),
                                                       IconButton(
-                                                          onPressed: () {
-                                                            c.uploadImage(
-                                                                '${listData['id']}');
-                                                          },
+                                                          onPressed:
+                                                              c.disabledIndexes
+                                                                      .contains(
+                                                                          index)
+                                                                  ? () {}
+                                                                  : () {
+                                                                      c.uploadImage(
+                                                                          '${listData['id']}');
+                                                                      c.disableIconButton(
+                                                                          index);
+                                                                    },
                                                           icon: Icon(
-                                                            PhosphorIcons
-                                                                .camera,
+                                                            c.disabledIndexes
+                                                                    .contains(
+                                                                        index)
+                                                                ? PhosphorIcons
+                                                                    .cameraSlash
+                                                                : PhosphorIcons
+                                                                    .camera,
                                                             size: 25,
-                                                            color: bluePrimary,
+                                                            color: c.disabledIndexes
+                                                                    .contains(
+                                                                        index)
+                                                                ? grey2
+                                                                : bluePrimary,
                                                           ))
                                                     ],
                                                   ),

@@ -143,6 +143,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                         ),
                                       ),
                                       popupProps: PopupProps.menu(
+                                          showSearchBox: true,
                                           fit: FlexFit.loose,
                                           menuProps: MenuProps(
                                             borderRadius:
