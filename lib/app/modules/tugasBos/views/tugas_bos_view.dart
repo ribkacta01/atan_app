@@ -136,7 +136,7 @@ class TugasBosView extends GetView<TugasBosController> {
                         padding: const EdgeInsets.only(left: 16),
                         child: TextButton(
                           onPressed: () {
-                            tugasC.changePage(1);
+                            Get.toNamed(Routes.TUGAS_SELESAI);
                           },
                           child: Text(
                             "Selesai",
@@ -376,7 +376,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                             height:
                                                                                 1.h),
                                                                         Text(
-                                                                          "${listTugas['detail']}",
+                                                                          "${listTugas['Keterangan']}",
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:

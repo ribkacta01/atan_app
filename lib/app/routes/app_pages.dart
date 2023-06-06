@@ -46,6 +46,8 @@ import '../modules/tugas/bindings/tugas_binding.dart';
 import '../modules/tugas/views/tugas_view.dart';
 import '../modules/tugasBos/bindings/tugas_bos_binding.dart';
 import '../modules/tugasBos/views/tugas_bos_view.dart';
+import '../modules/tugas_selesai/bindings/tugas_selesai_binding.dart';
+import '../modules/tugas_selesai/views/tugas_selesai_view.dart';
 
 part 'app_routes.dart';
 
@@ -169,6 +171,11 @@ class AppPages {
       name: _Paths.TAMBAH_FOTO,
       page: () => const TambahFotoView(),
       binding: TambahFotoBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUGAS_SELESAI,
+      page: () => const TugasSelesaiView(),
+      binding: TugasSelesaiBinding(),
     ),
   ];
 }

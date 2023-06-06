@@ -26,6 +26,7 @@ abstract class Routes {
   static const TAMBAH_ITEM = _Paths.TAMBAH_ITEM;
   static const EDIT_ITEM = _Paths.EDIT_ITEM;
   static const TAMBAH_FOTO = _Paths.TAMBAH_FOTO;
+  static const TUGAS_SELESAI = _Paths.TUGAS_SELESAI;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const TAMBAH_ITEM = '/tambah-item';
   static const EDIT_ITEM = '/edit-item';
   static const TAMBAH_FOTO = '/tambah-foto';
+  static const TUGAS_SELESAI = '/tugas-selesai';
 }
