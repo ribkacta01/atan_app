@@ -25,17 +25,25 @@ class TambahPemesanController extends GetxController {
 
   final selectedDate = DateTime.now().obs;
   final dateFormatter = DateFormat('d MMMM yyyy', 'id-ID');
+  final dateFormatterDefault = DateFormat('yyyy-MM-dd');
+  var datePesan = ''.obs;
+  var dateTenggat = ''.obs;
 
   DateRangePickerController datePesanController = DateRangePickerController();
   DateRangePickerController dateTenggatController = DateRangePickerController();
 
-  Future<void> addPemesan(
-      String nama, String datePesan, String dateTenggat) async {
+  Future<void> addPemesan(String nama) async {
     try {
       CollectionReference perencanaan = firestore.collection("Perencanaan");
       await perencanaan
-          .doc(nama + ' - ' + datePesan)
-          .set({'date': datePesan, 'nama': nama, 'tenggat': dateTenggat});
+          .doc(nama +
+              ' - ' +
+              dateFormatter.format(DateTime.parse(datePesan.value)))
+          .set({
+        'date': datePesan.value,
+        'nama': nama,
+        'tenggat': dateTenggat.value
+      });
 
       Get.dialog(Dialog(
           shape:
@@ -142,12 +150,14 @@ class TambahPemesanController extends GetxController {
   void selectDatePesan(DateRangePickerSelectionChangedArgs args) {
     selectedDate.value = args.value;
     final dateFormatted = dateFormatter.format(selectedDate.value);
+    datePesan.value = dateFormatterDefault.format(selectedDate.value);
     dateEdit.text = dateFormatted.toString();
   }
 
   void selectDateTenggat(DateRangePickerSelectionChangedArgs args) {
     selectedDate.value = args.value;
     final dateFormatted = dateFormatter.format(selectedDate.value);
+    dateTenggat.value = dateFormatterDefault.format(selectedDate.value);
     tenggatEdit.text = dateFormatted.toString();
   }
 

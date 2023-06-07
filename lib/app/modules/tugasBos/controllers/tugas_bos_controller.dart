@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,16 +30,17 @@ class TugasBosController extends GetxController {
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tugasDone() async* {
-    yield* firestore
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasDone() {
+    return firestore
         .collection("Tugas")
         .where("Status", isEqualTo: 'Selesai')
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tugasProses() async* {
-    yield* firestore
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasProses() {
+    return firestore
         .collection("Tugas")
+        //.orderBy('Tanggal Tenggat', descending: true)
         .where("Status", isEqualTo: 'Belum Selesai')
         .snapshots();
   }

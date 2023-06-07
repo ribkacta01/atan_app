@@ -11,17 +11,17 @@ class OlahDataPegawaiController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Stream<QuerySnapshot<Map<String, dynamic>>> olah() {
     return searchQuery
-        .debounceTime(Duration(milliseconds: 500))
+        .debounceTime(Duration(milliseconds: 300))
         .switchMap((query) {
       if (query.isEmpty) {
         return firestore.collection("users").snapshots();
       } else {
-        // String lowerCaseQuery = query.toLowerCase();
-        // String upperCaseQuery = query.toUpperCase();
+        String lowerCaseQuery = query.toLowerCase();
+        String upperCaseQuery = query.toUpperCase();
         return firestore
             .collection("users")
             .where("name", isGreaterThanOrEqualTo: query)
-            .where("name", isLessThanOrEqualTo: query + '\uf8ff')
+            .where("name", isLessThanOrEqualTo: query + 'z')
             .snapshots();
       }
     });

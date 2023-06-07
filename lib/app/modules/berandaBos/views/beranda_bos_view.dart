@@ -1,5 +1,6 @@
 import 'package:atan_app/app/modules/beranda/controllers/beranda_controller.dart';
 import 'package:atan_app/app/util/color.dart';
+import 'package:atan_app/app/util/dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -80,63 +81,20 @@ class BerandaBosView extends GetView<BerandaBosController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 2.5.h),
+                  SizedBox(height: 5.h),
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: HexColor("#0B0C2B"),
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 3.5.h,
-                          width: 9.h,
-                          child: Center(
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Terbaru",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, bottom: 15),
-                        child: TextButton(
-                          onPressed: () {
-                            Get.dialog(Dialog(
-                              child: Container(
-                                padding: EdgeInsets.all(1.h),
-                                height: 40.h,
-                                child: SfDateRangePicker(
-                                  view: DateRangePickerView.month,
-                                  selectionMode:
-                                      DateRangePickerSelectionMode.range,
-                                  showActionButtons: true,
-                                  onCancel: () => Get.back(),
-                                  onSubmit: (obj) {},
-                                ),
-                              ),
-                            ));
-                          },
-                          child: Text(
-                            "Filter",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: HexColor("#0B0C2B"),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                      Text(
+                        "Daftar Progres Pegawai",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: HexColor("#0B0C2B"),
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 3.h),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: home.tugasPeg(),
                       builder: (context, snapshot) {

@@ -517,8 +517,6 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                                 .validate()) {
                                           tambahC.addTugas(
                                               tambahC.namaEdit.text,
-                                              tambahC.dateEdit.text,
-                                              tambahC.tenggatEdit.text,
                                               tambahC.divEdit.text,
                                               tambahC.ketEdit.text);
                                         }

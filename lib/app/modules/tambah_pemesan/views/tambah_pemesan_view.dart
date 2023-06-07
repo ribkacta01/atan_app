@@ -330,9 +330,8 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                                         addOrderC.tenggatKey.value.currentState!
                                             .validate()) {
                                       addOrderC.addPemesan(
-                                          addOrderC.namaEdit.text,
-                                          addOrderC.dateEdit.text,
-                                          addOrderC.tenggatEdit.text);
+                                        addOrderC.namaEdit.text,
+                                      );
                                     }
                                   },
                                   child: Text(

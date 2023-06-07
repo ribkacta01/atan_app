@@ -84,7 +84,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.KERANJANG_BOS,
-      page: () => const KeranjangBosView(),
+      page: () => KeranjangBosView(),
       binding: KeranjangBosBinding(),
     ),
     GetPage(
@@ -94,7 +94,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TUGAS_BOS,
-      page: () => const TugasBosView(),
+      page: () => TugasBosView(),
       binding: TugasBosBinding(),
     ),
     GetPage(

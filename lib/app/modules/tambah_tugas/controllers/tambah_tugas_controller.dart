@@ -6,6 +6,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../util/color.dart';
 
@@ -32,6 +33,12 @@ class TambahTugasController extends GetxController {
 
   final selectedDate = DateTime.now().obs;
   final dateFormatter = DateFormat('d MMMM yyyy', 'id-ID');
+  final dateFormatterDefault = DateFormat('yyyy-MM-dd');
+  var datePesan = ''.obs;
+  var dateTenggat = ''.obs;
+
+  DateRangePickerController datePesanController = DateRangePickerController();
+  DateRangePickerController dateTenggatController = DateRangePickerController();
 
   // final CollectionReference<Map<String, dynamic>> collection =
   //     FirebaseFirestore.instance.collection('Tugas');
@@ -56,15 +63,12 @@ class TambahTugasController extends GetxController {
     update();
   }
 
-  DateRangePickerController datePesanController = DateRangePickerController();
-
-  Future<void> addTugas(String nama, String datePesan, String tenggat,
-      String divisi, String ket) async {
+  Future<void> addTugas(String nama, String divisi, String ket) async {
     try {
       var tugas = firestore.collection("Tugas");
       var docRefTugas = await tugas.add({
-        'Tanggal Pesan': datePesan,
-        'Tanggal Tenggat': tenggat,
+        'Tanggal Pesan': datePesan.value,
+        'Tanggal Tenggat': dateTenggat.value,
         'Nama Pemesan': nama,
         'Divisi': divisi,
         'Keterangan': ket,
@@ -178,12 +182,14 @@ class TambahTugasController extends GetxController {
   void selectDatePesan(DateRangePickerSelectionChangedArgs args) {
     selectedDate.value = args.value;
     final dateFormatted = dateFormatter.format(selectedDate.value);
+    datePesan.value = dateFormatterDefault.format(selectedDate.value);
     dateEdit.text = dateFormatted.toString();
   }
 
   void selectDateTenggat(DateRangePickerSelectionChangedArgs args) {
     selectedDate.value = args.value;
     final dateFormatted = dateFormatter.format(selectedDate.value);
+    dateTenggat.value = dateFormatterDefault.format(selectedDate.value);
     tenggatEdit.text = dateFormatted.toString();
   }
 

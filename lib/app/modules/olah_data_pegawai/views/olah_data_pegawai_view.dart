@@ -103,6 +103,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                               controller: controller.searchController,
                               onChanged: (value) =>
                                   olahC.searchQuery.add(value),
+                              textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(PhosphorIcons.magnifyingGlass),
                                 iconColor: HexColor("#0B0C2B"),
