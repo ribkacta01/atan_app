@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sizer/sizer.dart';
 
 import '../data/models/user_model.dart';
+import '../util/color.dart';
 
 class AuthController extends GetxController {
   var isAuth = false.obs;
@@ -134,8 +136,83 @@ class AuthController extends GetxController {
       userData.refresh();
 
       isAuth.value = true;
-
-      await Get.offAllNamed(Routes.HOME);
+      if (checkUserData['email'] == emailUser) {
+        await Get.offAllNamed(Routes.HOME);
+      } else {
+        Get.dialog(Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            backgroundColor: white,
+            child: Container(
+              width: 350,
+              height: 336,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    PhosphorIcons.xCircleFill,
+                    color: bluePrimary,
+                    size: 110,
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Text(
+                    'LOGIN GAGAL',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: bluePrimary,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  Text(
+                    'Periksa Kembali Akun Anda!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: bluePrimary,
+                      fontSize: 25,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  Text(
+                    'Hubungi Pemilik Usaha Untuk Aktivasi Akun',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: bluePrimary,
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Container(
+                      width: 15.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(11),
+                          color: white),
+                      child: TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            child: Text(
+                              'OK',
+                              style:
+                                  TextStyle(fontSize: 18, color: bluePrimary),
+                            ),
+                          )))
+                ],
+              ),
+            )));
+      }
     } else {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

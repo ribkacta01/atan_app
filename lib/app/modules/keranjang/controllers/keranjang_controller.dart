@@ -5,14 +5,20 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class KeranjangController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final collection = FirebaseFirestore.instance.collection('Perencanaan');
+
+  DateTime? start;
+  final end = DateTime.now().obs;
+  final dateFormatter = DateFormat('yyyy-MM-dd');
 
   Stream<QuerySnapshot<Map<String, dynamic>>> cart() async* {
     yield* firestore
         .collection("Perencanaan")
-        .orderBy('date', descending: false)
+        .orderBy('date', descending: true)
         .snapshots();
 
     final count = 0.obs;

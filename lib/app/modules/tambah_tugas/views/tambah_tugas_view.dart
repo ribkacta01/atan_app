@@ -507,7 +507,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (tambahC.nameKey.value.currentState!.validate() &&
                                             tambahC.dateKey.value.currentState!
                                                 .validate() &&
@@ -519,6 +519,13 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                               tambahC.namaEdit.text,
                                               tambahC.divEdit.text,
                                               tambahC.ketEdit.text);
+                                          await tambahC.addTugas(
+                                              tambahC.namaEdit.text,
+                                              tambahC.divEdit.text,
+                                              tambahC.ketEdit.text);
+                                          await tambahC.showNotification(
+                                              'Ada Tugas Baru',
+                                              'Segera Lihat dan Kerjakan Tugas Anda!');
                                         }
                                       },
                                       child: Text(

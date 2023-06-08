@@ -16,6 +16,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../controller/auth_controller.dart';
 import '../../../util/Loading.dart';
 import '../controllers/beranda_controller.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class BerandaView extends GetView<BerandaController> {
   const BerandaView({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class BerandaView extends GetView<BerandaController> {
     final berandaC = Get.put(BerandaController());
     final c = Get.put(TugasController());
     final addP = Get.put(TambahFotoController());
-
+    final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -205,7 +206,7 @@ class BerandaView extends GetView<BerandaController> {
                                                           ),
                                                           SizedBox(height: 1.h),
                                                           Text(
-                                                            "Tenggat Pesanan : ${listData['Tanggal Tenggat']}",
+                                                            "Tenggat Pesanan : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
                                                             style: TextStyle(
                                                               fontSize: 15,
                                                               color: HexColor(
@@ -362,7 +363,7 @@ class BerandaView extends GetView<BerandaController> {
                                                 )),
                                             SizedBox(height: 1.5.h),
                                             Text(
-                                                "Tenggat : ${listRiwayat['Tanggal Tenggat']}",
+                                                "Tenggat : ${dateFormatterDefault.format(DateTime.parse(listRiwayat['Tanggal Tenggat']))}",
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   color: grey1,

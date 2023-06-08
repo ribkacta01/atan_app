@@ -14,6 +14,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../util/Loading.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/keranjang_controller.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class KeranjangView extends GetView<KeranjangController> {
   const KeranjangView({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class KeranjangView extends GetView<KeranjangController> {
     final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
     final cartC = Get.put(KeranjangController());
+    final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -108,10 +110,15 @@ class KeranjangView extends GetView<KeranjangController> {
                               ),
                             ),
                           ),
+                          SizedBox(width: 55.w),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 20, bottom: 15),
-                            child: TextButton(
+                            child: IconButton(
+                              icon: Icon(
+                                PhosphorIcons.slidersHorizontal,
+                                color: bluePrimary,
+                              ),
                               onPressed: () {
                                 Get.dialog(Dialog(
                                   child: Container(
@@ -128,14 +135,6 @@ class KeranjangView extends GetView<KeranjangController> {
                                   ),
                                 ));
                               },
-                              child: Text(
-                                "Filter",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: HexColor("#0B0C2B"),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -220,7 +219,8 @@ class KeranjangView extends GetView<KeranjangController> {
                                                           )),
                                                     ),
                                                     SizedBox(height: 1.5.h),
-                                                    Text(data['date'],
+                                                    Text(
+                                                        '${dateFormatterDefault.format(DateTime.parse(data['date']))}',
                                                         style: TextStyle(
                                                           fontSize: 20,
                                                           color: white,

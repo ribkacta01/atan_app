@@ -84,63 +84,7 @@ class TugasView extends GetView<TugasController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 2.5.h),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: HexColor("#0B0C2B"),
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 3.5.h,
-                          width: 9.h,
-                          child: Center(
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Terbaru",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, bottom: 15),
-                        child: TextButton(
-                          onPressed: () {
-                            Get.dialog(Dialog(
-                              child: Container(
-                                padding: EdgeInsets.all(1.h),
-                                height: 40.h,
-                                child: SfDateRangePicker(
-                                  view: DateRangePickerView.month,
-                                  selectionMode:
-                                      DateRangePickerSelectionMode.range,
-                                  showActionButtons: true,
-                                  onCancel: () => Get.back(),
-                                  onSubmit: (obj) {},
-                                ),
-                              ),
-                            ));
-                          },
-                          child: Text(
-                            "Filter",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: HexColor("#0B0C2B"),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 5.h),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: homeC.tugas(data.get('divisi')),
                       builder: (context, snapshot) {
@@ -151,12 +95,12 @@ class TugasView extends GetView<TugasController> {
                         var dataFoto = snapshot.data!;
                         if (dataFoto.docs.isEmpty) {
                           return Padding(
-                            padding: EdgeInsets.only(top: 25.h),
+                            padding: EdgeInsets.only(top: 33.h),
                             child: Center(
                               child: Text(
-                                "Belum Ada Tugas yang Harus diunggah",
+                                "Belum Ada Tugas yang Harus di Unggah",
                                 style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 18,
                                     color: redError,
                                     fontWeight: FontWeight.w500),
                               ),

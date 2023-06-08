@@ -2,6 +2,7 @@ import 'package:atan_app/app/util/Error_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,10 +16,23 @@ import 'app/util/Loading.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> initNotifications() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initNotifications();
   await initializeDateFormatting('id_ID', null)
       .then((value) => runApp(AtanApp()));
 }

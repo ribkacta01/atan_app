@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class BerandaController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  DateTime? start;
+  final end = DateTime.now().obs;
+  final dateFormatter = DateFormat('yyyy-MM-dd');
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> beranda() async* {
     var email = auth.currentUser!.email;
