@@ -9,6 +9,7 @@ import 'package:atan_app/app/modules/profil/views/profil_view.dart';
 import 'package:atan_app/app/modules/profilBos/views/profil_bos_view.dart';
 import 'package:atan_app/app/util/Loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../util/notif.dart';
 import '../../keranjangBos/views/keranjang_bos_view.dart';
 import '../../tugas/views/tugas_view.dart';
 import '../../tugasBos/views/tugas_bos_view.dart';
@@ -26,6 +28,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
+    final notifC = Get.put(NotificationService());
     var pages = <Widget>[
       BerandaView(),
       KeranjangView(),
@@ -49,8 +52,12 @@ class HomeView extends GetView<HomeController> {
           }
           if (snap.hasData) {
             var roles = snap.data!.get("roles");
+            var divisi = snap.data!.get("divisi");
+
             log("$roles");
             if (roles != "pemilik_usaha") {
+              notifC.subsTopicRoles(roles);
+              notifC.subsTopicDivisi(divisi);
               return Scaffold(
                 body: Obx(() => pages[controller.currentIndex.value]),
                 bottomNavigationBar: Container(
@@ -73,6 +80,8 @@ class HomeView extends GetView<HomeController> {
                 ),
               );
             } else {
+              notifC.subsTopicRoles(roles);
+              notifC.subsTopicDivisi(divisi);
               return Scaffold(
                 body: Obx(() => pages2[controller.currentIndex.value]),
                 bottomNavigationBar: Container(

@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:atan_app/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +16,7 @@ import '../util/color.dart';
 class AuthController extends GetxController {
   var isAuth = false.obs;
 
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 //akun yg sudah login disimpan di currentuser
   GoogleSignInAccount? _currentUser;
@@ -136,14 +136,16 @@ class AuthController extends GetxController {
       userData.refresh();
 
       isAuth.value = true;
+
       if (checkUserData['email'] == emailUser) {
+        registerToNotificationTopic(checkUserData['roles']);
         await Get.offAllNamed(Routes.HOME);
       } else {
         Get.dialog(Dialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             backgroundColor: white,
-            child: Container(
+            child: SizedBox(
               width: 350,
               height: 336,
               child: Column(
@@ -217,18 +219,33 @@ class AuthController extends GetxController {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.white,
-        child: Container(
+        child: SizedBox(
           width: 193.93,
           height: 194.73,
           child: Column(
-            children: [Icon(PhosphorIcons.xCircle)],
+            children: const [Icon(PhosphorIcons.xCircle)],
           ),
         ),
       ));
     }
   }
 
+  // Pendaftaran perangkat ke topik notifikasi
+  Future<void> registerToNotificationTopic(String role) async {
+    await FirebaseMessaging.instance.subscribeToTopic(role);
+  }
+
+// Menghapus perangkat dari topik notifikasi
+  Future<void> unregisterFromNotificationTopic(String role) async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(role);
+  }
+
   Future<void> logout() async {
+    CollectionReference users = firestore.collection("users");
+    String emailUser = auth.currentUser!.email.toString();
+    final checkuser = await users.doc(emailUser).get();
+    final checkUserData = checkuser.data() as Map<String, dynamic>;
+    unregisterFromNotificationTopic(checkUserData['roles']);
     await _googleSignIn.disconnect();
     await _googleSignIn.signOut();
     Get.offAllNamed(Routes.LOGIN);

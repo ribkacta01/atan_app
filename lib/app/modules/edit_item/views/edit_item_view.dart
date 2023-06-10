@@ -24,8 +24,7 @@ class EditItemView extends GetView<EditItemController> {
     var docP = Get.arguments[1];
     var docName = '${doc['Nama Barang']} - ${doc['Keterangan']}';
     var docNameP = '${docP['nama']} - ${docP['date']}';
-    print(docName);
-    print(docNameP);
+
     editC.namaEdit.text = doc['Nama Barang'];
     editC.jmldit.text = doc['Jumlah Barang'];
     editC.kettEdit.text = doc['Keterangan'];
@@ -33,7 +32,7 @@ class EditItemView extends GetView<EditItemController> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 20,
               right: 20,
               top: 6,
@@ -42,7 +41,7 @@ class EditItemView extends GetView<EditItemController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return const Loading();
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -55,13 +54,13 @@ class EditItemView extends GetView<EditItemController> {
                             onPressed: () {
                               Get.back();
                             },
-                            icon: Icon(PhosphorIcons.arrowLeft)),
+                            icon: const Icon(PhosphorIcons.arrowLeft)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 left: 17,
                                 right: 20,
                                 top: 6,
@@ -105,7 +104,7 @@ class EditItemView extends GetView<EditItemController> {
                         ),
                         SizedBox(height: 12.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: const EdgeInsets.only(left: 17),
                           child: Text(
                             "Ubah Daftar Item Kebutuhan Pesanan",
                             style: TextStyle(
@@ -120,7 +119,7 @@ class EditItemView extends GetView<EditItemController> {
                             child: Column(children: [
                           Form(
                               key: editC.nameKey.value,
-                              child: Container(
+                              child: SizedBox(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(
@@ -153,7 +152,7 @@ class EditItemView extends GetView<EditItemController> {
                           SizedBox(height: 2.5.h),
                           Form(
                               key: editC.jmlKey.value,
-                              child: Container(
+                              child: SizedBox(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(
@@ -186,7 +185,7 @@ class EditItemView extends GetView<EditItemController> {
                           SizedBox(height: 2.5.h),
                           Form(
                               key: editC.ketKey.value,
-                              child: Container(
+                              child: SizedBox(
                                 height: 7.h,
                                 width: 82.w,
                                 child: TextFormField(

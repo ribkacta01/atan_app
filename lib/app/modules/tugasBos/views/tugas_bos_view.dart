@@ -22,7 +22,7 @@ class TugasBosView extends GetView<TugasBosController> {
   @override
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
-
+    tugasC.filteredData.clear();
     final home = Get.put(BerandaBosController());
     final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
 
@@ -121,13 +121,128 @@ class TugasBosView extends GetView<TugasBosController> {
                                     padding: EdgeInsets.all(1.h),
                                     height: 40.h,
                                     child: SfDateRangePicker(
-                                      view: DateRangePickerView.year,
-                                      selectionMode:
-                                          DateRangePickerSelectionMode.range,
-                                      showActionButtons: true,
-                                      onCancel: () => Get.back(),
-                                      onSubmit: (obj) {},
-                                    ),
+                                        view: DateRangePickerView.year,
+                                        selectionMode:
+                                            DateRangePickerSelectionMode.range,
+                                        showActionButtons: true,
+                                        onCancel: () => Get.back(),
+                                        onSubmit: (value) {
+                                          if (value != null) {
+                                            if ((value as PickerDateRange)
+                                                    .endDate !=
+                                                null) {
+                                              controller.pickRangeDate(
+                                                  value.startDate!,
+                                                  value.endDate!);
+                                              Get.back();
+                                            } else {
+                                              Get.dialog(Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                backgroundColor: bluePrimary,
+                                                child: Container(
+                                                  width: 350,
+                                                  height: 336,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 20),
+                                                        child: Center(
+                                                          child: Icon(
+                                                            PhosphorIcons
+                                                                .xCircle,
+                                                            color: white,
+                                                            size: 110,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 3.h,
+                                                      ),
+                                                      Text(
+                                                        "Terjadi Kesalahan!",
+                                                        style: TextStyle(
+                                                          fontSize: 30,
+                                                          color: white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 1.5.h,
+                                                      ),
+                                                      Text(
+                                                        "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 2.h,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ));
+                                            }
+                                          } else {
+                                            Get.dialog(Dialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              backgroundColor: bluePrimary,
+                                              child: Container(
+                                                width: 350,
+                                                height: 336,
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 20),
+                                                      child: Icon(
+                                                        PhosphorIcons.xCircle,
+                                                        color: white,
+                                                        size: 110,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 3.h,
+                                                    ),
+                                                    Center(
+                                                      child: Text(
+                                                        "Terjadi Kesalahan!",
+                                                        style: TextStyle(
+                                                          fontSize: 30,
+                                                          color: white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    Center(
+                                                      child: Text(
+                                                        "Tanggal tidak dipilih",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 2.h,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ));
+                                          }
+                                        }),
                                   ),
                                 ));
                               },
@@ -167,324 +282,381 @@ class TugasBosView extends GetView<TugasBosController> {
                               unselectedLabelColor: Colors.grey[400],
                             ),
                             views: [
-                              StreamBuilder<
-                                      QuerySnapshot<Map<String, dynamic>>>(
-                                  stream: tugasC.tugasProses(),
+                              FutureBuilder<
+                                      List<
+                                          DocumentSnapshot<
+                                              Map<String, dynamic>>>>(
+                                  future: tugasC.tugasProses(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return Loading();
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    if (snapshot.data?.length == 0 ||
+                                        snapshot.data == null) {
+                                      return Center(
+                                        child: Text('KOSONGGGGG'),
+                                      );
+                                    }
+
+                                    Set<String> uniqueNames = Set<String>();
+                                    tugasC.allData.assignAll(snapshot.data!);
+                                    for (var doc in tugasC.allData) {
+                                      uniqueNames.add(doc['Nama Pemesan']);
                                     }
 
                                     return SingleChildScrollView(
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          padding: EdgeInsets.only(top: 0.h),
-                                          itemCount: snapshot.data!.docs.length,
-                                          itemBuilder: (context, index) {
-                                            Map<String, dynamic> listData =
-                                                snapshot.data!.docs[index]
-                                                    .data();
-                                            return GestureDetector(
-                                                onTap: () {
-                                                  tugasC.toggleExpanded(index);
-                                                },
-                                                child: Obx(
-                                                  () => AnimatedContainer(
-                                                    duration: Duration(
-                                                        milliseconds: 100),
-                                                    margin: EdgeInsets.only(
-                                                        left: 5,
-                                                        right: 5,
-                                                        top: 20),
-                                                    height: tugasC.isChanged
-                                                                .value ==
-                                                            index
-                                                        ? 50.h
-                                                        : 10.h,
-                                                    width: 304.w,
-                                                    decoration: BoxDecoration(
-                                                      color: randomColor(),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                    ),
-                                                    padding: EdgeInsets.only(
-                                                        left: 0.8.w,
-                                                        top: 2.h,
-                                                        bottom: 0.1.h),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Column(
-                                                              children: [
-                                                                Text(
-                                                                    "Pesanan ${listData['Nama Pemesan']}",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          21,
-                                                                      color:
-                                                                          white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    )),
-                                                                SizedBox(
-                                                                    height:
-                                                                        1.5.h),
-                                                                Text(
-                                                                    "Tenggat : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      color:
-                                                                          white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                    )),
-                                                              ],
-                                                            ),
-                                                            Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      top:
-                                                                          0.4.h,
-                                                                      bottom:
-                                                                          0.3.h),
-                                                                  child: Text(
-                                                                      "${listData['Status']}",
+                                      child: Obx(
+                                        () => ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            padding: EdgeInsets.only(top: 0.h),
+                                            itemCount: tugasC
+                                                    .filteredData.isEmpty
+                                                ? uniqueNames.length
+                                                : tugasC.filteredData.length,
+                                            itemBuilder: (context, index) {
+                                              var data = tugasC
+                                                      .filteredData.isEmpty
+                                                  ? tugasC.allData[index]
+                                                      .data()!
+                                                  : tugasC.filteredData[index]
+                                                      .data()!;
+                                              if (data.length == 0) {
+                                                return Center(
+                                                  child: Text('KOSONGGGGG'),
+                                                );
+                                              }
+                                              final name =
+                                                  uniqueNames.elementAt(index);
+                                              final doc = snapshot.data!
+                                                  .firstWhere((doc) =>
+                                                      doc['Nama Pemesan'] ==
+                                                      name);
+                                              // Map<String, dynamic> listData =
+                                              //     snapshot.data!.docs[index]
+                                              //         .data();
+                                              return GestureDetector(
+                                                  onTap: () {
+                                                    tugasC
+                                                        .toggleExpanded(index);
+                                                  },
+                                                  child: Obx(
+                                                    () => AnimatedContainer(
+                                                      duration: Duration(
+                                                          milliseconds: 100),
+                                                      margin: EdgeInsets.only(
+                                                          left: 5,
+                                                          right: 5,
+                                                          top: 20),
+                                                      height: tugasC.isChanged
+                                                                  .value ==
+                                                              index
+                                                          ? 68.h
+                                                          : 10.h,
+                                                      width: 304.w,
+                                                      decoration: BoxDecoration(
+                                                        color: randomColor(),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      padding: EdgeInsets.only(
+                                                          left: 0.8.w,
+                                                          top: 2.h,
+                                                          bottom: 0.1.h),
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Text(
+                                                                      "Pesanan ${doc['Nama Pemesan']}",
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
                                                                             21,
-                                                                        color: Colors
-                                                                            .yellow,
+                                                                        color:
+                                                                            white,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      )),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          1.5.h),
+                                                                  Text(
+                                                                      "Tenggat : ${dateFormatterDefault.format(DateTime.parse(doc['Tanggal Tenggat']))}",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        color:
+                                                                            white,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                              Column(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsets.only(
+                                                                        top: 0.4
+                                                                            .h,
+                                                                        bottom:
+                                                                            0.3.h),
+                                                                    child: Text(
+                                                                        "${doc['Status']}",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              21,
+                                                                          color:
+                                                                              Colors.yellow,
+                                                                          fontWeight:
+                                                                              FontWeight.w800,
+                                                                        )),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Expanded(
+                                                            child: Visibility(
+                                                              visible: tugasC
+                                                                          .isChanged
+                                                                          .value ==
+                                                                      index &&
+                                                                  tugasC
+                                                                      .isVisible
+                                                                      .value,
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: 40,
+                                                                  ),
+                                                                  TextButton(
+                                                                    child: Text(
+                                                                      "Ubah Ke Selesai",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            20,
+                                                                        color:
+                                                                            bluePrimary,
                                                                         fontWeight:
                                                                             FontWeight.w800,
-                                                                      )),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Expanded(
-                                                          child: Visibility(
-                                                            visible: tugasC
-                                                                        .isChanged
-                                                                        .value ==
-                                                                    index &&
-                                                                tugasC.isVisible
-                                                                    .value,
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                SizedBox(
-                                                                  height: 40,
-                                                                ),
-                                                                TextButton(
-                                                                  child: Text(
-                                                                    "Ubah Ke Selesai",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          20,
-                                                                      color:
-                                                                          bluePrimary,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w800,
+                                                                      ),
                                                                     ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      tugasC.editStatus(
+                                                                          doc['id'],
+                                                                          'Selesai');
+                                                                    },
                                                                   ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    tugasC.editStatus(
-                                                                        listData[
-                                                                            'id'],
-                                                                        'Selesai');
-                                                                  },
-                                                                ),
-                                                                SizedBox(
-                                                                    height:
-                                                                        5.h),
-                                                                StreamBuilder<
-                                                                        QuerySnapshot<
-                                                                            Map<String,
-                                                                                dynamic>>>(
-                                                                    stream: tugasC.tugasDiv(
-                                                                        listData[
-                                                                            'Nama Pemesan']),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      if (snapshot
-                                                                              .connectionState ==
-                                                                          ConnectionState
-                                                                              .waiting) {
-                                                                        return Loading();
-                                                                      }
-                                                                      var dataTgs =
-                                                                          snapshot
-                                                                              .data!;
-                                                                      return ListView.builder(
-                                                                          shrinkWrap: true,
-                                                                          physics: AlwaysScrollableScrollPhysics(),
-                                                                          padding: EdgeInsets.only(top: 0.1.h, bottom: 0.1.h),
-                                                                          itemCount: snapshot.data!.docs.length,
-                                                                          itemBuilder: (context, index) {
-                                                                            Map<String, dynamic>
-                                                                                listTugas =
-                                                                                snapshot.data!.docs[index].data();
-                                                                            return Padding(
-                                                                              padding: const EdgeInsets.only(top: 20, left: 18, right: 18, bottom: 6),
-                                                                              child: Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                textDirection: TextDirection.ltr,
-                                                                                children: [
-                                                                                  Column(
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5.h),
+                                                                  StreamBuilder<
+                                                                          QuerySnapshot<
+                                                                              Map<String,
+                                                                                  dynamic>>>(
+                                                                      stream: tugasC
+                                                                          .tugasDiv(doc[
+                                                                              'Nama Pemesan']),
+                                                                      builder:
+                                                                          (context,
+                                                                              snapshot) {
+                                                                        if (snapshot.connectionState ==
+                                                                            ConnectionState.waiting) {
+                                                                          return Loading();
+                                                                        }
+                                                                        var dataTgs =
+                                                                            snapshot.data!;
+                                                                        return SingleChildScrollView(
+                                                                          child: ListView.builder(
+                                                                              shrinkWrap: true,
+                                                                              physics: AlwaysScrollableScrollPhysics(),
+                                                                              padding: EdgeInsets.only(top: 0.1.h, bottom: 0.1.h),
+                                                                              itemCount: snapshot.data!.docs.length,
+                                                                              itemBuilder: (context, index) {
+                                                                                Map<String, dynamic> listTugas = snapshot.data!.docs[index].data();
+                                                                                return Padding(
+                                                                                  padding: const EdgeInsets.only(top: 20, left: 18, right: 18, bottom: 6),
+                                                                                  child: Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                    textDirection: TextDirection.ltr,
                                                                                     children: [
-                                                                                      Text(
-                                                                                        "${listTugas['Divisi']}",
-                                                                                        style: TextStyle(
-                                                                                          fontSize: 20,
-                                                                                          color: white,
-                                                                                          fontWeight: FontWeight.w500,
-                                                                                        ),
+                                                                                      Column(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                        children: [
+                                                                                          Text(
+                                                                                            "${listTugas['Divisi']}",
+                                                                                            style: TextStyle(
+                                                                                              fontSize: 20,
+                                                                                              color: white,
+                                                                                              fontWeight: FontWeight.w500,
+                                                                                            ),
+                                                                                          ),
+                                                                                          SizedBox(height: 1.h),
+                                                                                          Text(
+                                                                                            "${listTugas['Keterangan']}",
+                                                                                            style: TextStyle(
+                                                                                              fontSize: 15,
+                                                                                              color: white,
+                                                                                              fontWeight: FontWeight.w400,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
                                                                                       ),
-                                                                                      SizedBox(height: 1.h),
-                                                                                      Text(
-                                                                                        "${listTugas['Keterangan']}",
-                                                                                        style: TextStyle(
-                                                                                          fontSize: 15,
-                                                                                          color: white,
-                                                                                          fontWeight: FontWeight.w400,
-                                                                                        ),
+                                                                                      Icon(
+                                                                                        PhosphorIcons.circleBold,
+                                                                                        size: 15,
+                                                                                        color: HexColor("#0B0C2B"),
                                                                                       ),
                                                                                     ],
                                                                                   ),
-                                                                                  Icon(
-                                                                                    PhosphorIcons.circleBold,
-                                                                                    size: 15,
-                                                                                    color: HexColor("#0B0C2B"),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            );
-                                                                          });
-                                                                    }),
-                                                              ],
+                                                                                );
+                                                                              }),
+                                                                        );
+                                                                      }),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        )
-                                                      ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ));
-                                            ;
-                                          }),
+                                                  ));
+                                              ;
+                                            }),
+                                      ),
                                     );
                                   }),
                               StreamBuilder<
-                                  QuerySnapshot<Map<String, dynamic>>>(
+                                  List<DocumentSnapshot<Map<String, dynamic>>>>(
                                 stream: tugasC.tugasDone(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return Loading();
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
                                   }
-                                  return ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.only(top: 0.h),
-                                      itemCount: snapshot.data!.docs.length,
-                                      itemBuilder: (context, index) {
-                                        Map<String, dynamic> listSelesai =
-                                            snapshot.data!.docs[index].data();
+                                  if (snapshot.data?.length == 0 ||
+                                      snapshot.data == null) {
+                                    return Center(
+                                      child: Text('KOSONGGGGG'),
+                                    );
+                                  }
+                                  tugasC.allData.assignAll(snapshot.data!);
 
-                                        return Padding(
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 5, right: 5, top: 20),
-                                              height: 10.h,
-                                              width: 304.w,
-                                              decoration: BoxDecoration(
-                                                color: brick,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              padding: EdgeInsets.only(
-                                                  left: 0.8.w,
-                                                  top: 2.h,
-                                                  bottom: 0.1.h),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                          "Pesanan ${listSelesai['Nama Pemesan']}",
-                                                          style: TextStyle(
-                                                            fontSize: 21,
-                                                            color: white,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          )),
-                                                      SizedBox(height: 1.5.h),
-                                                      Text(
-                                                          "Tenggat : ${listSelesai['Tanggal Tenggat']}",
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: white,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          )),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          top: 1.5.h,
-                                                        ),
-                                                        child: Text(
-                                                            "${listSelesai['Status']}",
+                                  return Obx(
+                                    () => ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        padding: EdgeInsets.only(top: 0.h),
+                                        itemCount: tugasC.filteredData.isEmpty
+                                            ? tugasC.allData.length
+                                            : tugasC.filteredData.length,
+                                        itemBuilder: (context, index) {
+                                          var listSelesai = tugasC
+                                                  .filteredData.isEmpty
+                                              ? tugasC.allData[index].data()!
+                                              : tugasC.filteredData[index]
+                                                  .data()!;
+                                          if (listSelesai.length == 0) {
+                                            return Center(
+                                              child: Text('KOSONGGGGG'),
+                                            );
+                                          }
+
+                                          return Padding(
+                                              child: Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 5, right: 5, top: 20),
+                                                height: 10.h,
+                                                width: 304.w,
+                                                decoration: BoxDecoration(
+                                                  color: brick,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                                padding: EdgeInsets.only(
+                                                    left: 0.8.w,
+                                                    top: 2.h,
+                                                    bottom: 0.1.h),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                            "Pesanan ${listSelesai['Nama Pemesan']}",
                                                             style: TextStyle(
                                                               fontSize: 21,
                                                               color: white,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w800,
+                                                                      .w500,
                                                             )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                        SizedBox(height: 1.5.h),
+                                                        Text(
+                                                            "Tenggat : ${dateFormatterDefault.format(DateTime.parse(listSelesai['Tanggal Tenggat']))}",
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            top: 1.5.h,
+                                                          ),
+                                                          child: Text(
+                                                              "${listSelesai['Status']}",
+                                                              style: TextStyle(
+                                                                fontSize: 21,
+                                                                color: white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            padding:
-                                                EdgeInsets.only(bottom: 0.h));
-                                      });
+                                              padding: EdgeInsets.only(
+                                                  bottom: 0.1.h));
+                                        }),
+                                  );
                                 },
                               )
                             ],

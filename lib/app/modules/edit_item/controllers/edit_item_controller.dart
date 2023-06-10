@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -35,7 +34,7 @@ class EditItemController extends GetxController {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           backgroundColor: bluePrimary,
-          child: Container(
+          child: SizedBox(
             width: 350,
             height: 336,
             child: Column(
@@ -84,7 +83,7 @@ class EditItemController extends GetxController {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: bluePrimary,
-        child: Container(
+        child: SizedBox(
           width: 350,
           height: 336,
           child: Column(

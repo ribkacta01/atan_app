@@ -9,14 +9,30 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class TugasBosController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var currentIndex = 0.obs;
-  changePage(int i) {
-    currentIndex.value = i;
-    print(currentIndex.value);
+  final dateFormatter = DateFormat('d MMMM yyyy', 'id-ID');
+  final dateFormatterDefault = DateFormat('yyyy-MM-dd');
+
+  void pickRangeDate(DateTime pickStart, DateTime pickEnd) {
+    filteredData.clear();
+
+    for (var data in allData) {
+      DateTime date = DateTime.parse(data['Tanggal Tenggat']);
+
+      if (date.isAfter(pickStart) && date.isBefore(pickEnd)) {
+        filteredData.add(data);
+      }
+    }
+    update();
   }
+
+  RxList<DocumentSnapshot<Map<String, dynamic>>> allData =
+      RxList<DocumentSnapshot<Map<String, dynamic>>>();
+  RxList<DocumentSnapshot<Map<String, dynamic>>> filteredData =
+      RxList<DocumentSnapshot<Map<String, dynamic>>>();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> tugasList() async* {
     yield* firestore.collection("Tugas").snapshots();
@@ -30,19 +46,23 @@ class TugasBosController extends GetxController {
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tugasDone() {
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> tugasDone() {
     return firestore
         .collection("Tugas")
         .where("Status", isEqualTo: 'Selesai')
-        .snapshots();
+        .orderBy("Tanggal Tenggat", descending: true)
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs);
+    ;
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tugasProses() {
-    return firestore
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> tugasProses() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
         .collection("Tugas")
-        //.orderBy('Tanggal Tenggat', descending: true)
         .where("Status", isEqualTo: 'Belum Selesai')
-        .snapshots();
+        .orderBy("Tanggal Tenggat", descending: true)
+        .get();
+    return querySnapshot.docs;
   }
 
   Future<void> editStatus(

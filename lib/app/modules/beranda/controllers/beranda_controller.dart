@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides, depend_on_referenced_packages
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,7 @@ class BerandaController extends GetxController {
     yield* firestore
         .collection("Tugas")
         .where('Status', isEqualTo: 'Selesai')
+        .limit(5)
         .where('Divisi', isEqualTo: dataDiv)
         .snapshots();
   }

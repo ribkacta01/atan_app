@@ -1,5 +1,6 @@
 import 'package:atan_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -10,6 +11,7 @@ import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../../../routes/app_pages.dart';
 import '../../../util/color.dart';
 
 class TambahTugasController extends GetxController {
@@ -65,27 +67,6 @@ class TambahTugasController extends GetxController {
     update();
   }
 
-  Future<void> showNotification(String title, String body) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      '0', // ID channel notifikasi
-      'Tambah Tugas', // Nama channel notifikasi
-      channelDescription:
-          'Terdapat tugas baru!', // Deskripsi channel notifikasi
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.show(
-      0, // ID notifikasi
-      title, // Judul notifikasi
-      body, // Isi notifikasi
-      platformChannelSpecifics,
-    );
-  }
-
   Future<void> addTugas(String nama, String divisi, String ket) async {
     try {
       var tugas = firestore.collection("Tugas");
@@ -136,6 +117,7 @@ class TambahTugasController extends GetxController {
                         borderRadius: BorderRadius.circular(11), color: white),
                     child: TextButton(
                         onPressed: () {
+                          Get.back();
                           Get.back();
                           Get.back();
                         },
@@ -202,10 +184,6 @@ class TambahTugasController extends GetxController {
       ));
     }
   }
-
-//   Future<void> onSelectNotification(String? payload) async {
-//   // Tindakan yang diambil ketika notifikasi diklik
-// }
 
   void selectDatePesan(DateRangePickerSelectionChangedArgs args) {
     selectedDate.value = args.value;

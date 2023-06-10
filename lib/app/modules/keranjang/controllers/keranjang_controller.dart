@@ -11,34 +11,49 @@ class KeranjangController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final collection = FirebaseFirestore.instance.collection('Perencanaan');
 
-  DateTime? start;
-  final end = DateTime.now().obs;
-  final dateFormatter = DateFormat('yyyy-MM-dd');
+  void pickRangeDate(DateTime pickStart, DateTime pickEnd) {
+    filteredData.clear();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cart() async* {
-    yield* firestore
+    for (var data in allData) {
+      DateTime date = DateTime.parse(data['date']);
+
+      if (date.isAfter(pickStart) && date.isBefore(pickEnd)) {
+        filteredData.add(data);
+      }
+    }
+    update();
+  }
+
+  RxList<DocumentSnapshot<Map<String, dynamic>>> allData =
+      RxList<DocumentSnapshot<Map<String, dynamic>>>();
+  RxList<DocumentSnapshot<Map<String, dynamic>>> filteredData =
+      RxList<DocumentSnapshot<Map<String, dynamic>>>();
+
+  Stream<List<DocumentSnapshot<Map<String, dynamic>>>> cart() {
+    return firestore
         .collection("Perencanaan")
         .orderBy('date', descending: true)
-        .snapshots();
-
-    final count = 0.obs;
-    @override
-    void onInit() {
-      super.onInit();
-    }
-
-    @override
-    void onReady() {
-      super.onReady();
-    }
-
-    @override
-    void onClose() {
-      super.onClose();
-    }
-
-    void increment() => count.value++;
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs);
   }
+
+  final count = 0.obs;
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
+  void increment() => count.value++;
 
   Future<void> delData(String docName) async {
     Get.dialog(Dialog(

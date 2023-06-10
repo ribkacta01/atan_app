@@ -23,136 +23,266 @@ class KeranjangView extends GetView<KeranjangController> {
     final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
     final cartC = Get.put(KeranjangController());
+    cartC.filteredData.clear();
     final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
-            ),
-            child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                stream: home.berandaBos(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
-                  }
-                  var data = snapshot.data!;
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    textDirection: TextDirection.ltr,
-                    children: [
-                      SizedBox(height: 8.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Halo ${data.get('name')}",
-                                style: TextStyle(
-                                  fontSize: 19,
-                                  color: HexColor("#0B0C2B"),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: 1.h),
-                              Text(
-                                "Mulai Perencanaan Bahan Baku ",
-                                style: TextStyle(
-                                  fontSize: 19,
-                                  color: HexColor("#0B0C2B"),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: ClipOval(
-                              child: Image.network(
-                                data.get('photoUrl'),
-                                height: 45,
-                                width: 45,
+        body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+            stream: home.berandaBos(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // return const Loading();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              var data = snapshot.data!;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 6,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textDirection: TextDirection.ltr,
+                  children: [
+                    SizedBox(height: 8.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Halo ${data.get('name')}",
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: HexColor("#0B0C2B"),
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
+                            SizedBox(height: 1.h),
+                            Text(
+                              "Mulai Perencanaan Bahan Baku ",
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: HexColor("#0B0C2B"),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: ClipOval(
+                            child: Image.network(
+                              data.get('photoUrl'),
+                              height: 45,
+                              width: 45,
+                            ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 2.5.h),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: HexColor("#0B0C2B"),
-                                  borderRadius: BorderRadius.circular(20)),
-                              height: 3.5.h,
-                              width: 9.h,
-                              child: Center(
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Terbaru",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 2.5.h),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: HexColor("#0B0C2B"),
+                                borderRadius: BorderRadius.circular(20)),
+                            height: 3.5.h,
+                            width: 9.h,
+                            child: Center(
+                              child: TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  "Terbaru",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(width: 55.w),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 20, bottom: 15),
-                            child: IconButton(
-                              icon: Icon(
-                                PhosphorIcons.slidersHorizontal,
-                                color: bluePrimary,
-                              ),
-                              onPressed: () {
-                                Get.dialog(Dialog(
-                                  child: Container(
-                                    padding: EdgeInsets.all(1.h),
-                                    height: 40.h,
-                                    child: SfDateRangePicker(
-                                      view: DateRangePickerView.year,
-                                      selectionMode:
-                                          DateRangePickerSelectionMode.range,
-                                      showActionButtons: true,
-                                      onCancel: () => Get.back(),
-                                      onSubmit: (obj) {},
-                                    ),
-                                  ),
-                                ));
-                              },
+                        ),
+                        SizedBox(width: 55.w),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, bottom: 15),
+                          child: IconButton(
+                            icon: Icon(
+                              PhosphorIcons.slidersHorizontal,
+                              color: bluePrimary,
                             ),
+                            onPressed: () {
+                              Get.dialog(Dialog(
+                                child: Container(
+                                  padding: EdgeInsets.all(1.h),
+                                  height: 40.h,
+                                  child: SfDateRangePicker(
+                                    view: DateRangePickerView.year,
+                                    selectionMode:
+                                        DateRangePickerSelectionMode.range,
+                                    showActionButtons: true,
+                                    onCancel: () => Get.back(),
+                                    onSubmit: (value) {
+                                      if (value != null) {
+                                        if ((value as PickerDateRange)
+                                                .endDate !=
+                                            null) {
+                                          controller.pickRangeDate(
+                                              value.startDate!, value.endDate!);
+                                          Get.back();
+                                        } else {
+                                          Get.dialog(Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            backgroundColor: bluePrimary,
+                                            child: Container(
+                                              width: 350,
+                                              height: 336,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 20),
+                                                    child: Icon(
+                                                      PhosphorIcons.xCircle,
+                                                      color: white,
+                                                      size: 110,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 3.h,
+                                                  ),
+                                                  Text(
+                                                    "Terjadi Kesalahan!",
+                                                    style: TextStyle(
+                                                      fontSize: 30,
+                                                      color: white,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 1.5.h,
+                                                  ),
+                                                  Text(
+                                                    "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: white,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 2.h,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ));
+                                        }
+                                      } else {
+                                        Get.dialog(Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          backgroundColor: bluePrimary,
+                                          child: Container(
+                                            width: 350,
+                                            height: 336,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 20),
+                                                  child: Icon(
+                                                    PhosphorIcons.xCircle,
+                                                    color: white,
+                                                    size: 110,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 3.h,
+                                                ),
+                                                Text(
+                                                  "Terjadi Kesalahan!",
+                                                  style: TextStyle(
+                                                    fontSize: 30,
+                                                    color: white,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 1.5.h,
+                                                ),
+                                                Text(
+                                                  "Tanggal tidak dipilih",
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: white,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 2.h,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ));
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ));
+                            },
                           ),
-                        ],
-                      ),
-                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          stream: cartC.cart(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Loading();
-                            }
-                            return ListView.builder(
+                        ),
+                      ],
+                    ),
+                    StreamBuilder<List<DocumentSnapshot<Map<String, dynamic>>>>(
+                        stream: cartC.cart(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.data?.length == 0 ||
+                              snapshot.data == null) {
+                            return Center(
+                              child: Text('KOSONGGGGG'),
+                            );
+                          }
+
+                          cartC.allData.assignAll(snapshot.data!);
+                          return Obx(
+                            () => ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.only(top: 2, bottom: 7),
-                                itemCount: snapshot.data!.docs.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding:
+                                    const EdgeInsets.only(top: 2, bottom: 7),
+                                itemCount: cartC.filteredData.isEmpty
+                                    ? cartC.allData.length
+                                    : cartC.filteredData.length,
                                 itemBuilder: (context, index) {
-                                  var data = snapshot.data!.docs[index];
+                                  var data = cartC.filteredData.isEmpty
+                                      ? cartC.allData[index].data()!
+                                      : cartC.filteredData[index].data()!;
+                                  if (data.length == 0) {
+                                    return Center(
+                                      child: Text('KOSONGGGGG'),
+                                    );
+                                  }
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: 2.h),
                                     child: Material(
@@ -250,10 +380,12 @@ class KeranjangView extends GetView<KeranjangController> {
                                       ),
                                     ),
                                   );
-                                });
-                          }),
-                    ],
-                  );
-                })));
+                                }),
+                          );
+                        }),
+                  ],
+                ),
+              );
+            }));
   }
 }

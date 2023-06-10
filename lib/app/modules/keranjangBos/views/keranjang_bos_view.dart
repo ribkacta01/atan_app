@@ -23,6 +23,8 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
     final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
+    keranjangC.filteredData.clear();
+    keranjangC.dateMonthNow();
     final home = Get.put(BerandaBosController());
     return Scaffold(
         floatingActionButton: Padding(
@@ -163,7 +165,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                     padding: EdgeInsets.all(1.h),
                                     height: 40.h,
                                     child: SfDateRangePicker(
-                                      view: DateRangePickerView.month,
+                                      view: DateRangePickerView.year,
                                       selectionMode:
                                           DateRangePickerSelectionMode.range,
                                       showActionButtons: true,
@@ -285,118 +287,155 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                           ),
                         ],
                       ),
-                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      StreamBuilder<
+                              List<DocumentSnapshot<Map<String, dynamic>>>>(
                           stream: keranjangC.documentsStream(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             }
+                            if (snapshot.data?.length == 0 ||
+                                snapshot.data == null) {
+                              return Center(
+                                child: Text(
+                                  'Data Tidak Ditemukan',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: redError),
+                                ),
+                              );
+                            }
+                            keranjangC.allData.assignAll(snapshot.data!);
+                            return Obx(
+                              () => ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.only(top: 2, bottom: 10),
+                                  itemCount: keranjangC.filteredData.isEmpty
+                                      ? keranjangC.allData.length
+                                      : keranjangC.filteredData.length,
+                                  itemBuilder: (context, index) {
+                                    var data = keranjangC.filteredData.isEmpty
+                                        ? keranjangC.allData[index].data()!
+                                        : keranjangC.filteredData[index]
+                                            .data()!;
+                                    if (data.length == 0) {
+                                      return Center(
+                                        child: Text(
+                                          'Data Tidak Ditemukan',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: redError),
+                                        ),
+                                      );
+                                    }
 
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.only(top: 2, bottom: 10),
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  Map<String, dynamic> data =
-                                      snapshot.data!.docs[index].data();
-
-                                  return Padding(
-                                    padding: EdgeInsets.only(bottom: 2.h),
-                                    child: Material(
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.toNamed(Routes.LIST_KEBUTUHAN,
-                                              arguments: data);
-                                        },
-                                        child: Container(
-                                          // margin: EdgeInsets.only(left: 12, right: 12),
-                                          height: 11.h,
-                                          width: 304.w,
-                                          decoration: BoxDecoration(
-                                            color: randomBlue(),
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 0.5.w, bottom: 0.1.h),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  height: 8.h,
-                                                  width: 8.h,
-                                                  child: Center(
-                                                    child: Icon(
-                                                      PhosphorIcons
-                                                          .dotsThreeOutlineFill,
-                                                      size: 35,
-                                                      color:
-                                                          HexColor("#0B0C2B"),
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: 2.h),
+                                      child: Material(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.toNamed(Routes.LIST_KEBUTUHAN,
+                                                arguments: data);
+                                          },
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: 12, right: 12),
+                                            height: 11.h,
+                                            width: 304.w,
+                                            decoration: BoxDecoration(
+                                              color: randomBlue(),
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 0.5.w, bottom: 0.1.h),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    height: 8.h,
+                                                    width: 8.h,
+                                                    child: Center(
+                                                      child: Icon(
+                                                        PhosphorIcons
+                                                            .dotsThreeOutlineFill,
+                                                        size: 35,
+                                                        color:
+                                                            HexColor("#0B0C2B"),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 2.5.h,
-                                                          right: 2,
-                                                          left: 2),
-                                                      child: Text(data['nama'],
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 2.5.h,
+                                                                right: 2,
+                                                                left: 2),
+                                                        child: Text(
+                                                            data['nama'],
+                                                            style: TextStyle(
+                                                              fontSize: 21,
+                                                              color: white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            )),
+                                                      ),
+                                                      SizedBox(height: 1.5.h),
+                                                      Text(
+                                                          '${dateFormatterDefault.format(DateTime.parse(data['date']))}',
                                                           style: TextStyle(
-                                                            fontSize: 21,
+                                                            fontSize: 20,
                                                             color: white,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                                FontWeight.w400,
                                                           )),
-                                                    ),
-                                                    SizedBox(height: 1.5.h),
-                                                    Text(
-                                                        '${dateFormatterDefault.format(DateTime.parse(data['date']))}',
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: white,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        )),
-                                                  ],
-                                                ),
-                                                SizedBox(width: 2.w),
-                                                IconButton(
-                                                    enableFeedback: true,
-                                                    hoverColor: Colors.amber,
-                                                    onPressed: () {
-                                                      Get.toNamed(
-                                                          Routes.LIST_KEBUTUHAN,
-                                                          arguments: data);
-                                                    },
-                                                    icon: Icon(
-                                                      PhosphorIcons.caretRight,
-                                                      color: white,
-                                                    )),
-                                              ],
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 2.w),
+                                                  IconButton(
+                                                      enableFeedback: true,
+                                                      hoverColor: Colors.amber,
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            Routes
+                                                                .LIST_KEBUTUHAN,
+                                                            arguments: data);
+                                                      },
+                                                      icon: Icon(
+                                                        PhosphorIcons
+                                                            .caretRight,
+                                                        color: white,
+                                                      )),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                });
+                                    );
+                                  }),
+                            );
                           }),
                     ],
                   ));

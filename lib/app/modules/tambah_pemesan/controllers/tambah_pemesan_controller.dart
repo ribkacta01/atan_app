@@ -1,6 +1,9 @@
 import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -8,7 +11,12 @@ import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../../../../main.dart';
+import '../../../util/notif.dart';
+
 class TambahPemesanController extends GetxController {
+  final notifC = Get.put(NotificationAPI());
+
   final namaValidator = RequiredValidator(errorText: "Nama Tidak Boleh Kosong");
   final dateValidator = RequiredValidator(errorText: "Tanggal Harus Diisi");
   final tenggatValidator = RequiredValidator(errorText: "Tanggal Harus Diisi");
@@ -22,6 +30,7 @@ class TambahPemesanController extends GetxController {
   final tenggatKey = GlobalKey<FormState>().obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   final selectedDate = DateTime.now().obs;
   final dateFormatter = DateFormat('d MMMM yyyy', 'id-ID');
@@ -35,6 +44,7 @@ class TambahPemesanController extends GetxController {
   Future<void> addPemesan(String nama) async {
     try {
       CollectionReference perencanaan = firestore.collection("Perencanaan");
+
       await perencanaan
           .doc(nama +
               ' - ' +
@@ -44,6 +54,9 @@ class TambahPemesanController extends GetxController {
         'nama': nama,
         'tenggat': dateTenggat.value
       });
+
+      notifC.sendNotificationToTopic(
+          'user', 'Terdapat pemesan baru!', 'Pemesan Baru!');
 
       Get.dialog(Dialog(
           shape:
@@ -80,6 +93,7 @@ class TambahPemesanController extends GetxController {
                         borderRadius: BorderRadius.circular(11), color: white),
                     child: TextButton(
                         onPressed: () {
+                          Get.back();
                           Get.back();
                           Get.back();
                         },

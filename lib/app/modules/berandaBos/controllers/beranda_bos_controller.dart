@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,8 @@ class BerandaBosController extends GetxController {
             .where("Tanggal Pesan", isLessThan: formattedEndDate)
             .where("Tanggal Pesan", isGreaterThan: start!.toIso8601String())
             .where("Tanggal Pesan",
-                isLessThan: end.value.add(Duration(days: 1)).toIso8601String())
+                isLessThan:
+                    end.value.add(const Duration(days: 1)).toIso8601String())
             .snapshots();
       }
     });
@@ -57,10 +60,18 @@ class BerandaBosController extends GetxController {
     yield* firestore.collection("users").doc(email).snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> tugasPeg() async* {
-    yield* firestore
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasPegProses() {
+    return firestore
         .collection("Tugas")
-        .orderBy('Tanggal Pesan', descending: false)
+        .where('photo', isEqualTo: '')
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> tugasPegDone() {
+    return firestore
+        .collection("Tugas")
+        .where('photo', isNotEqualTo: '')
+        .orderBy("photo", descending: false)
         .snapshots();
   }
 

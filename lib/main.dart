@@ -1,5 +1,6 @@
 import 'package:atan_app/app/util/Error_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,26 +14,24 @@ import 'app/controller/auth_controller.dart';
 import 'app/modules/splash_screen/views/splash_screen_view.dart';
 import 'app/routes/app_pages.dart';
 import 'app/util/Loading.dart';
+import 'app/util/notif.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
 
-Future<void> initNotifications() async {
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings =
-      InitializationSettings(android: initializationSettingsAndroid);
-
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  print("Handling a background message: ${message.messageId}");
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await initNotifications();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await initializeDateFormatting('id_ID', null)
       .then((value) => runApp(AtanApp()));
 }
@@ -41,7 +40,6 @@ class AtanApp extends StatelessWidget {
   //const AtanApp({super.key});
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final authC = Get.put(AuthController());
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

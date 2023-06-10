@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "542959380849-kpqtsubbf467vpeubsq8tfr0eoi0pg56.apps.googleusercontent.com",
+          "client_id": "542959380849-60a9rn3q3phem356f1u4p310e4sdrrtl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "542959380849-kpqtsubbf467vpeubsq8tfr0eoi0pg56.apps.googleusercontent.com",
+              "client_id": "542959380849-60a9rn3q3phem356f1u4p310e4sdrrtl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "542959380849-ede3ivkvgv153ojgs76asuhg4cs8hnu0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.atanApp"
+              }
             }
           ]
         }
