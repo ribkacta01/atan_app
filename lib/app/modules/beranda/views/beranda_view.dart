@@ -100,192 +100,194 @@ class BerandaView extends GetView<BerandaController> {
                           return const Loading();
                         }
                         var dataTgs = snapshot.data!;
-                        return Scrollbar(
-                          thickness: 20,
-                          child: SingleChildScrollView(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 5, right: 5, top: 20),
-                                height: 65.h,
-                                width: 304.w,
-                                decoration: BoxDecoration(
-                                  color: HexColor("#BFC0D2"),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: dataTgs.docs.isEmpty
-                                    ? Center(
-                                        child: Text(
-                                          "Belum Ada Tugas yang Ditambahkan",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: bluePrimary,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      )
-                                    : Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "Segera Selesaikan Tugasmu!",
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: HexColor("#0B0C2B"),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
+                        return SingleChildScrollView(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 5, right: 5, top: 20),
+                              height: 65.h,
+                              width: 304.w,
+                              decoration: BoxDecoration(
+                                color: HexColor("#BFC0D2"),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: dataTgs.docs.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "Belum Ada Tugas yang Ditambahkan",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: bluePrimary,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Segera Selesaikan Tugasmu!",
+                                                style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: HexColor("#0B0C2B"),
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 5.h),
-                                            Scrollbar(
-                                              thumbVisibility: true,
-                                              thickness: 10,
-                                              child: SingleChildScrollView(
-                                                child: SizedBox(
-                                                  height: 50.h,
-                                                  child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const AlwaysScrollableScrollPhysics(),
-                                                    padding: EdgeInsets.only(
-                                                        top: 0.1.h,
-                                                        bottom: 0.1.h),
-                                                    itemCount: snapshot
-                                                        .data!.docs.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      Map<String, dynamic>
-                                                          listData = snapshot
-                                                              .data!.docs[index]
-                                                              .data();
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              textDirection:
-                                                                  TextDirection
-                                                                      .ltr,
-                                                              children: [
-                                                                Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Icon(
-                                                                          PhosphorIcons
-                                                                              .circleFill,
-                                                                          size:
-                                                                              6.sp,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          Scrollbar(
+                                            thumbVisibility: true,
+                                            thickness: 10,
+                                            child: SingleChildScrollView(
+                                              child: SizedBox(
+                                                height: 50.h,
+                                                child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const AlwaysScrollableScrollPhysics(),
+                                                  padding: EdgeInsets.only(
+                                                      top: 0.1.h,
+                                                      bottom: 0.1.h),
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    Map<String, dynamic>
+                                                        listData = snapshot
+                                                            .data!.docs[index]
+                                                            .data();
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .ltr,
+                                                            children: [
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Icon(
+                                                                        PhosphorIcons
+                                                                            .circleFill,
+                                                                        size: 6
+                                                                            .sp,
+                                                                        color:
+                                                                            bluePrimary,
+                                                                      ),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2.w),
+                                                                      Text(
+                                                                        "${listData['Nama Pemesan']}",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              20,
                                                                           color:
-                                                                              bluePrimary,
+                                                                              HexColor("#0B0C2B"),
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
                                                                         ),
-                                                                        SizedBox(
-                                                                            width:
-                                                                                2.w),
-                                                                        Text(
-                                                                          "${listData['Nama Pemesan']}",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                20,
-                                                                            color:
-                                                                                HexColor("#0B0C2B"),
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            1.h),
-                                                                    Text(
-                                                                      "Tenggat Pesanan : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: HexColor(
-                                                                            "#0B0C2B"),
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
                                                                       ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          1.h),
+                                                                  Text(
+                                                                    "Tenggat Pesanan : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      color: HexColor(
+                                                                          "#0B0C2B"),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
                                                                     ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            1.h),
-                                                                    Text(
-                                                                      "${listData['Keterangan']}",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: HexColor(
-                                                                            "#0B0C2B"),
-                                                                        fontWeight:
-                                                                            FontWeight.w400,
-                                                                      ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          1.h),
+                                                                  Text(
+                                                                    "${listData['Keterangan']}",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      color: HexColor(
+                                                                          "#0B0C2B"),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                IconButton(
-                                                                    onPressed: c
-                                                                            .disabledIndexes
-                                                                            .contains(index)
-                                                                        ? () {}
-                                                                        : () {
-                                                                            c.uploadImage('${listData['id']}');
-                                                                            c.disableIconButton(index);
-                                                                          },
-                                                                    icon: Icon(
-                                                                      c.disabledIndexes.contains(
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              IconButton(
+                                                                  onPressed: c
+                                                                          .disabledIndexes
+                                                                          .contains(
                                                                               index)
-                                                                          ? PhosphorIcons
-                                                                              .cameraSlash
-                                                                          : PhosphorIcons
-                                                                              .camera,
-                                                                      size: 25,
-                                                                      color: c.disabledIndexes
-                                                                              .contains(index)
-                                                                          ? grey2
-                                                                          : bluePrimary,
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
+                                                                      ? () {}
+                                                                      : () {
+                                                                          c.uploadImage(
+                                                                              '${listData['id']}');
+                                                                          c.disableIconButton(
+                                                                              index);
+                                                                        },
+                                                                  icon: Icon(
+                                                                    c.disabledIndexes.contains(
+                                                                            index)
+                                                                        ? PhosphorIcons
+                                                                            .cameraSlash
+                                                                        : PhosphorIcons
+                                                                            .camera,
+                                                                    size: 25,
+                                                                    color: c.disabledIndexes
+                                                                            .contains(index)
+                                                                        ? grey2
+                                                                        : bluePrimary,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ))),
-                          ),
+                                          ),
+                                        ],
+                                      ))),
                         );
                       }),
                   Row(

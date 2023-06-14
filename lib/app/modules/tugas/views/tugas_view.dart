@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -95,17 +96,21 @@ class TugasView extends GetView<TugasController> {
                         var dataFoto = snapshot.data!;
                         if (dataFoto.docs.isEmpty) {
                           return Padding(
-                            padding: EdgeInsets.only(top: 33.h),
-                            child: Center(
-                              child: Text(
-                                "Belum Ada Tugas yang Harus di Unggah",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: redError,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          );
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Lottie.asset('assets/animation/noData.json',
+                                        height: 155),
+                                    // SizedBox(height: 2.h),
+                                    Text("Belum Ada Tugas yang Diunggah",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: grey1,
+                                        ))
+                                  ],
+                                ),
+                              ));
                         }
                         return ListView.builder(
                             shrinkWrap: true,

@@ -100,7 +100,7 @@ class AuthController extends GetxController {
 
       final checkuser = await users.doc(emailUser).get();
 
-      if (checkuser.data() == null) {
+      if (!checkuser.exists) {
         users.doc(emailUser).set({
           "uid": userCredential!.user!.uid,
           "name": _currentUser!.displayName,
@@ -125,7 +125,7 @@ class AuthController extends GetxController {
       userData(UserModel(
           uid: userCredential!.user!.uid,
           name: _currentUser!.displayName,
-          email: _currentUser!.email,
+          email: checkUserData['email'],
           photoUrl: _currentUser!.photoUrl,
           roles: checkUserData['roles'],
           creationTime:

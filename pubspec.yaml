@@ -26,6 +26,7 @@ dependencies:
   get: 4.6.5
   google_sign_in: ^5.4.4
   hexcolor: ^3.0.1
+  icons_launcher: ^2.1.1
   icons_plus: ^4.0.0
   image_picker: ^0.8.6+4
   lottie: ^2.4.0
@@ -35,10 +36,18 @@ dependencies:
   sizer: ^2.0.15
   syncfusion_flutter_datepicker: ^20.4.52
 
+  
+
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+icons_launcher:
+  image_path: "assets/images/logo.png"
+  platforms:
+    android:
+      enable: true
 
 flutter:
   assets:
