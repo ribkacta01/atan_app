@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -36,18 +37,14 @@ class TambahItemController extends GetxController {
       Get.dialog(Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          backgroundColor: bluePrimary,
+          backgroundColor: grey1,
           child: Container(
             width: 350,
             height: 336,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  PhosphorIcons.checkCircleFill,
-                  color: white,
-                  size: 110,
-                ),
+                Lottie.asset('assets/animation/check.json', height: 140),
                 SizedBox(
                   height: 3.h,
                 ),
@@ -55,9 +52,9 @@ class TambahItemController extends GetxController {
                   'Item Ditambahkan!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: white,
-                    fontSize: 25,
-                  ),
+                      color: bluePrimary,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 3.h,
@@ -76,7 +73,10 @@ class TambahItemController extends GetxController {
                               const EdgeInsets.only(top: 11.0, bottom: 11.0),
                           child: Text(
                             'OK',
-                            style: TextStyle(fontSize: 18, color: bluePrimary),
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: bluePrimary),
                           ),
                         )))
               ],
@@ -85,17 +85,24 @@ class TambahItemController extends GetxController {
     } catch (e) {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: bluePrimary,
+        backgroundColor: grey1,
         child: Container(
           width: 193.93,
           height: 194.73,
           child: Column(
             children: [
-              Icon(
-                PhosphorIcons.xCircle,
-                color: white,
+              Lottie.asset('assets/animation/failed.json', height: 140),
+              SizedBox(
+                height: 3.h,
               ),
-              Text("$e")
+              Text(
+                'Gagal Menambahkan Item',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: bluePrimary,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         ),

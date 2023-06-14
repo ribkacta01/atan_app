@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -37,6 +38,8 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(
+                decelerationRate: ScrollDecelerationRate.normal),
             padding: EdgeInsets.only(
               left: 20,
               right: 20,
@@ -129,10 +132,30 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                 ConnectionState.waiting) {
                               return Loading();
                             }
+                            if (snapshot.data == null ||
+                                snapshot.data!.docs.length == 0) {
+                              return Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Lottie.asset(
+                                            'assets/animation/search.json',
+                                            height: 130),
+                                        // SizedBox(height: 2.h),
+                                        Text("Pencarian Tidak Ditemukan",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: grey1,
+                                            ))
+                                      ],
+                                    ),
+                                  ));
+                            }
 
                             return ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: BouncingScrollPhysics(),
                                 padding: EdgeInsets.only(top: 2, bottom: 7),
                                 itemCount: snapshot.data!.docs.length,
                                 itemBuilder: (context, index) {
@@ -140,8 +163,29 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                   //     controller.searchResults[index];
                                   Map<String, dynamic> data =
                                       snapshot.data!.docs[index].data();
+
                                   var defaultImage =
                                       "https://ui-avatars.com/api/?name=${data['name']}&background=0B0C2B&color=BFC0D2&font-size=0.33";
+
+                                  if (data.length == 0) {
+                                    return Padding(
+                                        padding: EdgeInsets.only(top: 20.h),
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              Lottie.asset(
+                                                  'assets/animation/noData.json',
+                                                  height: 155),
+                                              // SizedBox(height: 2.h),
+                                              Text("Belum Ada Data Pegawai",
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: grey1,
+                                                  ))
+                                            ],
+                                          ),
+                                        ));
+                                  }
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: 2.h),
                                     child: Material(

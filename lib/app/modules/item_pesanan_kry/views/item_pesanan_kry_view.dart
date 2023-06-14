@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -128,6 +129,27 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                   ConnectionState.waiting) {
                                 return Loading();
                               }
+                              if (snapshot.data == null ||
+                                  snapshot.data!.docs.length == 0) {
+                                return Padding(
+                                    padding: EdgeInsets.only(top: 20.h),
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          Lottie.asset(
+                                              'assets/animation/noData.json',
+                                              height: 155),
+                                          // SizedBox(height: 2.h),
+                                          Text(
+                                              "Belum Ada Item yang Ditambahkan",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: grey1,
+                                              ))
+                                        ],
+                                      ),
+                                    ));
+                              }
                               return ListView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -138,11 +160,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                         snapshot.data!.docs[index].data();
                                     var docNameItem =
                                         '${data['Nama Barang']} - ${data['Keterangan']}';
-                                    if (docNameItem == '') {
-                                      return Center(
-                                        child: Text('Data Kosong'),
-                                      );
-                                    }
+
                                     return Padding(
                                       padding: EdgeInsets.only(bottom: 2.h),
                                       child: Material(

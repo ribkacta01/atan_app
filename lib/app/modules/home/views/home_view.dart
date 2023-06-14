@@ -17,7 +17,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../../util/notif.dart';
 import '../../keranjangBos/views/keranjang_bos_view.dart';
 import '../../tugas/views/tugas_view.dart';
 import '../../tugasBos/views/tugas_bos_view.dart';
@@ -28,7 +27,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
-    final notifC = Get.put(NotificationService());
+
     var pages = <Widget>[
       BerandaView(),
       KeranjangView(),
@@ -44,70 +43,78 @@ class HomeView extends GetView<HomeController> {
       ProfilBosView()
     ];
 
-    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: authC.getUserRoles(),
+    return FutureBuilder(
+        future: Future.delayed(Duration(seconds: 2)),
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
             return const Loading();
           }
-          if (snap.hasData) {
-            var roles = snap.data!.get("roles");
-            var divisi = snap.data!.get("divisi");
+          return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              stream: authC.getUserRoles(),
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return const Loading();
+                }
+                if (snap.hasData) {
+                  var roles = snap.data!.get("roles");
+                  var divisi = snap.data!.get("divisi");
 
-            log("$roles");
-            if (roles != "pemilik_usaha") {
-              notifC.subsTopicRoles(roles);
-              notifC.subsTopicDivisi(divisi);
-              return Scaffold(
-                body: Obx(() => pages[controller.currentIndex.value]),
-                bottomNavigationBar: Container(
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(1),
-                        blurRadius: 7,
-                        offset: Offset(0, 4))
-                  ]),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      navBarItem(context, PhosphorIcons.houseBold, 0),
-                      navBarItem(
-                          context, PhosphorIcons.shoppingCartSimpleBold, 1),
-                      navBarItem(context, PhosphorIcons.notePencilBold, 2),
-                      navBarItem(context, PhosphorIcons.userBold, 3),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              notifC.subsTopicRoles(roles);
-              notifC.subsTopicDivisi(divisi);
-              return Scaffold(
-                body: Obx(() => pages2[controller.currentIndex.value]),
-                bottomNavigationBar: Container(
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(1),
-                        blurRadius: 7,
-                        offset: Offset(0, 4))
-                  ]),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      navBarItem(context, PhosphorIcons.houseBold, 0),
-                      navBarItem(
-                          context, PhosphorIcons.shoppingCartSimpleBold, 1),
-                      navBarItem(context, PhosphorIcons.notePencilBold, 2),
-                      navBarItem(context, PhosphorIcons.usersThreeBold, 3),
-                      navBarItem(context, PhosphorIcons.userBold, 4),
-                    ],
-                  ),
-                ),
-              );
-            }
-          } else {
-            return Loading();
-          }
+                  log("$roles");
+                  if (roles != "pemilik_usaha") {
+                    return Scaffold(
+                      body: Obx(() => pages[controller.currentIndex.value]),
+                      bottomNavigationBar: Container(
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(1),
+                              blurRadius: 7,
+                              offset: Offset(0, 4))
+                        ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            navBarItem(context, PhosphorIcons.houseBold, 0),
+                            navBarItem(context,
+                                PhosphorIcons.shoppingCartSimpleBold, 1),
+                            navBarItem(
+                                context, PhosphorIcons.notePencilBold, 2),
+                            navBarItem(context, PhosphorIcons.userBold, 3),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Scaffold(
+                      body: Obx(() => pages2[controller.currentIndex.value]),
+                      bottomNavigationBar: Container(
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(1),
+                              blurRadius: 7,
+                              offset: Offset(0, 4))
+                        ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            navBarItem(context, PhosphorIcons.houseBold, 0),
+                            navBarItem(context,
+                                PhosphorIcons.shoppingCartSimpleBold, 1),
+                            navBarItem(
+                                context, PhosphorIcons.notePencilBold, 2),
+                            navBarItem(
+                                context, PhosphorIcons.usersThreeBold, 3),
+                            navBarItem(context, PhosphorIcons.userBold, 4),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                } else {
+                  return Loading();
+                }
+              });
         });
   }
 

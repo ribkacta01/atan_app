@@ -2,8 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:sizer/sizer.dart';
+
+import '../../../util/color.dart';
 
 class KeranjangBosController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -76,6 +81,111 @@ class KeranjangBosController extends GetxController {
   RxList<Map<String, dynamic>> searchResults = <Map<String, dynamic>>[].obs;
 
   var isSearching = false.obs;
+
+  Future<void> delData(String docName) async {
+    Get.dialog(Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: grey1,
+        child: Container(
+          width: 350,
+          height: 336,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/animation/alert.json', height: 140),
+              SizedBox(
+                height: 3.h,
+              ),
+              Text(
+                'Yakin Ingin Menghapus Data?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: bluePrimary,
+                  fontSize: 25,
+                ),
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: 20.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(11),
+                          color: white),
+                      child: TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: Text(
+                              'BATAL',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w800,
+                                  color: bluePrimary),
+                            ),
+                          ))),
+                  Container(
+                      width: 20.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(11),
+                          color: grey1),
+                      child: TextButton(
+                          onPressed: () async {
+                            CollectionReference users =
+                                firestore.collection("Perencanaan");
+                            await users.doc(docName).delete();
+                            await Get.dialog(Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              backgroundColor: grey1,
+                              child: Container(
+                                width: 350,
+                                height: 336,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Lottie.asset('assets/animation/check.json',
+                                        height: 140),
+                                    SizedBox(height: 3.h),
+                                    Text(
+                                      'Data Berhasil Dihapus',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: bluePrimary,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
+                            Get.back();
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            child: Text(
+                              'HAPUS',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w800,
+                                  color: bluePrimary),
+                            ),
+                          ))),
+                ],
+              )
+            ],
+          ),
+        )));
+  }
 
   @override
   void onInit() {

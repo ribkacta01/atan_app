@@ -4,6 +4,7 @@ import 'package:atan_app/app/modules/tugas/controllers/tugas_controller.dart';
 import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,20 +25,20 @@ class BerandaView extends GetView<BerandaController> {
     final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 6,
-        ),
-        child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            stream: berandaC.beranda(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Loading();
-              }
-              var data = snapshot.data!;
-              return Column(
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          stream: berandaC.beranda(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Loading();
+            }
+            var data = snapshot.data!;
+            return SingleChildScrollView(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 6,
+              ),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 textDirection: TextDirection.ltr,
@@ -336,15 +337,22 @@ class BerandaView extends GetView<BerandaController> {
 
                         var dataRiwayat = snapshot.data!;
                         if (dataRiwayat.docs.isEmpty) {
-                          return Center(
-                            child: Text(
-                              "Belum Ada Tugas Selesai",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: redError,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          );
+                          return Padding(
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Lottie.asset('assets/animation/noData.json',
+                                        height: 155),
+                                    // SizedBox(height: 2.h),
+                                    Text("Belum Ada Tugas Selesai",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: grey1,
+                                        ))
+                                  ],
+                                ),
+                              ));
                         }
                         return ListView.builder(
                             shrinkWrap: true,
@@ -415,9 +423,9 @@ class BerandaView extends GetView<BerandaController> {
                             });
                       }),
                 ],
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     );
   }
 }

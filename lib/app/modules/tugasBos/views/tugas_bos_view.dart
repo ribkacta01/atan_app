@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -36,7 +37,7 @@ class TugasBosView extends GetView<TugasBosController> {
                 Get.toNamed(Routes.TAMBAH_TUGAS);
               },
               backgroundColor: HexColor("#0B0C2B"),
-              child: Icon(PhosphorIcons.plus),
+              child: const Icon(PhosphorIcons.plus),
             ),
           ),
         ),
@@ -45,11 +46,13 @@ class TugasBosView extends GetView<TugasBosController> {
             stream: home.berandaBos(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Loading();
+                return const Loading();
               }
               var data = snapshot.data!;
               return SingleChildScrollView(
-                  padding: EdgeInsets.only(
+                  physics: const BouncingScrollPhysics(
+                      decelerationRate: ScrollDecelerationRate.normal),
+                  padding: const EdgeInsets.only(
                     left: 20,
                     right: 20,
                     top: 6,
@@ -122,6 +125,11 @@ class TugasBosView extends GetView<TugasBosController> {
                                     height: 40.h,
                                     child: SfDateRangePicker(
                                         view: DateRangePickerView.year,
+                                        selectionColor: bluePrimary,
+                                        rangeSelectionColor:
+                                            bluePrimary.withOpacity(0.2),
+                                        startRangeSelectionColor: bluePrimary,
+                                        endRangeSelectionColor: bluePrimary,
                                         selectionMode:
                                             DateRangePickerSelectionMode.range,
                                         showActionButtons: true,
@@ -141,10 +149,10 @@ class TugasBosView extends GetView<TugasBosController> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20)),
-                                                backgroundColor: bluePrimary,
+                                                backgroundColor: grey1,
                                                 child: Container(
                                                   width: 350,
-                                                  height: 336,
+                                                  height: 365,
                                                   child: Column(
                                                     children: [
                                                       Padding(
@@ -152,12 +160,9 @@ class TugasBosView extends GetView<TugasBosController> {
                                                             const EdgeInsets
                                                                 .only(top: 20),
                                                         child: Center(
-                                                          child: Icon(
-                                                            PhosphorIcons
-                                                                .xCircle,
-                                                            color: white,
-                                                            size: 110,
-                                                          ),
+                                                          child: Lottie.asset(
+                                                              'assets/animation/failed.json',
+                                                              height: 140),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -167,7 +172,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         "Terjadi Kesalahan!",
                                                         style: TextStyle(
                                                           fontSize: 30,
-                                                          color: white,
+                                                          color: bluePrimary,
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -177,7 +182,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
                                                         style: TextStyle(
                                                           fontSize: 20,
-                                                          color: white,
+                                                          color: bluePrimary,
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -194,7 +199,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20)),
-                                              backgroundColor: bluePrimary,
+                                              backgroundColor: grey1,
                                               child: Container(
                                                 width: 350,
                                                 height: 336,
@@ -204,11 +209,9 @@ class TugasBosView extends GetView<TugasBosController> {
                                                       padding:
                                                           const EdgeInsets.only(
                                                               top: 20),
-                                                      child: Icon(
-                                                        PhosphorIcons.xCircle,
-                                                        color: white,
-                                                        size: 110,
-                                                      ),
+                                                      child: Lottie.asset(
+                                                          'assets/animation/failed.json',
+                                                          height: 140),
                                                     ),
                                                     SizedBox(
                                                       height: 3.h,
@@ -218,7 +221,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         "Terjadi Kesalahan!",
                                                         style: TextStyle(
                                                           fontSize: 30,
-                                                          color: white,
+                                                          color: bluePrimary,
                                                         ),
                                                       ),
                                                     ),
@@ -230,7 +233,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         "Tanggal tidak dipilih",
                                                         style: TextStyle(
                                                           fontSize: 20,
-                                                          color: white,
+                                                          color: bluePrimary,
                                                         ),
                                                       ),
                                                     ),
@@ -253,6 +256,8 @@ class TugasBosView extends GetView<TugasBosController> {
                         ],
                       ),
                       SingleChildScrollView(
+                        physics: BouncingScrollPhysics(
+                            decelerationRate: ScrollDecelerationRate.normal),
                         child: Container(
                           height: 70.h,
                           child: ContainedTabBarView(
@@ -290,14 +295,21 @@ class TugasBosView extends GetView<TugasBosController> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return Center(
-                                        child: CircularProgressIndicator(),
-                                      );
+                                      return Loading();
                                     }
                                     if (snapshot.data?.length == 0 ||
                                         snapshot.data == null) {
-                                      return Center(
-                                        child: Text('KOSONGGGGG'),
+                                      return Padding(
+                                        padding: EdgeInsets.only(top: 33.h),
+                                        child: Center(
+                                          child: Text(
+                                            "Belum Ada Tugas",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: redError,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
                                       );
                                     }
 
@@ -312,24 +324,16 @@ class TugasBosView extends GetView<TugasBosController> {
                                         () => ListView.builder(
                                             shrinkWrap: true,
                                             physics:
-                                                NeverScrollableScrollPhysics(),
+                                                const BouncingScrollPhysics(
+                                                    decelerationRate:
+                                                        ScrollDecelerationRate
+                                                            .normal),
                                             padding: EdgeInsets.only(top: 0.h),
                                             itemCount: tugasC
                                                     .filteredData.isEmpty
                                                 ? uniqueNames.length
                                                 : tugasC.filteredData.length,
                                             itemBuilder: (context, index) {
-                                              var data = tugasC
-                                                      .filteredData.isEmpty
-                                                  ? tugasC.allData[index]
-                                                      .data()!
-                                                  : tugasC.filteredData[index]
-                                                      .data()!;
-                                              if (data.length == 0) {
-                                                return Center(
-                                                  child: Text('KOSONGGGGG'),
-                                                );
-                                              }
                                               final name =
                                                   uniqueNames.elementAt(index);
                                               final doc = snapshot.data!
@@ -346,12 +350,13 @@ class TugasBosView extends GetView<TugasBosController> {
                                                   },
                                                   child: Obx(
                                                     () => AnimatedContainer(
-                                                      duration: Duration(
+                                                      duration: const Duration(
                                                           milliseconds: 100),
-                                                      margin: EdgeInsets.only(
-                                                          left: 5,
-                                                          right: 5,
-                                                          top: 20),
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              left: 5,
+                                                              right: 5,
+                                                              top: 20),
                                                       height: tugasC.isChanged
                                                                   .value ==
                                                               index
@@ -418,7 +423,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                     child: Text(
                                                                         "${doc['Status']}",
                                                                         style:
-                                                                            TextStyle(
+                                                                            const TextStyle(
                                                                           fontSize:
                                                                               21,
                                                                           color:
@@ -445,7 +450,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                     CrossAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  SizedBox(
+                                                                  const SizedBox(
                                                                     height: 40,
                                                                   ),
                                                                   TextButton(
@@ -483,14 +488,14 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                               snapshot) {
                                                                         if (snapshot.connectionState ==
                                                                             ConnectionState.waiting) {
-                                                                          return Loading();
+                                                                          return const Loading();
                                                                         }
                                                                         var dataTgs =
                                                                             snapshot.data!;
                                                                         return SingleChildScrollView(
                                                                           child: ListView.builder(
                                                                               shrinkWrap: true,
-                                                                              physics: AlwaysScrollableScrollPhysics(),
+                                                                              physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.normal),
                                                                               padding: EdgeInsets.only(top: 0.1.h, bottom: 0.1.h),
                                                                               itemCount: snapshot.data!.docs.length,
                                                                               itemBuilder: (context, index) {
@@ -555,13 +560,13 @@ class TugasBosView extends GetView<TugasBosController> {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return Center(
+                                    return const Center(
                                       child: CircularProgressIndicator(),
                                     );
                                   }
                                   if (snapshot.data?.length == 0 ||
                                       snapshot.data == null) {
-                                    return Center(
+                                    return const Center(
                                       child: Text('KOSONGGGGG'),
                                     );
                                   }
@@ -569,7 +574,9 @@ class TugasBosView extends GetView<TugasBosController> {
 
                                   return Obx(
                                     () => ListView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics: const BouncingScrollPhysics(
+                                            decelerationRate:
+                                                ScrollDecelerationRate.normal),
                                         padding: EdgeInsets.only(top: 0.h),
                                         itemCount: tugasC.filteredData.isEmpty
                                             ? tugasC.allData.length
@@ -581,14 +588,16 @@ class TugasBosView extends GetView<TugasBosController> {
                                               : tugasC.filteredData[index]
                                                   .data()!;
                                           if (listSelesai.length == 0) {
-                                            return Center(
+                                            return const Center(
                                               child: Text('KOSONGGGGG'),
                                             );
                                           }
 
                                           return Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: 0.1.h),
                                               child: Container(
-                                                margin: EdgeInsets.only(
+                                                margin: const EdgeInsets.only(
                                                     left: 5, right: 5, top: 20),
                                                 height: 10.h,
                                                 width: 304.w,
@@ -652,9 +661,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                              padding: EdgeInsets.only(
-                                                  bottom: 0.1.h));
+                                              ));
                                         }),
                                   );
                                 },

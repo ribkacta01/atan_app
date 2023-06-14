@@ -257,11 +257,16 @@ class KeranjangView extends GetView<KeranjangController> {
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (snapshot.data?.length == 0 ||
-                              snapshot.data == null) {
-                            return Center(
-                              child: Text('KOSONGGGGG'),
-                            );
+                          if (snapshot.data == null ||
+                              snapshot.data!.length == 0) {
+                            return Padding(
+                                padding: EdgeInsets.only(top: 33.h),
+                                child: Center(
+                                    child: Text("Belum Ada Pesanan",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: redError,
+                                            fontWeight: FontWeight.w500))));
                           }
 
                           cartC.allData.assignAll(snapshot.data!);
@@ -278,11 +283,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                   var data = cartC.filteredData.isEmpty
                                       ? cartC.allData[index].data()!
                                       : cartC.filteredData[index].data()!;
-                                  if (data.length == 0) {
-                                    return Center(
-                                      child: Text('KOSONGGGGG'),
-                                    );
-                                  }
+
                                   return Padding(
                                     padding: EdgeInsets.only(bottom: 2.h),
                                     child: Material(
@@ -319,13 +320,10 @@ class KeranjangView extends GetView<KeranjangController> {
                                                   width: 8.h,
                                                   child: Center(
                                                     child: IconButton(
-                                                      onPressed: () {
-                                                        cartC.delData(
-                                                            '${data['nama']} - ${data['date']}');
-                                                      },
+                                                      onPressed: () {},
                                                       icon: Icon(
                                                           PhosphorIcons
-                                                              .trashSimple,
+                                                              .dotsThreeOutlineFill,
                                                           size: 35,
                                                           color: bluePrimary),
                                                     ),

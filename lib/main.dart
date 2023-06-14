@@ -11,32 +11,24 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
 
 import 'app/controller/auth_controller.dart';
+import 'app/controller/fcm_controller.dart';
 import 'app/modules/splash_screen/views/splash_screen_view.dart';
 import 'app/routes/app_pages.dart';
 import 'app/util/Loading.dart';
-import 'app/util/notif.dart';
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await initializeDateFormatting('id_ID', null)
       .then((value) => runApp(AtanApp()));
 }
 
 class AtanApp extends StatelessWidget {
+  final FCMController fcmController = FCMController();
   //const AtanApp({super.key});
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final authC = Get.put(AuthController());
@@ -66,6 +58,9 @@ class AtanApp extends StatelessWidget {
                                   ? Routes.HOME
                                   : Routes.LOGIN,
                               getPages: AppPages.routes,
+                              initialBinding: BindingsBuilder(() {
+                                Get.put(fcmController);
+                              }),
                             ),
                           ));
                     } else {
@@ -78,7 +73,7 @@ class AtanApp extends StatelessWidget {
                   });
             });
           }
-          return Loading();
+          return const Loading();
         });
   }
 }

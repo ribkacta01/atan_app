@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,6 +25,8 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(
+                decelerationRate: ScrollDecelerationRate.normal),
             padding: EdgeInsets.only(
               left: 20,
               right: 20,
@@ -33,7 +36,9 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child:
+                            CircularProgressIndicator(color: Colors.blueGrey));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -114,9 +119,32 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                   ConnectionState.waiting) {
                                 return Loading();
                               }
+                              if (snapshot.data == null ||
+                                  snapshot.data!.docs.length == 0) {
+                                return Padding(
+                                    padding: EdgeInsets.only(top: 20.h),
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          Lottie.asset(
+                                              'assets/animation/noData.json',
+                                              height: 155),
+                                          // SizedBox(height: 2.h),
+                                          Text(
+                                              "Belum Ada Item yang Ditambahkan",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: grey1,
+                                              ))
+                                        ],
+                                      ),
+                                    ));
+                              }
                               return ListView.builder(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: BouncingScrollPhysics(
+                                      decelerationRate:
+                                          ScrollDecelerationRate.normal),
                                   padding: EdgeInsets.only(top: 2, bottom: 7),
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
@@ -124,12 +152,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                         snapshot.data!.docs[index].data();
                                     var docNameItem =
                                         '${data['Nama Barang']} - ${data['Keterangan']}';
-                                    if (snapshot.data == null ||
-                                        snapshot.data!.docs.length == 0) {
-                                      return Center(
-                                        child: Text('Data Kosong'),
-                                      );
-                                    }
+
                                     return Padding(
                                       padding: EdgeInsets.only(bottom: 2.h),
                                       child: Material(

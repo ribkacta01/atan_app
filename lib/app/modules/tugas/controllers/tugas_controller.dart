@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:path/path.dart' as path;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -62,18 +63,14 @@ class TugasController extends GetxController {
         Get.dialog(Dialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            backgroundColor: bluePrimary,
+            backgroundColor: grey1,
             child: Container(
               width: 350,
               height: 336,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    PhosphorIcons.checkCircleFill,
-                    color: white,
-                    size: 110,
-                  ),
+                  Lottie.asset('assets/animation/check.json', height: 140),
                   SizedBox(
                     height: 3.h,
                   ),
@@ -81,9 +78,9 @@ class TugasController extends GetxController {
                     'Foto Berhasil Diunggah!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: white,
-                      fontSize: 25,
-                    ),
+                        color: bluePrimary,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
                     height: 3.h,
@@ -103,16 +100,57 @@ class TugasController extends GetxController {
                                 const EdgeInsets.only(top: 11.0, bottom: 11.0),
                             child: Text(
                               'OK',
-                              style:
-                                  TextStyle(fontSize: 18, color: bluePrimary),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: bluePrimary),
                             ),
                           )))
                 ],
               ),
             )));
       } catch (e) {
-        Get.snackbar('Error', 'Gagal mengupload foto');
-        print(e);
+        Get.dialog(Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: grey1,
+          child: Container(
+            width: 350,
+            height: 336,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child:
+                      Lottie.asset('assets/animation/failed.json', height: 140),
+                ),
+                SizedBox(
+                  height: 3.h,
+                ),
+                Text(
+                  "Terjadi Kesalahan!",
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: bluePrimary,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                Text(
+                  "Tidak Dapat Mengunggah Foto",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: bluePrimary,
+                  ),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+              ],
+            ),
+          ),
+        ));
       }
     }
   }

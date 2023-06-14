@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, unused_local_variable
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable, unnecessary_overrides
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

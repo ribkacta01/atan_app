@@ -6,9 +6,11 @@ environment:
   sdk: '>=2.17.5 <3.0.0'
 
 dependencies:
+  asn1lib: ^1.4.0
   autocomplete_textfield: ^2.0.1
   cloud_firestore: ^4.3.1
   contained_tab_bar_view: ^0.8.0
+  crypto: ^3.0.1
   cupertino_icons: ^1.0.2
   dio: ^5.2.0+1
   dropdown_search: ^5.0.3
@@ -26,7 +28,9 @@ dependencies:
   hexcolor: ^3.0.1
   icons_plus: ^4.0.0
   image_picker: ^0.8.6+4
+  lottie: ^2.4.0
   phosphor_flutter: ^1.4.0
+  pointycastle: ^3.2.0
   rxdart: ^0.27.7
   sizer: ^2.0.15
   syncfusion_flutter_datepicker: ^20.4.52
@@ -39,5 +43,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/animation/
     - assets/service_account.json
   uses-material-design: true

@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -144,18 +145,14 @@ class AuthController extends GetxController {
         Get.dialog(Dialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            backgroundColor: white,
+            backgroundColor: grey1,
             child: SizedBox(
               width: 350,
-              height: 336,
+              height: 365,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    PhosphorIcons.xCircleFill,
-                    color: bluePrimary,
-                    size: 110,
-                  ),
+                  Lottie.asset('assets/animation/failed.json', height: 140),
                   SizedBox(
                     height: 3.h,
                   ),
@@ -196,7 +193,7 @@ class AuthController extends GetxController {
                       width: 15.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(11),
-                          color: white),
+                          color: grey1),
                       child: TextButton(
                           onPressed: () {
                             Get.back();
