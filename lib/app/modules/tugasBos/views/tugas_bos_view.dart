@@ -1,4 +1,5 @@
 import 'package:atan_app/app/routes/app_pages.dart';
+import 'package:atan_app/app/util/string.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../controller/auth_controller.dart';
 import '../../../util/Loading.dart';
 import '../../../util/color.dart';
+import '../../../util/notif.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/tugas_bos_controller.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -25,6 +27,7 @@ class TugasBosView extends GetView<TugasBosController> {
     final authC = Get.put(AuthController());
     tugasC.filteredData.clear();
     final home = Get.put(BerandaBosController());
+    final notifC = Get.put(NotificationController());
     final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
 
     return Scaffold(
@@ -471,6 +474,10 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                       tugasC.editStatus(
                                                                           doc['id'],
                                                                           'Selesai');
+                                                                      notifC.sendNotificationToAllUser(
+                                                                          '$tugasSelesaiTitle dari Pesanan ${doc['Nama Pemesan']}',
+                                                                          tugasSelesaiMessage,
+                                                                          berandaView);
                                                                     },
                                                                   ),
                                                                   SizedBox(

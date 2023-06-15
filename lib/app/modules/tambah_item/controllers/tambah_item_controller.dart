@@ -1,3 +1,4 @@
+import 'package:atan_app/app/util/string.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,11 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
+import '../../../util/notif.dart';
 
 class TambahItemController extends GetxController {
+  final notifC = Get.put(NotificationController());
+
   final namaValidator = RequiredValidator(errorText: "Nama Tidak Boleh Kosong");
   final jmlValidator = RequiredValidator(errorText: "Jumlah Harus Diisi");
   final ketValidator = RequiredValidator(errorText: "Keterangan Harus Diisi");
@@ -33,6 +37,9 @@ class TambahItemController extends GetxController {
           .collection('Kebutuhan');
       await perencanaan.doc(nama + ' - ' + ket).set(
           {'Nama Barang': nama, 'Jumlah Barang': jumlah, 'Keterangan': ket});
+
+      notifC.sendNotificationToAdmin(
+          tambahItemTitle, tambahItemMessage, keranjangBosView);
 
       Get.dialog(Dialog(
           shape:

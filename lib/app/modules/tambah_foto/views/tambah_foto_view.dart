@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:atan_app/app/modules/berandaBos/controllers/beranda_bos_controller.dart';
 import 'package:atan_app/app/modules/tugas/controllers/tugas_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +10,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/Loading.dart';
+import '../../../util/notif.dart';
+import '../../../util/string.dart';
 import '../controllers/tambah_foto_controller.dart';
 
 class TambahFotoView extends GetView<TambahFotoController> {
@@ -20,7 +21,7 @@ class TambahFotoView extends GetView<TambahFotoController> {
     var doc = Get.arguments;
     final c = Get.put(TugasController());
     final home = Get.put(BerandaBosController());
-    final authC = Get.put(AuthController());
+    final notifC = Get.put(NotificationController());
     final tambahc = Get.put(TambahFotoController());
     final filePath = Get.find<TugasController>().filePath.value;
     return Scaffold(
@@ -38,6 +39,7 @@ class TambahFotoView extends GetView<TambahFotoController> {
                   return Loading();
                 }
                 var data = snapshot.data!;
+                var divisi = data.get('divisi');
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,6 +154,27 @@ class TambahFotoView extends GetView<TambahFotoController> {
                               if (tambahc.ketKey.value.currentState!
                                   .validate()) {
                                 c.simpanFoto(doc, tambahc.ketEdit.text);
+                                if (divisi == jahit) {
+                                  notifC.sendNotificationToAdmin(
+                                      tambahFotoJahitTitle,
+                                      tambahFotoJahitMessage,
+                                      berandaView);
+                                } else if (divisi == cetak) {
+                                  notifC.sendNotificationToAdmin(
+                                      tambahFotoCetakTitle,
+                                      tambahFotoCetakMessage,
+                                      berandaView);
+                                } else if (divisi == desain) {
+                                  notifC.sendNotificationToAdmin(
+                                      tambahFotoDesainTitle,
+                                      tambahFotoDesainkMessage,
+                                      berandaView);
+                                } else if (divisi == qapacking) {
+                                  notifC.sendNotificationToAdmin(
+                                      tambahFotoQAPAckingTitle,
+                                      tambahFotoQAPAckingkMessage,
+                                      berandaView);
+                                }
                               }
                             },
                             child: Text(

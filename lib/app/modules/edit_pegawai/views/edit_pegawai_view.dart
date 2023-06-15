@@ -353,10 +353,10 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                                   editpgC.emailKey.value.currentState!
                                       .validate()) {
                                 editpgC.editPeg(
-                                  indexData['email'],
-                                  editpgC.namaEdit.text,
-                                  editpgC.emailEdit.text,
-                                );
+                                    indexData['email'],
+                                    editpgC.namaEdit.text,
+                                    editpgC.emailEdit.text,
+                                    editpgC.divEdit.text);
                               }
                             },
                             child: Text(

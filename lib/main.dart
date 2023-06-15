@@ -22,13 +22,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  await initializeDateFormatting('id_ID', null)
-      .then((value) => runApp(AtanApp()));
+  final FCMController fcmController = FCMController();
+  await initializeDateFormatting('id_ID', null).then((value) => runApp(AtanApp(
+        fcmController: fcmController,
+      )));
 }
 
 class AtanApp extends StatelessWidget {
-  final FCMController fcmController = FCMController();
+  final FCMController fcmController;
+
+  AtanApp({Key? key, required this.fcmController}) : super(key: key);
   //const AtanApp({super.key});
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final authC = Get.put(AuthController());

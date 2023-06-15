@@ -94,124 +94,17 @@ class AuthController extends GetxController {
       //inisiasi collection yg akan dipakai
       CollectionReference users = firestore.collection("users");
 
-      DateTime now = DateTime.now();
-
       String emailUser = auth.currentUser!.email.toString();
 
-      final checkuser = await users.doc(emailUser).get();
-
-      if (!checkuser.exists) {
-        users.doc(emailUser).set({
-          "uid": userCredential!.user!.uid,
-          "name": _currentUser!.displayName,
-          "email": _currentUser!.email,
-          "photoUrl": _currentUser!.photoUrl,
-          "roles": "user",
-          "creationTime":
-              userCredential!.user!.metadata.creationTime!.toIso8601String(),
-          "lastSignInTime":
-              userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
-          "updatedTime": now.toIso8601String()
-        });
-      } else {
-        users.doc(emailUser).update({
-          "lastSignInTime":
-              userCredential!.user!.metadata.lastSignInTime?.toIso8601String(),
-        });
-      }
-
-      final checkUserData = checkuser.data() as Map<String, dynamic>;
-
-      userData(UserModel(
-          uid: userCredential!.user!.uid,
-          name: _currentUser!.displayName,
-          email: checkUserData['email'],
-          photoUrl: _currentUser!.photoUrl,
-          roles: checkUserData['roles'],
-          creationTime:
-              userCredential!.user!.metadata.creationTime!.toIso8601String(),
-          lastSignInTime:
-              userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
-          updatedTime: now.toIso8601String()));
-
-      userData.refresh();
+      users.doc(emailUser).update({
+        "photoUrl": _currentUser!.photoUrl,
+        "lastSignInTime":
+            userCredential!.user!.metadata.lastSignInTime?.toIso8601String(),
+      });
 
       isAuth.value = true;
 
-      if (checkUserData['email'] == emailUser) {
-        registerToNotificationTopic(checkUserData['roles']);
-        await Get.offAllNamed(Routes.HOME);
-      } else {
-        Get.dialog(Dialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            backgroundColor: grey1,
-            child: SizedBox(
-              width: 350,
-              height: 365,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Lottie.asset('assets/animation/failed.json', height: 140),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Text(
-                    'LOGIN GAGAL',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: bluePrimary,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  Text(
-                    'Periksa Kembali Akun Anda!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: bluePrimary,
-                      fontSize: 25,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  Text(
-                    'Hubungi Pemilik Usaha Untuk Aktivasi Akun',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: bluePrimary,
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Container(
-                      width: 15.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(11),
-                          color: grey1),
-                      child: TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                            child: Text(
-                              'OK',
-                              style:
-                                  TextStyle(fontSize: 18, color: bluePrimary),
-                            ),
-                          )))
-                ],
-              ),
-            )));
-      }
+      await Get.offAllNamed(Routes.HOME);
     } else {
       Get.dialog(Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

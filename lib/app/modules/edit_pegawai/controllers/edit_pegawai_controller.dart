@@ -36,12 +36,14 @@ class EditPegawaiController extends GetxController {
     String doc,
     String nama,
     String email,
+    String divisi,
   ) async {
     try {
       CollectionReference users = firestore.collection("users");
       await users.doc(doc).update({
         'name': nama,
         'email': email,
+        'divisi': divisi,
       });
 
       Get.dialog(Dialog(

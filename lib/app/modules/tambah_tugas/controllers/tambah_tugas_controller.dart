@@ -14,6 +14,8 @@ import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../routes/app_pages.dart';
 import '../../../util/color.dart';
+import '../../../util/notif.dart';
+import '../../../util/string.dart';
 
 class TambahTugasController extends GetxController {
   final namaValidator = RequiredValidator(errorText: "Nama Tidak Boleh Kosong");
@@ -50,6 +52,8 @@ class TambahTugasController extends GetxController {
 
   var listTUgas = <String>[].obs;
 
+  final notifC = Get.put(NotificationController());
+
   // void fetchlistTUgas(String query) {
   //   collection
   //       .where('nama', isGreaterThan: query)
@@ -82,6 +86,20 @@ class TambahTugasController extends GetxController {
         'detail': '',
       });
       await docRefTugas.update({'id': docRefTugas.id});
+
+      if (divisi == jahit) {
+        notifC.sendNotificationToJahit(
+            tambahTugasTitle, tambahTugasMessage, berandaView);
+      } else if (divisi == cetak) {
+        notifC.sendNotificationToCetak(
+            tambahTugasTitle, tambahTugasMessage, berandaView);
+      } else if (divisi == desain) {
+        notifC.sendNotificationToDesain(
+            tambahTugasTitle, tambahTugasMessage, berandaView);
+      } else if (divisi == qapacking) {
+        notifC.sendNotificationToQAPacking(
+            tambahTugasTitle, tambahTugasMessage, berandaView);
+      }
 
       Get.dialog(Dialog(
           shape:

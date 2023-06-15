@@ -4,8 +4,11 @@ import 'package:atan_app/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+
+import '../util/string.dart';
 
 class FCMController extends GetxController {
   final firestore = FirebaseFirestore.instance;
@@ -16,6 +19,7 @@ class FCMController extends GetxController {
   List<String>? desainFCMToken;
   List<String>? cetakFCMToken;
   List<String>? packingFCMToken;
+  Map<String, dynamic>? notificationData;
 
   @override
   Future<void> onInit() async {
@@ -32,11 +36,13 @@ class FCMController extends GetxController {
 
     String? token = await firebaseMessaging.getToken();
     log('FCM Token: $token');
+    String email = auth.currentUser!.email!;
+    var user = firestore.collection('users').doc(email);
 
     if (token != null) {
-      String email = auth.currentUser!.email!;
-      var user = firestore.collection('users').doc(email);
-      user.update({'fcmToken': token});
+      user.update(
+        {'fcmToken': token},
+      );
     }
   }
 
@@ -63,9 +69,46 @@ class FCMController extends GetxController {
       android: androidPlatformChannelSpecifics,
     );
 
-    await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-        message.notification?.body, notificationDetails,
-        payload: Routes.BERANDA);
+    if (message.notification?.title == tambahPemesanTitle) {
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, notificationDetails,
+          payload: 'KERANJANG');
+      notificationData = message.data;
+    } else if (message.notification?.title == tambahTugasTitle) {
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, notificationDetails,
+          payload: 'BERANDA');
+      notificationData = message.data;
+    } else if (message.notification?.title == tambahItemTitle) {
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, notificationDetails,
+          payload: 'KERANJANG_BOS');
+      notificationData = message.data;
+    } else if (message.notification?.title == tambahFotoJahitTitle ||
+        message.notification?.title == tambahFotoCetakTitle ||
+        message.notification?.title == tambahFotoDesainTitle ||
+        message.notification?.title == tambahFotoQAPAckingTitle) {
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, notificationDetails,
+          payload: 'BERANDA_BOS');
+      notificationData = message.data;
+    } else if (message.notification?.title == tugasSelesaiTitle) {
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, notificationDetails,
+          payload: 'BERANDA');
+      notificationData = message.data;
+    }
+
+    // await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    //       message.notification?.body, notificationDetails,
+    //       );
+    //   notificationData = message.data;
+
+    // if (fcmC.notificationData['id'] == berandaView) {
+    //   controller.currentIndex2.value = 1;
+    // } else if (fcmC.notificationData['id'] == keranjangView) {
+    //   controller.currentIndex2.value = 2;
+    // }
 
     // Add your custom logic to handle the message
   }
@@ -74,36 +117,113 @@ class FCMController extends GetxController {
     // Handle the incoming message when the app is in the background
     print('Received background message: ${message.notification?.body}');
     // Add your custom logic to handle the message
+    if (message != null) {
+      notificationData = message.data;
+    }
   }
 
   Future<String?> getAdminToken() async {
-    if (adminFCMToken == null) {
-      var adminSnapshot = await firestore
-          .collection('users')
-          .where('roles', isEqualTo: 'pemilik_usaha')
-          .where('divisi', isEqualTo: 'Pemilik Usaha')
-          .get();
-      var adminDoc = adminSnapshot.docs.first;
-      adminFCMToken = adminDoc.data()['fcmToken'];
+    var adminSnapshot = await firestore
+        .collection('users')
+        .where('divisi', isEqualTo: 'Pemilik Usaha')
+        .limit(1)
+        .get();
+    var adminDoc = adminSnapshot.docs.first;
+    if (kDebugMode) {
+      print('ADMIN TOKEN EMAIL ${adminDoc.data()['email']}');
     }
+    adminFCMToken = adminDoc.data()['fcmToken'];
+
     return adminFCMToken;
   }
 
-  Future<List<String>?> getJahitToken() async {
-    if (jahitFCMToken == null) {
-      var adminSnapshot = await firestore
-          .collection('users')
-          .where('roles', isEqualTo: 'user')
-          .where('divisi', isEqualTo: 'Divisi Jahit')
-          .get();
-      var adminDoc = adminSnapshot.docs;
-      for (var doc in adminDoc) {
-        var token = doc.data()['fcmToken'];
-        if (token != null) {
-          jahitFCMToken!.add(token);
-        }
+  Future<List<String>> getAllUserToken() async {
+    List<String> jahitFCMToken = [];
+    var snapshot = await firestore
+        .collection('users')
+        .where('roles', isEqualTo: 'user')
+        .get();
+    var document = snapshot.docs;
+    for (var doc in document) {
+      String token = doc.data()['fcmToken'];
+      if (kDebugMode) {
+        print('ALL USER TOKEN EMAIL ${doc.data()['email']}');
       }
+      jahitFCMToken.add(token);
     }
+
+    return jahitFCMToken;
+  }
+
+  Future<List<String>> getJahitToken() async {
+    List<String> jahitFCMToken = [];
+    var snapshot = await firestore
+        .collection('users')
+        .where('divisi', isEqualTo: 'Divisi Jahit')
+        .get();
+    var document = snapshot.docs;
+    for (var doc in document) {
+      String token = doc.data()['fcmToken'];
+      if (kDebugMode) {
+        print('JAHIT TOKEN EMAIL ${doc.data()['email']}');
+      }
+      jahitFCMToken.add(token);
+    }
+
+    return jahitFCMToken;
+  }
+
+  Future<List<String>> getCetakToken() async {
+    List<String> jahitFCMToken = [];
+    var snapshot = await firestore
+        .collection('users')
+        .where('divisi', isEqualTo: 'Divisi Cetak')
+        .get();
+    var document = snapshot.docs;
+    for (var doc in document) {
+      String token = doc.data()['fcmToken'];
+      if (kDebugMode) {
+        print('CETAK TOKEN EMAIL ${doc.data()['email']}');
+      }
+      jahitFCMToken.add(token);
+    }
+
+    return jahitFCMToken;
+  }
+
+  Future<List<String>> getDesainToken() async {
+    List<String> jahitFCMToken = [];
+    var snapshot = await firestore
+        .collection('users')
+        .where('divisi', isEqualTo: 'Divisi Desain')
+        .get();
+    var document = snapshot.docs;
+    for (var doc in document) {
+      String token = doc.data()['fcmToken'];
+      if (kDebugMode) {
+        print('DESAIN TOKEN EMAIL ${doc.data()['email']}');
+      }
+      jahitFCMToken.add(token);
+    }
+
+    return jahitFCMToken;
+  }
+
+  Future<List<String>> getQAPackingToken() async {
+    List<String> jahitFCMToken = [];
+    var snapshot = await firestore
+        .collection('users')
+        .where('divisi', isEqualTo: 'Divisi QA & Packing')
+        .get();
+    var document = snapshot.docs;
+    for (var doc in document) {
+      String token = doc.data()['fcmToken'];
+      if (kDebugMode) {
+        print('QA PACKING TOKEN EMAIL ${doc.data()['email']}');
+      }
+      jahitFCMToken.add(token);
+    }
+
     return jahitFCMToken;
   }
 }

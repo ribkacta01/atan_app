@@ -1,4 +1,5 @@
 import 'package:atan_app/app/util/color.dart';
+import 'package:atan_app/app/util/string.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,6 +14,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../../main.dart';
+import '../../../util/notif.dart';
 
 class TambahPemesanController extends GetxController {
   final namaValidator = RequiredValidator(errorText: "Nama Tidak Boleh Kosong");
@@ -26,6 +28,8 @@ class TambahPemesanController extends GetxController {
   final nameKey = GlobalKey<FormState>().obs;
   final dateKey = GlobalKey<FormState>().obs;
   final tenggatKey = GlobalKey<FormState>().obs;
+
+  final notifC = Get.put(NotificationController());
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -52,6 +56,9 @@ class TambahPemesanController extends GetxController {
         'nama': nama,
         'tenggat': dateTenggat.value
       });
+
+      notifC.sendNotificationToAllUser(
+          tambahPemesanTitle, tambahPemesanMessage, keranjangView);
 
       Get.dialog(Dialog(
           shape:
