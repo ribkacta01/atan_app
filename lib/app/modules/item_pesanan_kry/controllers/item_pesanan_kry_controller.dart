@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
@@ -23,12 +22,12 @@ class ItemPesananKryController extends GetxController {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: grey1,
         child: Container(
-          width: 350,
-          height: 336,
+          width: 68.w,
+          height: 32.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset('assets/animation/alert.json', height: 140),
+              Lottie.asset('assets/animation/alert.json', width: 30.w),
               SizedBox(
                 height: 3.h,
               ),
@@ -37,7 +36,7 @@ class ItemPesananKryController extends GetxController {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: bluePrimary,
-                    fontSize: 25,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w600),
               ),
               SizedBox(
@@ -56,12 +55,11 @@ class ItemPesananKryController extends GetxController {
                             Get.back();
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             child: Text(
                               'BATAL',
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w600,
                                   color: bluePrimary),
                             ),
@@ -69,7 +67,7 @@ class ItemPesananKryController extends GetxController {
                   Container(
                       width: 15.w,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(11),
+                          borderRadius: BorderRadius.circular(10.sp),
                           color: grey1),
                       child: TextButton(
                           onPressed: () async {
@@ -81,12 +79,11 @@ class ItemPesananKryController extends GetxController {
                             Get.back();
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             child: Text(
                               'HAPUS',
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w600,
                                   color: bluePrimary),
                             ),

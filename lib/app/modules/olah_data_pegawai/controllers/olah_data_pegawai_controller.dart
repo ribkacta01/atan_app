@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sizer/sizer.dart';
@@ -47,28 +48,25 @@ class OlahDataPegawaiController extends GetxController {
 
   Future<void> delKry(String docName) async {
     Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: bluePrimary,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.sp)),
+        backgroundColor: grey1,
         child: Container(
-          width: 350,
-          height: 336,
+          width: 68.w,
+          height: 32.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                PhosphorIcons.checkCircleFill,
-                color: white,
-                size: 110,
-              ),
+              Lottie.asset('assets/animation/alert.json', width: 28.w),
               SizedBox(
-                height: 3.h,
+                height: 1.h,
               ),
               Text(
                 'Yakin Ingin Menghapus Data?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: white,
-                  fontSize: 25,
+                  color: bluePrimary,
+                  fontSize: 15.sp,
                 ),
               ),
               SizedBox(
@@ -80,42 +78,34 @@ class OlahDataPegawaiController extends GetxController {
                   Container(
                       width: 15.w,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(11),
+                          borderRadius: BorderRadius.circular(8.sp),
                           color: white),
                       child: TextButton(
                           onPressed: () {
                             Get.back();
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             child: Text(
                               'BATAL',
-                              style:
-                                  TextStyle(fontSize: 18, color: bluePrimary),
+                              style: TextStyle(
+                                  fontSize: 10.sp, color: bluePrimary),
                             ),
                           ))),
-                  Container(
-                      width: 15.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(11),
-                          color: white),
-                      child: TextButton(
-                          onPressed: () async {
-                            CollectionReference users =
-                                firestore.collection("users");
-                            await users.doc(docName).delete();
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                            child: Text(
-                              'HAPUS',
-                              style:
-                                  TextStyle(fontSize: 18, color: bluePrimary),
-                            ),
-                          ))),
+                  TextButton(
+                      onPressed: () async {
+                        CollectionReference users =
+                            firestore.collection("users");
+                        await users.doc(docName).delete();
+                        Get.back();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
+                        child: Text(
+                          'HAPUS',
+                          style: TextStyle(fontSize: 10.sp, color: bluePrimary),
+                        ),
+                      )),
                 ],
               )
             ],

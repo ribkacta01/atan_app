@@ -28,9 +28,9 @@ class ProfilBosView extends GetView<ProfilBosController> {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
               padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 6,
+                left: 3.w,
+                right: 3.w,
+                top: 1.h,
               ),
               child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   stream: home.berandaBos(),
@@ -56,7 +56,7 @@ class ProfilBosView extends GetView<ProfilBosController> {
                                 Text(
                                   "Halo ${data.get('name')}",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -65,7 +65,7 @@ class ProfilBosView extends GetView<ProfilBosController> {
                                 Text(
                                   "Halaman Profil Anda",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -139,7 +139,7 @@ class ProfilBosView extends GetView<ProfilBosController> {
                             Text(
                               data.get('divisi'),
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 11.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -150,7 +150,7 @@ class ProfilBosView extends GetView<ProfilBosController> {
                             Text(
                               data.get('email'),
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 10.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),

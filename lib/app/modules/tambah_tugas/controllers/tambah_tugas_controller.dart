@@ -1,18 +1,12 @@
-import 'package:atan_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:lottie/lottie.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:intl/intl.dart' show DateFormat;
 
-import '../../../routes/app_pages.dart';
 import '../../../util/color.dart';
 import '../../../util/notif.dart';
 import '../../../util/string.dart';
@@ -102,25 +96,25 @@ class TambahTugasController extends GetxController {
       }
 
       Get.dialog(Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.sp)),
           backgroundColor: grey1,
           child: Container(
-            width: 350,
-            height: 336,
+            width: 68.w,
+            height: 32.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/animation/check.json', height: 140),
+                Lottie.asset('assets/animation/check.json', width: 28.w),
                 SizedBox(
                   height: 3.h,
                 ),
                 Text(
-                  'Tugas Terkirim!',
+                  'Tugas Berhasil Ditambahkan!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: bluePrimary,
-                      fontSize: 25,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -129,7 +123,8 @@ class TambahTugasController extends GetxController {
                 Container(
                     width: 15.w,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11), color: white),
+                        borderRadius: BorderRadius.circular(8.sp),
+                        color: white),
                     child: TextButton(
                         onPressed: () {
                           Get.back();
@@ -137,14 +132,11 @@ class TambahTugasController extends GetxController {
                           Get.back();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 11.0,
-                            bottom: 11.0,
-                          ),
+                          padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                           child: Text(
                             'OK',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,
                                 color: bluePrimary),
                           ),
@@ -154,40 +146,25 @@ class TambahTugasController extends GetxController {
           )));
     } catch (e) {
       Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.sp)),
         backgroundColor: grey1,
         child: Container(
-          width: 350,
-          height: 336,
+          width: 68.w,
+          height: 32.h,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child:
-                    Lottie.asset('assets/animation/failed.json', height: 140),
-              ),
+              Lottie.asset('assets/animation/failed.json', width: 28.w),
               SizedBox(
                 height: 3.h,
               ),
               Text(
-                "Terjadi Kesalahan!",
+                'Gagal Menambahkan Tugas',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 30,
-                  color: bluePrimary,
-                ),
-              ),
-              SizedBox(
-                height: 1.5.h,
-              ),
-              Text(
-                "Tidak Dapat Menambah Data",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: bluePrimary,
-                ),
-              ),
-              SizedBox(
-                height: 2.h,
+                    color: bluePrimary,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),

@@ -1,4 +1,3 @@
-import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:atan_app/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
   const OlahDataPegawaiView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
     final olahC = Get.put(OlahDataPegawaiController());
 
@@ -41,9 +39,9 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
             physics: BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.normal),
             padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
+              left: 3.w,
+              right: 3.w,
+              top: 1.h,
             ),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: home.berandaBos(),
@@ -69,7 +67,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                               Text(
                                 "Halo ${data.get('name')}",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 12.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -78,7 +76,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                               Text(
                                 "Daftar Pegawai Atan Sport Apparel ",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 12.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -86,12 +84,11 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 5),
+                            padding: EdgeInsets.only(right: 3.w),
                             child: ClipOval(
                               child: Image.network(
                                 data.get('photoUrl'),
-                                height: 45,
-                                width: 45,
+                                width: 11.w,
                               ),
                             ),
                           ),
@@ -141,11 +138,11 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                       children: [
                                         Lottie.asset(
                                             'assets/animation/search.json',
-                                            height: 130),
+                                            width: 28.w),
                                         // SizedBox(height: 2.h),
                                         Text("Pencarian Tidak Ditemukan",
                                             style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 10.sp,
                                               color: grey1,
                                             ))
                                       ],
@@ -156,7 +153,8 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                             return ListView.builder(
                                 shrinkWrap: true,
                                 physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.only(top: 2, bottom: 7),
+                                padding:
+                                    EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
                                 itemCount: snapshot.data!.docs.length,
                                 itemBuilder: (context, index) {
                                   // Map<String, dynamic> data =
@@ -175,11 +173,11 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                             children: [
                                               Lottie.asset(
                                                   'assets/animation/noData.json',
-                                                  height: 155),
+                                                  width: 28.w),
                                               // SizedBox(height: 2.h),
                                               Text("Belum Ada Data Pegawai",
                                                   style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 10.sp,
                                                     color: grey1,
                                                   ))
                                             ],
@@ -198,7 +196,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                           decoration: BoxDecoration(
                                             color: randomize(),
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(16.sp),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.only(
@@ -230,7 +228,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                           top: 2.h, right: 2),
                                                       child: Text(data['name'],
                                                           style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: 12.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -239,7 +237,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     SizedBox(height: 1.h),
                                                     Text(data['divisi'],
                                                         style: TextStyle(
-                                                          fontSize: 15,
+                                                          fontSize: 10.sp,
                                                           color: white,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -247,7 +245,7 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                                                     SizedBox(height: 1.h),
                                                     Text(data['email'],
                                                         style: TextStyle(
-                                                          fontSize: 13,
+                                                          fontSize: 8.sp,
                                                           color: white,
                                                           fontWeight:
                                                               FontWeight.w400,

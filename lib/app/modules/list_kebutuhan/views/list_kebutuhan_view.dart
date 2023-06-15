@@ -25,20 +25,18 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(
+            physics: const BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.normal),
             padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
+              left: 3.w,
+              right: 3.w,
+              top: 1.h,
             ),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child:
-                            CircularProgressIndicator(color: Colors.blueGrey));
+                    return Loading();
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -58,9 +56,9 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 17,
-                                right: 20,
-                                top: 6,
+                                left: 3.w,
+                                right: 3.w,
+                                top: 1.h,
                               ),
                               child: Column(
                                 mainAxisAlignment:
@@ -70,7 +68,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                   Text(
                                     "Halo ${data.get('name')}",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -79,7 +77,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                   Text(
                                     "Perencanaan Produksi Anda Disini ",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -88,12 +86,11 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 5),
+                              padding: EdgeInsets.only(right: 3.w),
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  height: 45,
-                                  width: 45,
+                                  height: 11.w,
                                 ),
                               ),
                             ),
@@ -101,7 +98,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                         ),
                         SizedBox(height: 6.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.only(left: 3.w),
                           child: Text(
                             "Daftar Kebutuhan Pesanan",
                             style: TextStyle(
@@ -128,12 +125,12 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                         children: [
                                           Lottie.asset(
                                               'assets/animation/noData.json',
-                                              height: 155),
+                                              width: 28.w),
                                           // SizedBox(height: 2.h),
                                           Text(
                                               "Belum Ada Item yang Ditambahkan",
                                               style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 10.sp,
                                                 color: grey1,
                                               ))
                                         ],
@@ -142,16 +139,15 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                               }
                               return ListView.builder(
                                   shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(
+                                  physics: const BouncingScrollPhysics(
                                       decelerationRate:
                                           ScrollDecelerationRate.normal),
-                                  padding: EdgeInsets.only(top: 2, bottom: 7),
+                                  padding: EdgeInsets.only(
+                                      top: 1.5.h, bottom: 1.5.h),
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> data =
                                         snapshot.data!.docs[index].data();
-                                    var docNameItem =
-                                        '${data['Nama Barang']} - ${data['Keterangan']}';
 
                                     return Padding(
                                       padding: EdgeInsets.only(bottom: 2.h),
@@ -165,13 +161,13 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                             decoration: BoxDecoration(
                                               color: randomize(),
                                               borderRadius:
-                                                  BorderRadius.circular(25),
+                                                  BorderRadius.circular(16.sp),
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 0.8.w,
-                                                  bottom: 0.1.h,
-                                                  right: 0.8.w),
+                                                  right: 3.w,
+                                                  bottom: 0.1.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -184,17 +180,19 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20)),
-                                                    height: 8.h,
-                                                    width: 8.h,
+                                                                .circular(
+                                                                    14.sp)),
+                                                    height: 8.5.h,
+                                                    width: 8.5.h,
                                                     child: Center(
                                                       child: Icon(
                                                         PhosphorIcons.checkBold,
-                                                        size: 35,
+                                                        size: 25.sp,
                                                         color: bluePrimary,
                                                       ),
                                                     ),
                                                   ),
+                                                  SizedBox(width: 1.w),
                                                   Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -202,26 +200,18 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.5.h,
-                                                                right: 5,
-                                                                bottom: 1),
-                                                        child: Text(
-                                                            data['Nama Barang'],
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                              color: white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                            )),
-                                                      ),
+                                                      SizedBox(height: 1.h),
+                                                      Text(data['Nama Barang'],
+                                                          style: TextStyle(
+                                                            fontSize: 12.sp,
+                                                            color: white,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          )),
                                                       SizedBox(height: 1.h),
                                                       Text(data['Keterangan'],
                                                           style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 12.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -230,7 +220,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                       Text(
                                                           data['Jumlah Barang'],
                                                           style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 12.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -241,7 +231,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                   IconButton(
                                                       enableFeedback: true,
                                                       onPressed: () {},
-                                                      icon: Icon(
+                                                      icon: const Icon(
                                                         PhosphorIcons
                                                             .pencilSimpleFill,
                                                         color:

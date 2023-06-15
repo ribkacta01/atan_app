@@ -84,15 +84,16 @@ class KeranjangBosController extends GetxController {
 
   Future<void> delData(String docName) async {
     Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.sp)),
         backgroundColor: grey1,
         child: Container(
-          width: 350,
-          height: 336,
+          width: 68.w,
+          height: 32.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset('assets/animation/alert.json', height: 140),
+              Lottie.asset('assets/animation/alert.json', width: 28.w),
               SizedBox(
                 height: 3.h,
               ),
@@ -101,7 +102,7 @@ class KeranjangBosController extends GetxController {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: bluePrimary,
-                  fontSize: 25,
+                  fontSize: 13.sp,
                 ),
               ),
               SizedBox(
@@ -120,12 +121,11 @@ class KeranjangBosController extends GetxController {
                             Get.back();
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             child: Text(
                               'BATAL',
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w800,
                                   color: bluePrimary),
                             ),
@@ -140,42 +140,44 @@ class KeranjangBosController extends GetxController {
                             CollectionReference users =
                                 firestore.collection("Perencanaan");
                             await users.doc(docName).delete();
-                            await Get.dialog(Dialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              backgroundColor: grey1,
-                              child: Container(
-                                width: 350,
-                                height: 336,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Lottie.asset('assets/animation/check.json',
-                                        height: 140),
-                                    SizedBox(height: 3.h),
-                                    Text(
-                                      'Data Berhasil Dihapus',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: bluePrimary,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500),
+                            await Get.dialog(
+                                Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  backgroundColor: grey1,
+                                  child: Container(
+                                    width: 350,
+                                    height: 336,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Lottie.asset(
+                                            'assets/animation/check.json',
+                                            width: 28.w),
+                                        SizedBox(height: 3.h),
+                                        Text(
+                                          'Data Berhasil Dihapus',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: bluePrimary,
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ));
-                            Get.back();
-                            Get.back();
+                                transitionDuration:
+                                    Duration(milliseconds: 500));
                             Get.back();
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             child: Text(
                               'HAPUS',
                               style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w800,
                                   color: bluePrimary),
                             ),

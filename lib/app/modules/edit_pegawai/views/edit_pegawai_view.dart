@@ -26,9 +26,9 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           padding: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 6,
+            left: 3.w,
+            right: 3.w,
+            top: 1.h,
           ),
           child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               stream: home.berandaBos(),
@@ -56,9 +56,9 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              left: 17,
-                              right: 20,
-                              top: 6,
+                              left: 3.w,
+                              right: 3.w,
+                              top: 1.h,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +67,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                                 Text(
                                   "Halo ${data.get('name')}",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -76,7 +76,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                                 Text(
                                   "Edit Data Pegawai ",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -85,12 +85,11 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 5),
+                            padding: EdgeInsets.only(right: 3.w),
                             child: ClipOval(
                               child: Image.network(
                                 data.get('photoUrl'),
-                                height: 45,
-                                width: 45,
+                                width: 11.w,
                               ),
                             ),
                           ),
@@ -98,11 +97,11 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                       ),
                       SizedBox(height: 6.h),
                       Padding(
-                        padding: EdgeInsets.only(left: 17),
+                        padding: EdgeInsets.only(left: 3.w),
                         child: Text(
                           "Ubah Data Pegawai",
                           style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 18.sp,
                             color: HexColor("#0B0C2B"),
                             fontWeight: FontWeight.w600,
                           ),

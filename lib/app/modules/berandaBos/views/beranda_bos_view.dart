@@ -31,10 +31,10 @@ class BerandaBosView extends GetView<BerandaBosController> {
             var data = snapshot.data!;
             return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 6,
+                padding: EdgeInsets.only(
+                  left: 3.w,
+                  right: 3.w,
+                  top: 1.h,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -53,7 +53,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                             Text(
                               "Selamat datang, ${data.get('name')}",
                               style: TextStyle(
-                                fontSize: 19,
+                                fontSize: 12.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -62,7 +62,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                             Text(
                               "Pantau Pekerjaan Pegawai Anda",
                               style: TextStyle(
-                                fontSize: 19,
+                                fontSize: 12.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -71,7 +71,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                             Text(
                               "Daftar Tugas",
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 18.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w600,
                               ),
@@ -79,12 +79,11 @@ class BerandaBosView extends GetView<BerandaBosController> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 5),
+                          padding: EdgeInsets.only(right: 3.w),
                           child: ClipOval(
                             child: Image.network(
                               data.get('photoUrl'),
-                              height: 45,
-                              width: 45,
+                              width: 11.w,
                             ),
                           ),
                         ),
@@ -101,7 +100,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                               Text(
                                 "Selesai",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 14.sp,
                                   color: bluePrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -109,7 +108,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                               Text(
                                 "Dalam Proses",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 14.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -133,7 +132,6 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                       return const Loading();
                                     }
 
-                                    var dataPictProses = snapshot.data!;
                                     return SingleChildScrollView(
                                       child: ListView.builder(
                                           shrinkWrap: true,
@@ -163,20 +161,19 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                           HexColor("#BFC0D2"),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              25),
+                                                              16.sp),
                                                     ),
                                                     child: Column(
                                                       children: [
                                                         ClipRRect(
                                                           borderRadius:
-                                                              const BorderRadius
-                                                                      .only(
+                                                              BorderRadius.only(
                                                                   topLeft: Radius
-                                                                      .circular(
-                                                                          25),
+                                                                      .circular(16
+                                                                          .sp),
                                                                   topRight: Radius
                                                                       .circular(
-                                                                          25)),
+                                                                          16.sp)),
                                                           child: dataPoto[
                                                                       'photo'] !=
                                                                   ''
@@ -202,7 +199,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                           color:
                                                                               bluePrimary,
                                                                           size:
-                                                                              90),
+                                                                              55.sp),
                                                                     ),
                                                                     SizedBox(
                                                                         height:
@@ -212,8 +209,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                       style: TextStyle(
                                                                           color:
                                                                               bluePrimary,
-                                                                          fontSize:
-                                                                              20,
+                                                                          fontSize: 13
+                                                                              .sp,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
@@ -226,7 +223,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                           color:
                                                                               bluePrimary,
                                                                           fontSize:
-                                                                              15),
+                                                                              10.sp),
                                                                     ),
                                                                     SizedBox(
                                                                         height:
@@ -237,7 +234,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                           color:
                                                                               bluePrimary,
                                                                           fontSize:
-                                                                              15),
+                                                                              10.sp),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -273,7 +270,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                               Text(
                                                                             "${dataPoto['Divisi']}",
                                                                             style: TextStyle(
-                                                                                fontSize: 25,
+                                                                                fontSize: 12.sp,
                                                                                 color: HexColor("#0B0C2B"),
                                                                                 fontWeight: FontWeight.w500),
                                                                           ),
@@ -294,9 +291,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                         "${dataPoto['photoDateTime']}",
                                                                         style: TextStyle(
                                                                             fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                HexColor("#0B0C2B"),
+                                                                                10.sp,
+                                                                            color: HexColor("#0B0C2B"),
                                                                             fontWeight: FontWeight.w500),
                                                                       )
                                                                     : const Text(
@@ -345,8 +341,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                   ? Text(
                                                                       "Pesanan ${dataPoto['Nama Pemesan']}",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
+                                                                          fontSize: 12
+                                                                              .sp,
                                                                           color: HexColor(
                                                                               "#0B0C2B"),
                                                                           fontWeight:
@@ -361,8 +357,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                   ? Text(
                                                                       "${dataPoto['detail']}",
                                                                       style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
+                                                                          fontSize: 10
+                                                                              .sp,
                                                                           color: HexColor(
                                                                               "#0B0C2B"),
                                                                           fontWeight:
@@ -390,7 +386,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                         ConnectionState.waiting) {
                                       return const Loading();
                                     }
-                                    var dataPict = snapshot.data!;
+
                                     return SingleChildScrollView(
                                       child: ListView.builder(
                                           shrinkWrap: true,
@@ -419,20 +415,19 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                           HexColor("#BFC0D2"),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              25),
+                                                              16.sp),
                                                     ),
                                                     child: Column(
                                                       children: [
                                                         ClipRRect(
                                                           borderRadius:
-                                                              const BorderRadius
-                                                                      .only(
+                                                              BorderRadius.only(
                                                                   topLeft: Radius
-                                                                      .circular(
-                                                                          25),
+                                                                      .circular(16
+                                                                          .sp),
                                                                   topRight: Radius
                                                                       .circular(
-                                                                          25)),
+                                                                          16.sp)),
                                                           child: Column(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -451,7 +446,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                         .cameraSlashBold,
                                                                     color:
                                                                         bluePrimary,
-                                                                    size: 90),
+                                                                    size:
+                                                                        55.sp),
                                                               ),
                                                               SizedBox(
                                                                   height: 2.h),
@@ -461,7 +457,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                     color:
                                                                         bluePrimary,
                                                                     fontSize:
-                                                                        20,
+                                                                        12.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -474,7 +470,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                     color:
                                                                         bluePrimary,
                                                                     fontSize:
-                                                                        15),
+                                                                        10.sp),
                                                               ),
                                                               SizedBox(
                                                                   height: 1.h),
@@ -484,7 +480,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                     color:
                                                                         bluePrimary,
                                                                     fontSize:
-                                                                        15),
+                                                                        10.sp),
                                                               ),
                                                             ],
                                                           ),
@@ -503,14 +499,14 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Column(
+                                                              const Column(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
-                                                                children: const [
+                                                                children: [
                                                                   Text(''),
                                                                 ],
                                                               ),
@@ -542,8 +538,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                               SizedBox(
                                                                 height: 1.5.h,
                                                               ),
-                                                              Row(
-                                                                children: const [
+                                                              const Row(
+                                                                children: [
                                                                   Text(''),
                                                                 ],
                                                               ),

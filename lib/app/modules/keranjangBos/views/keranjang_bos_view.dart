@@ -11,7 +11,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../controller/auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/keranjang_bos_controller.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -56,9 +55,9 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                     var data = snapshot.data!;
                     return SingleChildScrollView(
                         padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          top: 6,
+                          left: 3.w,
+                          right: 3.w,
+                          top: 1.h,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -78,7 +77,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                     Text(
                                       "Halo ${data.get('name')}",
                                       style: TextStyle(
-                                        fontSize: 19,
+                                        fontSize: 12.sp,
                                         color: HexColor("#0B0C2B"),
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -87,7 +86,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                     Text(
                                       "Perencanaan Produksi Anda Disini ",
                                       style: TextStyle(
-                                        fontSize: 19,
+                                        fontSize: 12.sp,
                                         color: HexColor("#0B0C2B"),
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -95,12 +94,11 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 5),
+                                  padding: EdgeInsets.only(right: 3.w),
                                   child: ClipOval(
                                     child: Image.network(
                                       data.get('photoUrl'),
-                                      height: 45,
-                                      width: 45,
+                                      width: 8.w,
                                     ),
                                   ),
                                 ),
@@ -142,12 +140,12 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                             Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 15),
+                                  padding: EdgeInsets.only(bottom: 8.sp),
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: HexColor("#0B0C2B"),
                                         borderRadius:
-                                            BorderRadius.circular(20)),
+                                            BorderRadius.circular(15.sp)),
                                     height: 3.5.h,
                                     width: 9.h,
                                     child: Center(
@@ -156,7 +154,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                         child: Text(
                                           "Terbaru",
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 10.sp,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -165,147 +163,137 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 55.w),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, bottom: 15),
-                                  child: IconButton(
-                                    icon: Icon(PhosphorIcons.slidersHorizontal,
-                                        color: bluePrimary),
-                                    onPressed: () {
-                                      Get.dialog(Dialog(
-                                        child: Container(
-                                          padding: EdgeInsets.all(1.h),
-                                          height: 40.h,
-                                          child: SfDateRangePicker(
-                                            view: DateRangePickerView.year,
-                                            selectionColor: bluePrimary,
-                                            rangeSelectionColor:
-                                                bluePrimary.withOpacity(0.2),
-                                            startRangeSelectionColor:
-                                                bluePrimary,
-                                            endRangeSelectionColor: bluePrimary,
-                                            selectionMode:
-                                                DateRangePickerSelectionMode
-                                                    .range,
-                                            showActionButtons: true,
-                                            onCancel: () => Get.back(),
-                                            onSubmit: (value) {
-                                              if (value != null) {
-                                                if ((value as PickerDateRange)
-                                                        .endDate !=
-                                                    null) {
-                                                  controller.pickRangeDate(
-                                                      value.startDate!,
-                                                      value.endDate!);
-                                                  Get.back();
-                                                } else {
-                                                  Get.dialog(Dialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
-                                                    backgroundColor: grey1,
-                                                    child: Container(
-                                                      width: 350,
-                                                      height: 365,
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    top: 20),
-                                                            child: Lottie.asset(
-                                                                'assets/animation/failed.json'),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 3.h,
-                                                          ),
-                                                          Text(
-                                                            "Terjadi Kesalahan!",
-                                                            style: TextStyle(
-                                                              fontSize: 30,
-                                                              color:
-                                                                  bluePrimary,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 1.5.h,
-                                                          ),
-                                                          Text(
-                                                            "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
-                                                            style: TextStyle(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  bluePrimary,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 2.h,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ));
-                                                }
+                                SizedBox(
+                                  width: 60.w,
+                                  height: 1.h,
+                                ),
+                                IconButton(
+                                  icon: Icon(PhosphorIcons.slidersHorizontal,
+                                      color: bluePrimary),
+                                  onPressed: () {
+                                    Get.dialog(Dialog(
+                                      child: Container(
+                                        padding: EdgeInsets.all(1.h),
+                                        height: 40.h,
+                                        child: SfDateRangePicker(
+                                          view: DateRangePickerView.year,
+                                          selectionColor: bluePrimary,
+                                          startRangeSelectionColor: bluePrimary,
+                                          endRangeSelectionColor: bluePrimary,
+                                          rangeSelectionColor:
+                                              bluePrimary.withOpacity(0.2),
+                                          selectionMode:
+                                              DateRangePickerSelectionMode
+                                                  .range,
+                                          showActionButtons: true,
+                                          onCancel: () => Get.back(),
+                                          onSubmit: (value) {
+                                            if (value != null) {
+                                              if ((value as PickerDateRange)
+                                                      .endDate !=
+                                                  null) {
+                                                controller.pickRangeDate(
+                                                    value.startDate!,
+                                                    value.endDate!);
+                                                Get.back();
                                               } else {
                                                 Get.dialog(Dialog(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              20)),
+                                                              18.sp)),
                                                   backgroundColor: grey1,
                                                   child: Container(
-                                                    width: 350,
-                                                    height: 365,
+                                                    width: 55.w,
+                                                    height: 28.h,
                                                     child: Column(
                                                       children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 20),
-                                                          child: Lottie.asset(
-                                                              'assets/animation/failed.json',
-                                                              height: 140),
-                                                        ),
+                                                        Lottie.asset(
+                                                            'assets/animation/alert.json',
+                                                            width: 28.w),
                                                         SizedBox(
-                                                          height: 3.h,
+                                                          height: 1.h,
                                                         ),
                                                         Text(
                                                           "Terjadi Kesalahan!",
                                                           style: TextStyle(
-                                                            fontSize: 30,
-                                                            color: bluePrimary,
-                                                          ),
+                                                              fontSize: 15.sp,
+                                                              color:
+                                                                  bluePrimary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
                                                         ),
                                                         SizedBox(
                                                           height: 1.5.h,
                                                         ),
-                                                        Text(
-                                                          "Tanggal tidak dipilih",
-                                                          style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: bluePrimary,
+                                                        Center(
+                                                          child: Text(
+                                                            "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
+                                                            style: TextStyle(
+                                                              fontSize: 8.sp,
+                                                              color:
+                                                                  bluePrimary,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 2.h,
                                                         ),
                                                       ],
                                                     ),
                                                   ),
                                                 ));
                                               }
-                                            },
-                                          ),
+                                            } else {
+                                              Get.dialog(Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.sp)),
+                                                backgroundColor: grey1,
+                                                child: Container(
+                                                  width: 55.w,
+                                                  height: 28.h,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 2.h),
+                                                          child: Lottie.asset(
+                                                              'assets/animation/alert.json',
+                                                              width: 25.w)),
+                                                      SizedBox(
+                                                        height: 3.h,
+                                                      ),
+                                                      Text(
+                                                        "Terjadi Kesalahan!",
+                                                        style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: bluePrimary,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 1.5.h,
+                                                      ),
+                                                      Text(
+                                                        "Tanggal Belum Dipilih",
+                                                        style: TextStyle(
+                                                          fontSize: 10.sp,
+                                                          color: bluePrimary,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 2.h,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ));
+                                            }
+                                          },
                                         ),
-                                      ));
-                                    },
-                                  ),
+                                      ),
+                                    ));
+                                  },
                                 ),
                               ],
                             ),
@@ -322,17 +310,17 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                   if (snapshot.data?.length == 0 ||
                                       snapshot.data == null) {
                                     return Padding(
-                                        padding: const EdgeInsets.only(top: 10),
+                                        padding: EdgeInsets.only(top: 4.h),
                                         child: Center(
                                           child: Column(
                                             children: [
                                               Lottie.asset(
                                                   'assets/animation/search.json',
-                                                  height: 130),
+                                                  width: 25.w),
                                               // SizedBox(height: 2.h),
                                               Text("Pencarian Tidak Ditemukan",
                                                   style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 10.sp,
                                                     color: grey1,
                                                   ))
                                             ],
@@ -344,8 +332,8 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                     () => ListView.builder(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
-                                        padding:
-                                            EdgeInsets.only(top: 2, bottom: 10),
+                                        padding: EdgeInsets.only(
+                                            top: 1.5.h, bottom: 1.5.h),
                                         itemCount: keranjangC
                                                 .filteredData.isEmpty
                                             ? keranjangC.allData.length
@@ -360,18 +348,17 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                           if (data.length == 0) {
                                             return Padding(
                                                 padding:
-                                                    EdgeInsets.only(top: 20.h),
+                                                    EdgeInsets.only(top: 33.h),
                                                 child: Center(
                                                   child: Column(
                                                     children: [
                                                       Lottie.asset(
                                                           'assets/animation/noData.json',
-                                                          height: 155),
+                                                          width: 30.w),
                                                       // SizedBox(height: 2.h),
-                                                      Text(
-                                                          "Data Tidak Ditemukan",
+                                                      Text("Belum Ada Pesanan",
                                                           style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 12.sp,
                                                             color: grey1,
                                                           ))
                                                     ],
@@ -397,11 +384,11 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                     color: randomBlue(),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25),
+                                                            16.sp),
                                                   ),
                                                   child: Padding(
                                                     padding: EdgeInsets.only(
-                                                        left: 0.5.w,
+                                                        left: 0.8.w,
                                                         bottom: 0.1.h),
                                                     child: Row(
                                                       mainAxisAlignment:
@@ -418,21 +405,30 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          20)),
-                                                          height: 8.h,
-                                                          width: 8.h,
+                                                                          14.sp)),
+                                                          height: 8.5.h,
+                                                          width: 8.5.h,
                                                           child: Center(
-                                                            child: IconButton(
-                                                              onPressed: () {
-                                                                keranjangC.delData(
-                                                                    '${data['nama']} - ${dateFormatterDefault.format(DateTime.parse(data['date']))}');
-                                                              },
-                                                              icon: Icon(
-                                                                  PhosphorIcons
-                                                                      .trashSimple,
-                                                                  size: 35,
-                                                                  color:
-                                                                      bluePrimary),
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          1.w,
+                                                                      bottom:
+                                                                          1.w),
+                                                              child: IconButton(
+                                                                onPressed: () {
+                                                                  keranjangC
+                                                                      .delData(
+                                                                          '${data['nama']} - ${dateFormatterDefault.format(DateTime.parse(data['date']))}');
+                                                                },
+                                                                icon: Icon(
+                                                                    PhosphorIcons
+                                                                        .trashSimple,
+                                                                    size: 25.sp,
+                                                                    color:
+                                                                        bluePrimary),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -449,14 +445,16 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                                   .only(
                                                                       top:
                                                                           2.5.h,
-                                                                      right: 2,
-                                                                      left: 2),
+                                                                      right:
+                                                                          2.w,
+                                                                      left:
+                                                                          1.w),
                                                               child: Text(
                                                                   data['nama'],
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
-                                                                        21,
+                                                                        12.sp,
                                                                     color:
                                                                         white,
                                                                     fontWeight:
@@ -470,7 +468,8 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                                 '${dateFormatterDefault.format(DateTime.parse(data['date']))}',
                                                                 style:
                                                                     TextStyle(
-                                                                  fontSize: 20,
+                                                                  fontSize:
+                                                                      12.sp,
                                                                   color: white,
                                                                   fontWeight:
                                                                       FontWeight
@@ -480,10 +479,6 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                         ),
                                                         SizedBox(width: 2.w),
                                                         IconButton(
-                                                            enableFeedback:
-                                                                true,
-                                                            hoverColor:
-                                                                Colors.amber,
                                                             onPressed: () {
                                                               Get.toNamed(
                                                                   Routes
@@ -493,7 +488,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                             },
                                                             icon: Icon(
                                                               PhosphorIcons
-                                                                  .caretRight,
+                                                                  .caretRightBold,
                                                               color: white,
                                                             )),
                                                       ],

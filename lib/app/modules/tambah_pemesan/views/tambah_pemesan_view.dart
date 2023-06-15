@@ -22,9 +22,9 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
             padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
+              left: 3.w,
+              right: 3.w,
+              top: 1.h,
             ),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: authC.getUserRoles(),
@@ -50,9 +50,9 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 17,
-                                right: 20,
-                                top: 6,
+                                left: 3.w,
+                                right: 3.w,
+                                top: 1.h,
                               ),
                               child: Column(
                                 mainAxisAlignment:
@@ -62,7 +62,7 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                                   Text(
                                     "Halo ${data.get('name')}",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -71,7 +71,7 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                                   Text(
                                     "Perencanaan Produksi Anda Disini ",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -84,8 +84,7 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  height: 45,
-                                  width: 45,
+                                  width: 11.w,
                                 ),
                               ),
                             ),
@@ -93,22 +92,11 @@ class TambahPemesanView extends GetView<TambahPemesanController> {
                         ),
                         SizedBox(height: 20.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.only(left: 3.w),
                           child: Text(
-                            "Tambahkan Daftar Pemesan",
+                            "Tambahkan Daftar Pesanan",
                             style: TextStyle(
-                              fontSize: 22,
-                              color: HexColor("#0B0C2B"),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 17),
-                          child: Text(
-                            "dan Kebutuhan",
-                            style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 15.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w600,
                             ),

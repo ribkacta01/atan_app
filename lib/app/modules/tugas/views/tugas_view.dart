@@ -1,4 +1,3 @@
-import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:atan_app/app/modules/beranda/controllers/beranda_controller.dart';
 import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +8,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../util/Loading.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
@@ -20,8 +18,6 @@ class TugasView extends GetView<TugasController> {
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(TugasController());
-    final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
     final homeC = Get.put(BerandaController());
 
@@ -29,9 +25,9 @@ class TugasView extends GetView<TugasController> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 6,
+          left: 3.w,
+          right: 3.w,
+          top: 1.h,
         ),
         child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             stream: home.berandaBos(),
@@ -57,7 +53,7 @@ class TugasView extends GetView<TugasController> {
                           Text(
                             "Halo ${data.get('name')}",
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 12.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w500,
                             ),
@@ -66,7 +62,7 @@ class TugasView extends GetView<TugasController> {
                           Text(
                             "Lihat Update Pekerjaan Anda",
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 12.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w500,
                             ),
@@ -74,12 +70,11 @@ class TugasView extends GetView<TugasController> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                        padding: EdgeInsets.only(right: 3.w),
                         child: ClipOval(
                           child: Image.network(
                             data.get('photoUrl'),
-                            height: 45,
-                            width: 45,
+                            width: 11.w,
                           ),
                         ),
                       ),
@@ -101,11 +96,11 @@ class TugasView extends GetView<TugasController> {
                                 child: Column(
                                   children: [
                                     Lottie.asset('assets/animation/noData.json',
-                                        height: 155),
+                                        width: 35.w),
                                     // SizedBox(height: 2.h),
                                     Text("Belum Ada Tugas yang Diunggah",
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 12.sp,
                                           color: grey1,
                                         ))
                                   ],
@@ -131,18 +126,20 @@ class TugasView extends GetView<TugasController> {
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           right: 4.w, left: 4.w),
-                                      height: 70.h,
+                                      height: 72.h,
                                       decoration: BoxDecoration(
                                         color: HexColor("#BFC0D2"),
-                                        borderRadius: BorderRadius.circular(25),
+                                        borderRadius:
+                                            BorderRadius.circular(16.sp),
                                       ),
                                       child: Column(
                                         children: [
                                           ClipRRect(
                                               borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(25),
+                                                  topLeft:
+                                                      Radius.circular(16.sp),
                                                   topRight:
-                                                      Radius.circular(25)),
+                                                      Radius.circular(16.sp)),
                                               child: dataList['photo'] != ''
                                                   ? Image.network(
                                                       "${dataList['photo']}",
@@ -165,7 +162,7 @@ class TugasView extends GetView<TugasController> {
                                                                   .cameraSlashBold,
                                                               color:
                                                                   bluePrimary,
-                                                              size: 90),
+                                                              size: 55.sp),
                                                         ),
                                                         SizedBox(height: 2.h),
                                                         Text(
@@ -173,18 +170,18 @@ class TugasView extends GetView<TugasController> {
                                                           style: TextStyle(
                                                               color:
                                                                   bluePrimary,
-                                                              fontSize: 20,
+                                                              fontSize: 13.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
                                                         ),
                                                         SizedBox(height: 1.h),
                                                         Text(
-                                                          "Segera Update Progress Pesanan ${dataList['Nama Pemesan']}",
+                                                          "Segera Unggah Progres Pesanan ${dataList['Nama Pemesan']}",
                                                           style: TextStyle(
                                                               color:
                                                                   bluePrimary,
-                                                              fontSize: 15),
+                                                              fontSize: 10.sp),
                                                         ),
                                                         SizedBox(height: 1.h),
                                                         Text(
@@ -192,7 +189,7 @@ class TugasView extends GetView<TugasController> {
                                                           style: TextStyle(
                                                               color:
                                                                   bluePrimary,
-                                                              fontSize: 15),
+                                                              fontSize: 10.sp),
                                                         )
                                                       ],
                                                     )),
@@ -219,7 +216,7 @@ class TugasView extends GetView<TugasController> {
                                                         ? Text(
                                                             "${data['name']}",
                                                             style: TextStyle(
-                                                                fontSize: 25,
+                                                                fontSize: 12.sp,
                                                                 color: HexColor(
                                                                     "#0B0C2B"),
                                                                 fontWeight:
@@ -234,7 +231,7 @@ class TugasView extends GetView<TugasController> {
                                                         ? Text(
                                                             "${data['divisi']}",
                                                             style: TextStyle(
-                                                                fontSize: 20,
+                                                                fontSize: 12.sp,
                                                                 color: HexColor(
                                                                     "#0B0C2B"),
                                                                 fontWeight:
@@ -245,13 +242,13 @@ class TugasView extends GetView<TugasController> {
                                                   ],
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 2.h),
+                                                  padding: EdgeInsets.only(
+                                                      top: 1.8.h),
                                                   child: dataList['photo'] != ''
                                                       ? Text(
                                                           "${dataList['photoDateTime']}",
                                                           style: TextStyle(
-                                                              fontSize: 18,
+                                                              fontSize: 10.sp,
                                                               color: HexColor(
                                                                   "#0B0C2B"),
                                                               fontWeight:
@@ -294,7 +291,7 @@ class TugasView extends GetView<TugasController> {
                                                     ? Text(
                                                         "Pesanan ${dataList['Nama Pemesan']}",
                                                         style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: 12.sp,
                                                             color: HexColor(
                                                                 "#0B0C2B"),
                                                             fontWeight:
@@ -309,7 +306,7 @@ class TugasView extends GetView<TugasController> {
                                                     ? Text(
                                                         "${dataList['detail']}",
                                                         style: TextStyle(
-                                                            fontSize: 20,
+                                                            fontSize: 12.sp,
                                                             color: HexColor(
                                                                 "#0B0C2B"),
                                                             fontWeight:

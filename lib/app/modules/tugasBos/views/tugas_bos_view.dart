@@ -55,10 +55,10 @@ class TugasBosView extends GetView<TugasBosController> {
               return SingleChildScrollView(
                   physics: const BouncingScrollPhysics(
                       decelerationRate: ScrollDecelerationRate.normal),
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 6,
+                  padding: EdgeInsets.only(
+                    left: 3.w,
+                    right: 3.w,
+                    top: 1.h,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -77,7 +77,7 @@ class TugasBosView extends GetView<TugasBosController> {
                               Text(
                                 "Selamat datang, ${data.get('name')}",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 12.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -86,7 +86,7 @@ class TugasBosView extends GetView<TugasBosController> {
                               Text(
                                 "Daftar Pekerjaan Untuk Pegawai Anda",
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 12.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -98,8 +98,7 @@ class TugasBosView extends GetView<TugasBosController> {
                             child: ClipOval(
                               child: Image.network(
                                 data.get('photoUrl'),
-                                height: 45,
-                                width: 45,
+                                width: 11.w,
                               ),
                             ),
                           ),
@@ -111,13 +110,13 @@ class TugasBosView extends GetView<TugasBosController> {
                           Text(
                             "Daftar Tugas",
                             style: TextStyle(
-                              fontSize: 40,
+                              fontSize: 18.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           SizedBox(
-                            width: 36.w,
+                            width: 52.w,
                             height: 9.h,
                           ),
                           IconButton(
@@ -127,128 +126,116 @@ class TugasBosView extends GetView<TugasBosController> {
                                     padding: EdgeInsets.all(1.h),
                                     height: 40.h,
                                     child: SfDateRangePicker(
-                                        view: DateRangePickerView.year,
-                                        selectionColor: bluePrimary,
-                                        rangeSelectionColor:
-                                            bluePrimary.withOpacity(0.2),
-                                        startRangeSelectionColor: bluePrimary,
-                                        endRangeSelectionColor: bluePrimary,
-                                        selectionMode:
-                                            DateRangePickerSelectionMode.range,
-                                        showActionButtons: true,
-                                        onCancel: () => Get.back(),
-                                        onSubmit: (value) {
-                                          if (value != null) {
-                                            if ((value as PickerDateRange)
-                                                    .endDate !=
-                                                null) {
-                                              controller.pickRangeDate(
-                                                  value.startDate!,
-                                                  value.endDate!);
-                                              Get.back();
-                                            } else {
-                                              Get.dialog(Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                backgroundColor: grey1,
-                                                child: Container(
-                                                  width: 350,
-                                                  height: 365,
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 20),
-                                                        child: Center(
-                                                          child: Lottie.asset(
-                                                              'assets/animation/failed.json',
-                                                              height: 140),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 3.h,
-                                                      ),
-                                                      Text(
-                                                        "Terjadi Kesalahan!",
-                                                        style: TextStyle(
-                                                          fontSize: 30,
-                                                          color: bluePrimary,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 1.5.h,
-                                                      ),
-                                                      Text(
-                                                        "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: bluePrimary,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 2.h,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ));
-                                            }
+                                      view: DateRangePickerView.year,
+                                      selectionColor: bluePrimary,
+                                      startRangeSelectionColor: bluePrimary,
+                                      endRangeSelectionColor: bluePrimary,
+                                      rangeSelectionColor:
+                                          bluePrimary.withOpacity(0.2),
+                                      selectionMode:
+                                          DateRangePickerSelectionMode.range,
+                                      showActionButtons: true,
+                                      onCancel: () => Get.back(),
+                                      onSubmit: (value) {
+                                        if (value != null) {
+                                          if ((value as PickerDateRange)
+                                                  .endDate !=
+                                              null) {
+                                            controller.pickRangeDate(
+                                                value.startDate!,
+                                                value.endDate!);
+                                            Get.back();
                                           } else {
                                             Get.dialog(Dialog(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          20)),
+                                                          18.sp)),
                                               backgroundColor: grey1,
                                               child: Container(
-                                                width: 350,
-                                                height: 336,
+                                                width: 55.w,
+                                                height: 28.h,
                                                 child: Column(
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 20),
-                                                      child: Lottie.asset(
-                                                          'assets/animation/failed.json',
-                                                          height: 140),
-                                                    ),
+                                                    Lottie.asset(
+                                                        'assets/animation/alert.json',
+                                                        width: 28.w),
                                                     SizedBox(
-                                                      height: 3.h,
+                                                      height: 1.h,
                                                     ),
-                                                    Center(
-                                                      child: Text(
-                                                        "Terjadi Kesalahan!",
-                                                        style: TextStyle(
-                                                          fontSize: 30,
+                                                    Text(
+                                                      "Terjadi Kesalahan!",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
                                                           color: bluePrimary,
-                                                        ),
-                                                      ),
+                                                          fontWeight:
+                                                              FontWeight.w600),
                                                     ),
                                                     SizedBox(
                                                       height: 1.5.h,
                                                     ),
                                                     Center(
                                                       child: Text(
-                                                        "Tanggal tidak dipilih",
+                                                        "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
                                                         style: TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: 8.sp,
                                                           color: bluePrimary,
                                                         ),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2.h,
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                             ));
                                           }
-                                        }),
+                                        } else {
+                                          Get.dialog(Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        18.sp)),
+                                            backgroundColor: grey1,
+                                            child: Container(
+                                              width: 55.w,
+                                              height: 28.h,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 2.h),
+                                                      child: Lottie.asset(
+                                                          'assets/animation/alert.json',
+                                                          width: 25.w)),
+                                                  SizedBox(
+                                                    height: 3.h,
+                                                  ),
+                                                  Text(
+                                                    "Terjadi Kesalahan!",
+                                                    style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      color: bluePrimary,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 1.5.h,
+                                                  ),
+                                                  Text(
+                                                    "Tanggal Belum Dipilih",
+                                                    style: TextStyle(
+                                                      fontSize: 10.sp,
+                                                      color: bluePrimary,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 2.h,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ));
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ));
                               },
@@ -268,7 +255,7 @@ class TugasBosView extends GetView<TugasBosController> {
                               Text(
                                 "Dalam Proses",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 13.sp,
                                   color: bluePrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -276,7 +263,7 @@ class TugasBosView extends GetView<TugasBosController> {
                               Text(
                                 "Selesai",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 13.sp,
                                   color: HexColor("#0B0C2B"),
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -305,12 +292,20 @@ class TugasBosView extends GetView<TugasBosController> {
                                       return Padding(
                                         padding: EdgeInsets.only(top: 33.h),
                                         child: Center(
-                                          child: Text(
-                                            "Belum Ada Tugas",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: redError,
-                                                fontWeight: FontWeight.w500),
+                                          child: Column(
+                                            children: [
+                                              Lottie.asset(
+                                                  'assets/animation/noData.json',
+                                                  width: 28.w),
+                                              Text(
+                                                "Belum Ada Tugas",
+                                                style: TextStyle(
+                                                    fontSize: 10.sp,
+                                                    color: redError,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       );
@@ -355,11 +350,10 @@ class TugasBosView extends GetView<TugasBosController> {
                                                     () => AnimatedContainer(
                                                       duration: const Duration(
                                                           milliseconds: 100),
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              left: 5,
-                                                              right: 5,
-                                                              top: 20),
+                                                      margin: EdgeInsets.only(
+                                                          left: 2.w,
+                                                          right: 2.w,
+                                                          top: 1.h),
                                                       height: tugasC.isChanged
                                                                   .value ==
                                                               index
@@ -370,7 +364,8 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         color: randomColor(),
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(25),
+                                                                .circular(
+                                                                    16.sp),
                                                       ),
                                                       padding: EdgeInsets.only(
                                                           left: 0.8.w,
@@ -393,7 +388,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
-                                                                            21,
+                                                                            12.sp,
                                                                         color:
                                                                             white,
                                                                         fontWeight:
@@ -407,7 +402,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            10.sp,
                                                                         color:
                                                                             white,
                                                                         fontWeight:
@@ -426,9 +421,9 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                     child: Text(
                                                                         "${doc['Status']}",
                                                                         style:
-                                                                            const TextStyle(
+                                                                            TextStyle(
                                                                           fontSize:
-                                                                              21,
+                                                                              12.sp,
                                                                           color:
                                                                               Colors.yellow,
                                                                           fontWeight:
@@ -462,7 +457,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
-                                                                            20,
+                                                                            13.sp,
                                                                         color:
                                                                             bluePrimary,
                                                                         fontWeight:
@@ -497,8 +492,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                             ConnectionState.waiting) {
                                                                           return const Loading();
                                                                         }
-                                                                        var dataTgs =
-                                                                            snapshot.data!;
+
                                                                         return SingleChildScrollView(
                                                                           child: ListView.builder(
                                                                               shrinkWrap: true,
@@ -508,7 +502,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                               itemBuilder: (context, index) {
                                                                                 Map<String, dynamic> listTugas = snapshot.data!.docs[index].data();
                                                                                 return Padding(
-                                                                                  padding: const EdgeInsets.only(top: 20, left: 18, right: 18, bottom: 6),
+                                                                                  padding: EdgeInsets.only(top: 3.h, left: 2.h, right: 2.h, bottom: 1.h),
                                                                                   child: Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -521,7 +515,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                                           Text(
                                                                                             "${listTugas['Divisi']}",
                                                                                             style: TextStyle(
-                                                                                              fontSize: 20,
+                                                                                              fontSize: 12.sp,
                                                                                               color: white,
                                                                                               fontWeight: FontWeight.w500,
                                                                                             ),
@@ -530,7 +524,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                                           Text(
                                                                                             "${listTugas['Keterangan']}",
                                                                                             style: TextStyle(
-                                                                                              fontSize: 15,
+                                                                                              fontSize: 10.sp,
                                                                                               color: white,
                                                                                               fontWeight: FontWeight.w400,
                                                                                             ),
@@ -539,7 +533,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                                       ),
                                                                                       Icon(
                                                                                         PhosphorIcons.circleBold,
-                                                                                        size: 15,
+                                                                                        size: 12.sp,
                                                                                         color: HexColor("#0B0C2B"),
                                                                                       ),
                                                                                     ],
@@ -556,7 +550,6 @@ class TugasBosView extends GetView<TugasBosController> {
                                                       ),
                                                     ),
                                                   ));
-                                              ;
                                             }),
                                       ),
                                     );
@@ -573,8 +566,24 @@ class TugasBosView extends GetView<TugasBosController> {
                                   }
                                   if (snapshot.data?.length == 0 ||
                                       snapshot.data == null) {
-                                    return const Center(
-                                      child: Text('KOSONGGGGG'),
+                                    return Padding(
+                                      padding: EdgeInsets.only(top: 33.h),
+                                      child: Center(
+                                        child: Column(
+                                          children: [
+                                            Lottie.asset(
+                                                'assets/animation/noData.json',
+                                                width: 28.w),
+                                            Text(
+                                              "Belum Ada Tugas Selesai",
+                                              style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  color: redError,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     );
                                   }
                                   tugasC.allData.assignAll(snapshot.data!);
@@ -594,24 +603,22 @@ class TugasBosView extends GetView<TugasBosController> {
                                               ? tugasC.allData[index].data()!
                                               : tugasC.filteredData[index]
                                                   .data()!;
-                                          if (listSelesai.length == 0) {
-                                            return const Center(
-                                              child: Text('KOSONGGGGG'),
-                                            );
-                                          }
 
                                           return Padding(
                                               padding: EdgeInsets.only(
                                                   bottom: 0.1.h),
                                               child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    left: 5, right: 5, top: 20),
+                                                margin: EdgeInsets.only(
+                                                    left: 2.w,
+                                                    right: 2.w,
+                                                    top: 1.h),
                                                 height: 10.h,
                                                 width: 304.w,
                                                 decoration: BoxDecoration(
                                                   color: brick,
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(
+                                                          16.sp),
                                                 ),
                                                 padding: EdgeInsets.only(
                                                     left: 0.8.w,
@@ -629,7 +636,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         Text(
                                                             "Pesanan ${listSelesai['Nama Pemesan']}",
                                                             style: TextStyle(
-                                                              fontSize: 21,
+                                                              fontSize: 12.sp,
                                                               color: white,
                                                               fontWeight:
                                                                   FontWeight
@@ -639,7 +646,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                         Text(
                                                             "Tenggat : ${dateFormatterDefault.format(DateTime.parse(listSelesai['Tanggal Tenggat']))}",
                                                             style: TextStyle(
-                                                              fontSize: 15,
+                                                              fontSize: 10.sp,
                                                               color: white,
                                                               fontWeight:
                                                                   FontWeight
@@ -657,7 +664,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                           child: Text(
                                                               "${listSelesai['Status']}",
                                                               style: TextStyle(
-                                                                fontSize: 21,
+                                                                fontSize: 12.sp,
                                                                 color: white,
                                                                 fontWeight:
                                                                     FontWeight

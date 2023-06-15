@@ -27,9 +27,9 @@ class ProfilView extends GetView<ProfilController> {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
               padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 6,
+                left: 3.w,
+                right: 3.w,
+                top: 1.h,
               ),
               child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   stream: home.berandaBos(),
@@ -55,7 +55,7 @@ class ProfilView extends GetView<ProfilController> {
                                 Text(
                                   "Halo ${data.get('name')}",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -64,23 +64,21 @@ class ProfilView extends GetView<ProfilController> {
                                 Text(
                                   "Halaman Profil Anda",
                                   style: TextStyle(
-                                    fontSize: 19,
+                                    fontSize: 12.sp,
                                     color: HexColor("#0B0C2B"),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ],
                             ),
-                            Padding(
-                                padding: const EdgeInsets.only(right: 0),
-                                child: IconButton(
-                                    onPressed: () {
-                                      authC.logout();
-                                    },
-                                    icon: Icon(
-                                      PhosphorIcons.signOut,
-                                      color: HexColor("#D90000"),
-                                    ))),
+                            IconButton(
+                                onPressed: () {
+                                  authC.logout();
+                                },
+                                icon: Icon(
+                                  PhosphorIcons.signOut,
+                                  color: HexColor("#D90000"),
+                                )),
                           ],
                         ),
                         SizedBox(
@@ -94,6 +92,7 @@ class ProfilView extends GetView<ProfilController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
+                                  width: 85,
                                   height: 85,
                                 ),
                               ),
@@ -109,7 +108,7 @@ class ProfilView extends GetView<ProfilController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 20),
+                                    padding: EdgeInsets.only(left: 6.w),
                                     child: Text(
                                       data.get('name'),
                                       style: TextStyle(
@@ -120,11 +119,11 @@ class ProfilView extends GetView<ProfilController> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 3.w, right: 2.w),
                                     child: Icon(
                                       PhosphorIcons.pencilSimple,
-                                      size: 20,
+                                      size: 15.sp,
                                       color: HexColor("#0B0C2B"),
                                     ),
                                   ),
@@ -137,7 +136,7 @@ class ProfilView extends GetView<ProfilController> {
                             Text(
                               data.get('divisi'),
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 12.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -148,7 +147,7 @@ class ProfilView extends GetView<ProfilController> {
                             Text(
                               data.get('email'),
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 10.sp,
                                 color: HexColor("#0B0C2B"),
                                 fontWeight: FontWeight.w500,
                               ),

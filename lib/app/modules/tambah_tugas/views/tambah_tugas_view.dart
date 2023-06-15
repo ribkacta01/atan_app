@@ -23,9 +23,9 @@ class TambahTugasView extends GetView<TambahTugasController> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
             padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
+              left: 3.w,
+              right: 3.w,
+              top: 1.h,
             ),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: authC.getUserRoles(),
@@ -51,9 +51,9 @@ class TambahTugasView extends GetView<TambahTugasController> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 17,
-                                right: 20,
-                                top: 6,
+                                left: 3.w,
+                                right: 3.w,
+                                top: 1.h,
                               ),
                               child: Column(
                                 mainAxisAlignment:
@@ -63,7 +63,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                   Text(
                                     "Halo ${data.get('name')}",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -72,7 +72,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                   Text(
                                     "Tambahkan Pekerjaan Pegawai ",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -81,12 +81,11 @@ class TambahTugasView extends GetView<TambahTugasController> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 5),
+                              padding: EdgeInsets.only(right: 3.w),
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  height: 45,
-                                  width: 45,
+                                  width: 11.sp,
                                 ),
                               ),
                             ),
@@ -94,11 +93,11 @@ class TambahTugasView extends GetView<TambahTugasController> {
                         ),
                         SizedBox(height: 6.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.only(left: 3.w),
                           child: Text(
                             "Berikan Tugas",
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 18.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w600,
                             ),
@@ -354,7 +353,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                                 borderSide: BorderSide(
                                                     color:
                                                         HexColor("#BFC0D2"))),
-                                            hintText: "Pilih Tenggat Pesanan",
+                                            hintText: "Pilih Tenggat Tugas",
                                             errorStyle: TextStyle(
                                                 color: Colors.white,
                                                 background: Paint()

@@ -69,9 +69,9 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                  left: 17,
-                                  right: 20,
-                                  top: 6,
+                                  left: 3.w,
+                                  right: 3.w,
+                                  top: 1.h,
                                 ),
                                 child: Column(
                                   mainAxisAlignment:
@@ -81,7 +81,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                     Text(
                                       "Halo ${data.get('name')}",
                                       style: TextStyle(
-                                        fontSize: 19,
+                                        fontSize: 12.sp,
                                         color: HexColor("#0B0C2B"),
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -90,7 +90,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                     Text(
                                       "Mulai Perencanaan Bahan Baku ",
                                       style: TextStyle(
-                                        fontSize: 19,
+                                        fontSize: 12.sp,
                                         color: HexColor("#0B0C2B"),
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -99,23 +99,22 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 5),
+                                padding: EdgeInsets.only(right: 3.w),
                                 child: ClipOval(
                                   child: Image.network(
                                     data.get('photoUrl'),
-                                    height: 45,
-                                    width: 45,
+                                    width: 11.w,
                                   ),
                                 ),
                               ),
                             ]),
                         SizedBox(height: 6.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.only(left: 3.w),
                           child: Text(
-                            "Sering Diminta",
+                            "Daftar Kebutuhan Pesanan",
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 15.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w600,
                             ),
@@ -138,12 +137,12 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                         children: [
                                           Lottie.asset(
                                               'assets/animation/noData.json',
-                                              height: 155),
+                                              width: 35.w),
                                           // SizedBox(height: 2.h),
                                           Text(
                                               "Belum Ada Item yang Ditambahkan",
                                               style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 10.sp,
                                                 color: grey1,
                                               ))
                                         ],
@@ -153,7 +152,8 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                               return ListView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(top: 2, bottom: 7),
+                                  padding: EdgeInsets.only(
+                                      top: 1.5.h, bottom: 1.5.h),
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> data =
@@ -169,17 +169,15 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                           child: Container(
                                             // margin: EdgeInsets.only(left: 12, right: 12),
                                             height: 11.h,
-                                            width: 304.w,
+                                            width: 307.w,
                                             decoration: BoxDecoration(
                                               color: randomBlue(),
                                               borderRadius:
-                                                  BorderRadius.circular(25),
+                                                  BorderRadius.circular(16.sp),
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  left: 3.w,
-                                                  bottom: 0.1.h,
-                                                  right: 3.w),
+                                                  left: 0.8.w, bottom: 0.1.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -192,15 +190,21 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20)),
-                                                    height: 8.h,
-                                                    width: 8.h,
+                                                                .circular(
+                                                                    14.sp)),
+                                                    height: 8.5.h,
+                                                    width: 8.5.h,
                                                     child: Center(
-                                                      child: Icon(
-                                                        PhosphorIcons.checkBold,
-                                                        size: 35,
-                                                        color:
-                                                            HexColor("#0B0C2B"),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(1.w),
+                                                        child: Icon(
+                                                          PhosphorIcons
+                                                              .checkBold,
+                                                          size: 25.sp,
+                                                          color: HexColor(
+                                                              "#0B0C2B"),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -214,13 +218,13 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                top: 1.5.h,
-                                                                right: 5,
-                                                                bottom: 1),
+                                                          top: 1.h,
+                                                          right: 2.w,
+                                                        ),
                                                         child: Text(
                                                             data['Nama Barang'],
                                                             style: TextStyle(
-                                                              fontSize: 18,
+                                                              fontSize: 13.sp,
                                                               color: white,
                                                               fontWeight:
                                                                   FontWeight
@@ -230,7 +234,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       SizedBox(height: 1.h),
                                                       Text(data['Keterangan'],
                                                           style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 13.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -239,14 +243,14 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       Text(
                                                           data['Jumlah Barang'],
                                                           style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 13.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
                                                     ],
                                                   ),
-                                                  SizedBox(width: 2.w),
+                                                  SizedBox(width: 6.w),
                                                   IconButton(
                                                       enableFeedback: true,
                                                       onPressed: () {

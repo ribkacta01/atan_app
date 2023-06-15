@@ -47,25 +47,25 @@ class EditPegawaiController extends GetxController {
       });
 
       Get.dialog(Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.sp)),
           backgroundColor: grey1,
-          child: SizedBox(
-            width: 350,
-            height: 336,
+          child: Container(
+            width: 68.w,
+            height: 32.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/animation/check.json', height: 140),
+                Lottie.asset('assets/animation/check.json', width: 28.w),
                 SizedBox(
                   height: 3.h,
                 ),
                 Text(
-                  'Data Pegawai Diubah!',
+                  'Data Pegawai Ditambahkan!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: bluePrimary,
-                      fontSize: 25,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -74,19 +74,19 @@ class EditPegawaiController extends GetxController {
                 Container(
                     width: 15.w,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11), color: white),
+                        borderRadius: BorderRadius.circular(8.sp),
+                        color: white),
                     child: TextButton(
                         onPressed: () {
                           Get.back();
                           Get.back();
                         },
                         child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 11.0, bottom: 11.0),
+                          padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                           child: Text(
                             'OK',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,
                                 color: bluePrimary),
                           ),
@@ -96,37 +96,33 @@ class EditPegawaiController extends GetxController {
           )));
     } catch (e) {
       Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.sp)),
         backgroundColor: grey1,
         child: Container(
-          width: 350,
-          height: 336,
+          width: 68.w,
+          height: 32.h,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child:
-                    Lottie.asset('assets/animation/failed.json', height: 140),
-              ),
+              Lottie.asset('assets/animation/failed.json', width: 28.w),
               SizedBox(
                 height: 3.h,
               ),
               Text(
-                "Terjadi Kesalahan!",
+                'Terjadi Kesalahan!',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 30,
-                  color: bluePrimary,
-                ),
-              ),
-              SizedBox(
-                height: 1.5.h,
+                    color: bluePrimary,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500),
               ),
               Text(
-                "Tidak Dapat Mengubah Data",
+                'Tidak Dapat Menghapus Data',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 20,
-                  color: bluePrimary,
-                ),
+                    color: bluePrimary,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),

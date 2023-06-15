@@ -33,10 +33,10 @@ class BerandaView extends GetView<BerandaController> {
             }
             var data = snapshot.data!;
             return SingleChildScrollView(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 6,
+              padding: EdgeInsets.only(
+                left: 3.w,
+                right: 3.w,
+                top: 1.h,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -55,8 +55,8 @@ class BerandaView extends GetView<BerandaController> {
                           Text(
                             "Selamat datang, ${data.get('name')}",
                             style: TextStyle(
-                              fontSize: 19,
-                              color: HexColor("#0B0C2B"),
+                              fontSize: 12.sp,
+                              color: bluePrimary,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -64,31 +64,30 @@ class BerandaView extends GetView<BerandaController> {
                           Text(
                             "Daftar Tugas Pekerjaan Anda Disini",
                             style: TextStyle(
-                              fontSize: 19,
-                              color: HexColor("#0B0C2B"),
+                              fontSize: 12.sp,
+                              color: bluePrimary,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 5),
+                        padding: EdgeInsets.only(right: 3.w),
                         child: ClipOval(
                           child: Image.network(
                             data.get('photoUrl'),
-                            height: 45,
-                            width: 45,
+                            width: 11.w,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 6.h),
+                  SizedBox(height: 5.h),
                   Text(
                     "Tugas Saya",
                     style: TextStyle(
-                      fontSize: 40,
-                      color: HexColor("#0B0C2B"),
+                      fontSize: 22.sp,
+                      color: bluePrimary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -102,8 +101,8 @@ class BerandaView extends GetView<BerandaController> {
                         var dataTgs = snapshot.data!;
                         return SingleChildScrollView(
                           child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 5, right: 5, top: 20),
+                              margin: EdgeInsets.only(
+                                  left: 1.w, right: 1.w, top: 3.h),
                               height: 65.h,
                               width: 304.w,
                               decoration: BoxDecoration(
@@ -115,7 +114,7 @@ class BerandaView extends GetView<BerandaController> {
                                       child: Text(
                                         "Belum Ada Tugas yang Ditambahkan",
                                         style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 10.sp,
                                             color: bluePrimary,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -133,156 +132,150 @@ class BerandaView extends GetView<BerandaController> {
                                               Text(
                                                 "Segera Selesaikan Tugasmu!",
                                                 style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: HexColor("#0B0C2B"),
+                                                  fontSize: 17.sp,
+                                                  color: bluePrimary,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
                                             ],
                                           ),
                                           SizedBox(height: 5.h),
-                                          Scrollbar(
-                                            thumbVisibility: true,
-                                            thickness: 10,
-                                            child: SingleChildScrollView(
-                                              child: SizedBox(
-                                                height: 50.h,
-                                                child: ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      const AlwaysScrollableScrollPhysics(),
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.1.h,
-                                                      bottom: 0.1.h),
-                                                  itemCount: snapshot
-                                                      .data!.docs.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    Map<String, dynamic>
-                                                        listData = snapshot
-                                                            .data!.docs[index]
-                                                            .data();
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .ltr,
-                                                            children: [
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Row(
-                                                                    children: [
-                                                                      Icon(
-                                                                        PhosphorIcons
-                                                                            .circleFill,
-                                                                        size: 6
-                                                                            .sp,
-                                                                        color:
-                                                                            bluePrimary,
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              2.w),
-                                                                      Text(
-                                                                        "${listData['Nama Pemesan']}",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              20,
-                                                                          color:
-                                                                              HexColor("#0B0C2B"),
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height:
-                                                                          1.h),
-                                                                  Text(
-                                                                    "Tenggat Pesanan : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      color: HexColor(
-                                                                          "#0B0C2B"),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
+                                          SingleChildScrollView(
+                                            child: SizedBox(
+                                              height: 50.h,
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const AlwaysScrollableScrollPhysics(),
+                                                padding: EdgeInsets.only(
+                                                    top: 0.1.h, bottom: 0.1.h),
+                                                itemCount:
+                                                    snapshot.data!.docs.length,
+                                                itemBuilder: (context, index) {
+                                                  Map<String, dynamic>
+                                                      listData = snapshot
+                                                          .data!.docs[index]
+                                                          .data();
+                                                  return Padding(
+                                                    padding:
+                                                        EdgeInsets.all(2.w),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          textDirection:
+                                                              TextDirection.ltr,
+                                                          children: [
+                                                            Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Icon(
+                                                                      PhosphorIcons
+                                                                          .circleFill,
+                                                                      size:
+                                                                          6.sp,
+                                                                      color:
+                                                                          bluePrimary,
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height:
-                                                                          1.h),
-                                                                  Text(
-                                                                    "${listData['Keterangan']}",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      color: HexColor(
-                                                                          "#0B0C2B"),
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
+                                                                    SizedBox(
+                                                                        width: 2
+                                                                            .w),
+                                                                    Text(
+                                                                      "${listData['Nama Pemesan']}",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12.sp,
+                                                                        color: HexColor(
+                                                                            "#0B0C2B"),
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
                                                                     ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        1.h),
+                                                                Text(
+                                                                  "Tenggat Tugas : ${dateFormatterDefault.format(DateTime.parse(listData['Tanggal Tenggat']))}",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        10.sp,
+                                                                    color: HexColor(
+                                                                        "#0B0C2B"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
                                                                   ),
-                                                                ],
-                                                              ),
-                                                              IconButton(
-                                                                  onPressed: c
-                                                                          .disabledIndexes
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        1.h),
+                                                                Text(
+                                                                  "${listData['Keterangan']}",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        8.sp,
+                                                                    color: HexColor(
+                                                                        "#0B0C2B"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            IconButton(
+                                                                onPressed: c
+                                                                        .disabledIndexes
+                                                                        .contains(
+                                                                            index)
+                                                                    ? () {}
+                                                                    : () {
+                                                                        c.uploadImage(
+                                                                            '${listData['id']}');
+                                                                        c.disableIconButton(
+                                                                            index);
+                                                                      },
+                                                                icon: Icon(
+                                                                  c.disabledIndexes
                                                                           .contains(
                                                                               index)
-                                                                      ? () {}
-                                                                      : () {
-                                                                          c.uploadImage(
-                                                                              '${listData['id']}');
-                                                                          c.disableIconButton(
-                                                                              index);
-                                                                        },
-                                                                  icon: Icon(
-                                                                    c.disabledIndexes.contains(
-                                                                            index)
-                                                                        ? PhosphorIcons
-                                                                            .cameraSlash
-                                                                        : PhosphorIcons
-                                                                            .camera,
-                                                                    size: 25,
-                                                                    color: c.disabledIndexes
-                                                                            .contains(index)
-                                                                        ? grey2
-                                                                        : bluePrimary,
-                                                                  ))
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
+                                                                      ? PhosphorIcons
+                                                                          .cameraSlash
+                                                                      : PhosphorIcons
+                                                                          .camera,
+                                                                  size: 16.sp,
+                                                                  color: c.disabledIndexes
+                                                                          .contains(
+                                                                              index)
+                                                                      ? grey2
+                                                                      : bluePrimary,
+                                                                ))
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
@@ -290,6 +283,7 @@ class BerandaView extends GetView<BerandaController> {
                                       ))),
                         );
                       }),
+                  SizedBox(height: 3.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -297,14 +291,14 @@ class BerandaView extends GetView<BerandaController> {
                       Text(
                         "Riwayat Tugas",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 18.sp,
                           color: HexColor("#0B0C2B"),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       SizedBox(
                         width: 20.w,
-                        height: 9.h,
+                        height: 4.h,
                       ),
                       IconButton(
                           onPressed: () {
@@ -340,16 +334,16 @@ class BerandaView extends GetView<BerandaController> {
                         var dataRiwayat = snapshot.data!;
                         if (dataRiwayat.docs.isEmpty) {
                           return Padding(
-                              padding: EdgeInsets.only(top: 20.h),
+                              padding: EdgeInsets.only(bottom: 3.h),
                               child: Center(
                                 child: Column(
                                   children: [
                                     Lottie.asset('assets/animation/noData.json',
-                                        height: 155),
+                                        width: 30.w),
                                     // SizedBox(height: 2.h),
                                     Text("Belum Ada Tugas Selesai",
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 10.sp,
                                           color: grey1,
                                         ))
                                   ],
@@ -359,7 +353,7 @@ class BerandaView extends GetView<BerandaController> {
                         return ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.only(top: 2, bottom: 5),
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
                               Map<String, dynamic> listRiwayat =
@@ -368,8 +362,8 @@ class BerandaView extends GetView<BerandaController> {
                               return Padding(
                                   padding: EdgeInsets.only(bottom: 1.h),
                                   child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 5, right: 5),
+                                    margin:
+                                        EdgeInsets.only(left: 1.w, right: 1.w),
                                     height: 10.h,
                                     width: 304.w,
                                     decoration: BoxDecoration(
@@ -389,7 +383,7 @@ class BerandaView extends GetView<BerandaController> {
                                             Text(
                                                 "Pesanan ${listRiwayat['Nama Pemesan']}",
                                                 style: TextStyle(
-                                                  fontSize: 21,
+                                                  fontSize: 13.sp,
                                                   color: grey1,
                                                   fontWeight: FontWeight.w500,
                                                 )),
@@ -397,7 +391,7 @@ class BerandaView extends GetView<BerandaController> {
                                             Text(
                                                 "Tenggat : ${dateFormatterDefault.format(DateTime.parse(listRiwayat['Tanggal Tenggat']))}",
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 10.sp,
                                                   color: grey1,
                                                   fontWeight: FontWeight.w500,
                                                 )),
@@ -412,7 +406,7 @@ class BerandaView extends GetView<BerandaController> {
                                               child: Text(
                                                   "${listRiwayat['Status']}",
                                                   style: TextStyle(
-                                                    fontSize: 21,
+                                                    fontSize: 13.sp,
                                                     color: white,
                                                     fontWeight: FontWeight.w800,
                                                   )),

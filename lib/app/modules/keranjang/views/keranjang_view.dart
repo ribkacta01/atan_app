@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -20,7 +21,6 @@ class KeranjangView extends GetView<KeranjangController> {
   const KeranjangView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final authC = Get.put(AuthController());
     final home = Get.put(BerandaBosController());
     final cartC = Get.put(KeranjangController());
     cartC.filteredData.clear();
@@ -32,16 +32,14 @@ class KeranjangView extends GetView<KeranjangController> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // return const Loading();
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Loading();
               }
               var data = snapshot.data!;
               return SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 6,
+                padding: EdgeInsets.only(
+                  left: 3.w,
+                  right: 3.w,
+                  top: 1.h,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -58,54 +56,53 @@ class KeranjangView extends GetView<KeranjangController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Halo ${data.get('name')}",
+                              "Selamat datang, ${data.get('name')}",
                               style: TextStyle(
-                                fontSize: 19,
-                                color: HexColor("#0B0C2B"),
+                                fontSize: 12.sp,
+                                color: bluePrimary,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             SizedBox(height: 1.h),
                             Text(
-                              "Mulai Perencanaan Bahan Baku ",
+                              "Daftar Tugas Pekerjaan Anda Disini",
                               style: TextStyle(
-                                fontSize: 19,
-                                color: HexColor("#0B0C2B"),
+                                fontSize: 12.sp,
+                                color: bluePrimary,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 5),
+                          padding: EdgeInsets.only(right: 3.w),
                           child: ClipOval(
                             child: Image.network(
                               data.get('photoUrl'),
-                              height: 45,
-                              width: 45,
+                              width: 11.w,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 2.5.h),
+                    SizedBox(height: 3.h),
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
+                          padding: EdgeInsets.only(bottom: 8.sp),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: HexColor("#0B0C2B"),
-                                borderRadius: BorderRadius.circular(20)),
+                                borderRadius: BorderRadius.circular(18.sp)),
                             height: 3.5.h,
                             width: 9.h,
                             child: Center(
                               child: TextButton(
                                 onPressed: () {},
-                                child: const Text(
+                                child: Text(
                                   "Terbaru",
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 10.sp,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -114,110 +111,61 @@ class KeranjangView extends GetView<KeranjangController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 55.w),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, bottom: 15),
-                          child: IconButton(
-                            icon: Icon(
-                              PhosphorIcons.slidersHorizontal,
-                              color: bluePrimary,
-                            ),
-                            onPressed: () {
-                              Get.dialog(Dialog(
-                                child: Container(
-                                  padding: EdgeInsets.all(1.h),
-                                  height: 40.h,
-                                  child: SfDateRangePicker(
-                                    view: DateRangePickerView.year,
-                                    selectionMode:
-                                        DateRangePickerSelectionMode.range,
-                                    showActionButtons: true,
-                                    onCancel: () => Get.back(),
-                                    onSubmit: (value) {
-                                      if (value != null) {
-                                        if ((value as PickerDateRange)
-                                                .endDate !=
-                                            null) {
-                                          controller.pickRangeDate(
-                                              value.startDate!, value.endDate!);
-                                          Get.back();
-                                        } else {
-                                          Get.dialog(Dialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            backgroundColor: bluePrimary,
-                                            child: Container(
-                                              width: 350,
-                                              height: 336,
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 20),
-                                                    child: Icon(
-                                                      PhosphorIcons.xCircle,
-                                                      color: white,
-                                                      size: 110,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 3.h,
-                                                  ),
-                                                  Text(
-                                                    "Terjadi Kesalahan!",
-                                                    style: TextStyle(
-                                                      fontSize: 30,
-                                                      color: white,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.5.h,
-                                                  ),
-                                                  Text(
-                                                    "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: white,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2.h,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                        }
+                        SizedBox(
+                          width: 60.w,
+                          height: 1.h,
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            PhosphorIcons.slidersHorizontal,
+                            color: bluePrimary,
+                          ),
+                          onPressed: () {
+                            Get.dialog(Dialog(
+                              child: Container(
+                                padding: EdgeInsets.all(1.h),
+                                height: 40.h,
+                                child: SfDateRangePicker(
+                                  view: DateRangePickerView.year,
+                                  selectionColor: bluePrimary,
+                                  startRangeSelectionColor: bluePrimary,
+                                  endRangeSelectionColor: bluePrimary,
+                                  rangeSelectionColor:
+                                      bluePrimary.withOpacity(0.2),
+                                  selectionMode:
+                                      DateRangePickerSelectionMode.range,
+                                  showActionButtons: true,
+                                  onCancel: () => Get.back(),
+                                  onSubmit: (value) {
+                                    if (value != null) {
+                                      if ((value as PickerDateRange).endDate !=
+                                          null) {
+                                        controller.pickRangeDate(
+                                            value.startDate!, value.endDate!);
+                                        Get.back();
                                       } else {
                                         Get.dialog(Dialog(
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(20)),
+                                                  BorderRadius.circular(18.sp)),
                                           backgroundColor: bluePrimary,
                                           child: Container(
-                                            width: 350,
-                                            height: 336,
+                                            width: 50.w,
+                                            height: 68.h,
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Icon(
-                                                    PhosphorIcons.xCircle,
-                                                    color: white,
-                                                    size: 110,
-                                                  ),
-                                                ),
+                                                    padding: EdgeInsets.only(
+                                                        top: 5.h),
+                                                    child: Lottie.asset(
+                                                        'assets/animation/alert.json')),
                                                 SizedBox(
                                                   height: 3.h,
                                                 ),
                                                 Text(
                                                   "Terjadi Kesalahan!",
                                                   style: TextStyle(
-                                                    fontSize: 30,
+                                                    fontSize: 20.sp,
                                                     color: white,
                                                   ),
                                                 ),
@@ -225,9 +173,9 @@ class KeranjangView extends GetView<KeranjangController> {
                                                   height: 1.5.h,
                                                 ),
                                                 Text(
-                                                  "Tanggal tidak dipilih",
+                                                  "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
                                                   style: TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: 15.sp,
                                                     color: white,
                                                   ),
                                                 ),
@@ -239,12 +187,56 @@ class KeranjangView extends GetView<KeranjangController> {
                                           ),
                                         ));
                                       }
-                                    },
-                                  ),
+                                    } else {
+                                      Get.dialog(Dialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.sp)),
+                                        backgroundColor: grey1,
+                                        child: Container(
+                                          width: 55.w,
+                                          height: 28.h,
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 2.h),
+                                                  child: Lottie.asset(
+                                                      'assets/animation/alert.json',
+                                                      width: 25.w)),
+                                              SizedBox(
+                                                height: 3.h,
+                                              ),
+                                              Text(
+                                                "Terjadi Kesalahan!",
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                  color: bluePrimary,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 1.5.h,
+                                              ),
+                                              Text(
+                                                "Tanggal Belum Dipilih",
+                                                style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  color: bluePrimary,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ));
+                                    }
+                                  },
                                 ),
-                              ));
-                            },
-                          ),
+                              ),
+                            ));
+                          },
                         ),
                       ],
                     ),
@@ -260,13 +252,23 @@ class KeranjangView extends GetView<KeranjangController> {
                           if (snapshot.data == null ||
                               snapshot.data!.length == 0) {
                             return Padding(
-                                padding: EdgeInsets.only(top: 33.h),
-                                child: Center(
-                                    child: Text("Belum Ada Pesanan",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: redError,
-                                            fontWeight: FontWeight.w500))));
+                              padding: EdgeInsets.only(top: 33.h),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Lottie.asset('assets/animation/noData.json',
+                                        width: 28.w),
+                                    Text(
+                                      "Belum Ada Pesanan",
+                                      style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: redError,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
                           }
 
                           cartC.allData.assignAll(snapshot.data!);
@@ -275,7 +277,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 padding:
-                                    const EdgeInsets.only(top: 2, bottom: 7),
+                                    EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
                                 itemCount: cartC.filteredData.isEmpty
                                     ? cartC.allData.length
                                     : cartC.filteredData.length,
@@ -299,7 +301,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                           decoration: BoxDecoration(
                                             color: generateRandomColor(),
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(16.sp),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.only(
@@ -315,16 +317,17 @@ class KeranjangView extends GetView<KeranjangController> {
                                                       color: Colors.white,
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              20)),
-                                                  height: 8.h,
-                                                  width: 8.h,
+                                                              14.sp)),
+                                                  height: 8.5.h,
+                                                  width: 8.5.h,
                                                   child: Center(
-                                                    child: IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(1.w),
+                                                      child: Icon(
                                                           PhosphorIcons
                                                               .dotsThreeOutlineFill,
-                                                          size: 35,
+                                                          size: 25.sp,
                                                           color: bluePrimary),
                                                     ),
                                                   ),
@@ -340,7 +343,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                           top: 2.5.h, right: 5),
                                                       child: Text(data['nama'],
                                                           style: TextStyle(
-                                                            fontSize: 21,
+                                                            fontSize: 13.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -350,7 +353,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                     Text(
                                                         '${dateFormatterDefault.format(DateTime.parse(data['date']))}',
                                                         style: TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: 13.sp,
                                                           color: white,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -368,7 +371,8 @@ class KeranjangView extends GetView<KeranjangController> {
                                                           arguments: data);
                                                     },
                                                     icon: Icon(
-                                                      PhosphorIcons.caretRight,
+                                                      PhosphorIcons
+                                                          .caretRightBold,
                                                       color: white,
                                                     )),
                                               ],
