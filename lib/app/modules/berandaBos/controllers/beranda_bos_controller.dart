@@ -71,7 +71,6 @@ class BerandaBosController extends GetxController {
     return firestore
         .collection("Tugas")
         .where('photo', isNotEqualTo: '')
-        .orderBy("photo", descending: false)
         .snapshots();
   }
 

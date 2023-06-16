@@ -12,16 +12,20 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../../util/Loading.dart';
+
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/item_pesanan_kry_controller.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class ItemPesananKryView extends GetView<ItemPesananKryController> {
   const ItemPesananKryView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     var doc = Get.arguments;
-    var docName = '${doc['nama']} - ${doc['date']}';
+    var docName =
+        '${doc['nama']} - ${dateFormatterDefault.format(DateTime.parse(doc['date']))}';
+
     final authC = Get.put(AuthController());
     final itemC = Get.put(ItemPesananKryController());
     return Scaffold(
@@ -49,7 +53,9 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -126,7 +132,10 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return Loading();
+                                return Center(
+                                    child: Lottie.asset(
+                                        'assets/animation/loading.json',
+                                        height: 145));
                               }
                               if (snapshot.data == null ||
                                   snapshot.data!.docs.length == 0) {
@@ -158,8 +167,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> data =
                                         snapshot.data!.docs[index].data();
-                                    var docNameItem =
-                                        '${data['Nama Barang']} - ${data['Keterangan']}';
+                                    var docNameItem = '${data['id']}';
 
                                     return Padding(
                                       padding: EdgeInsets.only(bottom: 2.h),

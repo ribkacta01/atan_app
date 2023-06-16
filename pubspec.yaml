@@ -13,6 +13,7 @@ dependencies:
   crypto: ^3.0.1
   cupertino_icons: ^1.0.2
   dio: ^5.2.0+1
+  dotted_dashed_line: ^0.0.3
   dropdown_search: ^5.0.3
   firebase_auth: ^4.2.6
   firebase_core: ^2.5.0
@@ -35,8 +36,6 @@ dependencies:
   rxdart: ^0.27.7
   sizer: ^2.0.15
   syncfusion_flutter_datepicker: ^20.4.52
-
-  
 
 dev_dependencies:
   flutter_lints: ^2.0.0

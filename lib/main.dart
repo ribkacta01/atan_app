@@ -7,14 +7,15 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hexcolor/hexcolor.dart';
+
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 import 'app/controller/auth_controller.dart';
 import 'app/controller/fcm_controller.dart';
 import 'app/modules/splash_screen/views/splash_screen_view.dart';
 import 'app/routes/app_pages.dart';
-import 'app/util/Loading.dart';
+
 import 'firebase_options.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -76,7 +77,9 @@ class AtanApp extends StatelessWidget {
                   });
             });
           }
-          return const Loading();
+          return Center(
+              child:
+                  Lottie.asset('assets/animation/loading.json', height: 145));
         });
   }
 }

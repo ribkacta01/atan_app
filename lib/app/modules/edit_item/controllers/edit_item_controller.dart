@@ -92,7 +92,7 @@ class EditItemController extends GetxController {
               Padding(
                 padding: EdgeInsets.only(top: 2.h),
                 child:
-                    Lottie.asset('assets/animation/failed.json', width: 30.sp),
+                    Lottie.asset('assets/animation/failed.json', width: 28.w),
               ),
               SizedBox(
                 height: 3.h,

@@ -1,14 +1,13 @@
-import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/color.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/edit_pegawai_controller.dart';
@@ -18,7 +17,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
   @override
   Widget build(BuildContext context) {
     final editpgC = Get.put(EditPegawaiController());
-    final authC = Get.put(AuthController());
+
     final home = Get.put(BerandaBosController());
     final indexData = Get.arguments;
 
@@ -34,7 +33,9 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
               stream: home.berandaBos(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Loading();
+                  return Center(
+                      child: Lottie.asset('assets/animation/loading.json',
+                          height: 145));
                 }
                 var data = snapshot.data!;
                 controller.namaEdit.text = indexData['name'];
@@ -95,7 +96,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 6.h),
+                      SizedBox(height: 10.h),
                       Padding(
                         padding: EdgeInsets.only(left: 3.w),
                         child: Text(
@@ -107,7 +108,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 1.5.h),
+                      SizedBox(height: 2.5.h),
                       Center(
                         child: Form(
                           key: controller.namaKey.value,
@@ -192,7 +193,7 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                                   clearButtonProps: ClearButtonProps(
                                       isVisible: true,
                                       color: HexColor("#0B0C2B")),
-                                  items: [
+                                  items: const [
                                     'Divisi Jahit',
                                     'Divisi Cetak',
                                     'Divisi Desain',
@@ -253,87 +254,13 @@ class EditPegawaiView extends GetView<EditPegawaiController> {
                                           ],
                                         );
                                       },
-                                      scrollbarProps: ScrollbarProps(
+                                      scrollbarProps: const ScrollbarProps(
                                           trackVisibility: true,
                                           trackColor: Colors.black),
                                       constraints: BoxConstraints(
                                         maxHeight: 20.h,
                                       )),
                                 ))),
-                      ),
-                      SizedBox(height: 1.5.h),
-                      Center(
-                        child: Form(
-                          child: Container(
-                            height: 7.h,
-                            width: 82.w,
-                            child: DropdownSearch<String>(
-                              clearButtonProps: ClearButtonProps(
-                                  isVisible: true, color: bluePrimary),
-                              items: [
-                                'Laki-Laki',
-                                'Perempuan',
-                              ],
-                              onChanged: (value) {
-                                if (value != null) {
-                                  editpgC.genderEdit.text = value;
-                                }
-                              },
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  fillColor: grey1,
-                                  filled: true,
-                                  hintText: "Jenis Kelamin",
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide:
-                                          BorderSide(width: 1, color: grey2)),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide:
-                                          BorderSide(width: 1, color: grey2)),
-                                ),
-                              ),
-                              popupProps: PopupProps.menu(
-                                  fit: FlexFit.loose,
-                                  menuProps: MenuProps(
-                                    borderRadius: BorderRadius.circular(12),
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  ),
-                                  containerBuilder: (context, popupWidget) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 1.h)),
-                                        Flexible(
-                                            child: Container(
-                                          child: popupWidget,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: HexColor("#BFC0D2"),
-                                                width: 0.3.w,
-                                              )),
-                                        ))
-                                      ],
-                                    );
-                                  },
-                                  scrollbarProps: ScrollbarProps(
-                                      trackVisibility: true,
-                                      trackColor: Colors.black),
-                                  constraints: BoxConstraints(
-                                    maxHeight: 20.h,
-                                  )),
-                            ),
-                          ),
-                        ),
                       ),
                       SizedBox(
                         height: 2.5.h,

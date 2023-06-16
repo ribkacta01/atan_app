@@ -9,8 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../routes/app_pages.dart';
-import '../../../util/Loading.dart';
 import '../controllers/list_kebutuhan_controller.dart';
 
 class ListKebutuhanView extends GetView<ListKebutuhanController> {
@@ -36,7 +34,9 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -49,7 +49,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                             onPressed: () {
                               Get.back();
                             },
-                            icon: Icon(PhosphorIcons.arrowLeft)),
+                            icon: const Icon(PhosphorIcons.arrowLeft)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,10 +114,13 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return Loading();
+                                return Center(
+                                    child: Lottie.asset(
+                                        'assets/animation/loading.json',
+                                        height: 145));
                               }
                               if (snapshot.data == null ||
-                                  snapshot.data!.docs.length == 0) {
+                                  snapshot.data!.docs.isEmpty) {
                                 return Padding(
                                     padding: EdgeInsets.only(top: 20.h),
                                     child: Center(

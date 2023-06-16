@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../data/models/user_model.dart';
@@ -106,17 +105,57 @@ class AuthController extends GetxController {
 
       await Get.offAllNamed(Routes.HOME);
     } else {
-      Get.dialog(Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.white,
-        child: SizedBox(
-          width: 193.93,
-          height: 194.73,
-          child: Column(
-            children: const [Icon(PhosphorIcons.xCircle)],
-          ),
-        ),
-      ));
+      Get.dialog(
+        Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            backgroundColor: Colors.white,
+            child: SizedBox(
+              width: 68.w,
+              height: 32.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/animation/failed.json', width: 28.w),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Text(
+                    'BATAL LOGIN',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: bluePrimary,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Container(
+                      width: 15.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.sp),
+                          color: white),
+                      child: TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
+                            child: Text(
+                              'OK',
+                              style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: bluePrimary),
+                            ),
+                          ))),
+                ],
+              ),
+            )),
+      );
+      Get.back();
     }
   }
 

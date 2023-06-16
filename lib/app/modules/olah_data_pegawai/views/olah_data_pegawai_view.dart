@@ -8,7 +8,6 @@ import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/color.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/olah_data_pegawai_controller.dart';
@@ -47,7 +46,9 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                 stream: home.berandaBos(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -127,7 +128,10 @@ class OlahDataPegawaiView extends GetView<OlahDataPegawaiController> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Loading();
+                              return Center(
+                                  child: Lottie.asset(
+                                      'assets/animation/loading.json',
+                                      height: 145));
                             }
                             if (snapshot.data == null ||
                                 snapshot.data!.docs.length == 0) {

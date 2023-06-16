@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../controller/auth_controller.dart';
-import '../../../util/Loading.dart';
+
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/tugas_selesai_controller.dart';
 
@@ -35,7 +36,9 @@ class TugasSelesaiView extends GetView<TugasSelesaiController> {
               stream: home.berandaBos(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Loading();
+                  return Center(
+                      child: Lottie.asset('assets/animation/loading.json',
+                          height: 145));
                 }
                 var data = snapshot.data!;
                 return Column(
@@ -164,7 +167,10 @@ class TugasSelesaiView extends GetView<TugasSelesaiController> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Loading();
+                            return Center(
+                                child: Lottie.asset(
+                                    'assets/animation/loading.json',
+                                    height: 145));
                           }
                           return ListView.builder(
                               shrinkWrap: true,
@@ -270,7 +276,11 @@ class TugasSelesaiView extends GetView<TugasSelesaiController> {
                                                                   .connectionState ==
                                                               ConnectionState
                                                                   .waiting) {
-                                                            return Loading();
+                                                            return Center(
+                                                                child: Lottie.asset(
+                                                                    'assets/animation/loading.json',
+                                                                    height:
+                                                                        145));
                                                           }
                                                           var dataTgs =
                                                               snapshot.data!;

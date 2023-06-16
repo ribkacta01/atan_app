@@ -1,4 +1,3 @@
-import 'package:atan_app/app/controller/auth_controller.dart';
 import 'package:atan_app/app/routes/app_pages.dart';
 import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +11,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../util/Loading.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/keranjang_controller.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -32,10 +30,13 @@ class KeranjangView extends GetView<KeranjangController> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // return const Loading();
-                return const Loading();
+                return Center(
+                    child: Lottie.asset('assets/animation/loading.json',
+                        height: 145));
               }
               var data = snapshot.data!;
               return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.only(
                   left: 3.w,
                   right: 3.w,

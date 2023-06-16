@@ -4,12 +4,13 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controller/auth_controller.dart';
 import '../../../routes/app_pages.dart';
-import '../../../util/Loading.dart';
+
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/profil_bos_controller.dart';
 
@@ -21,7 +22,7 @@ class ProfilBosView extends GetView<ProfilBosController> {
     final home = Get.put(BerandaBosController());
 
     return AnnotatedRegion(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.dark,
             statusBarColor: Colors.transparent),
         child: Scaffold(
@@ -36,7 +37,9 @@ class ProfilBosView extends GetView<ProfilBosController> {
                   stream: home.berandaBos(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Loading();
+                      return Center(
+                          child: Lottie.asset('assets/animation/loading.json',
+                              height: 145));
                     }
                     var data = snapshot.data!;
                     return Column(

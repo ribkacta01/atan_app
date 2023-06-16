@@ -15,8 +15,7 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController());
-    final bodyHeight = MediaQuery.of(context).size.height;
-    final bodyWidth = MediaQuery.of(context).size.width;
+
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.light,

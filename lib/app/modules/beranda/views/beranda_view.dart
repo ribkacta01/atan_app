@@ -10,9 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../util/Loading.dart';
 import '../controllers/beranda_controller.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -29,10 +27,13 @@ class BerandaView extends GetView<BerandaController> {
           stream: berandaC.beranda(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Loading();
+              return Center(
+                  child: Lottie.asset('assets/animation/loading.json',
+                      height: 145));
             }
             var data = snapshot.data!;
             return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               padding: EdgeInsets.only(
                 left: 3.w,
                 right: 3.w,
@@ -96,7 +97,10 @@ class BerandaView extends GetView<BerandaController> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Loading();
+                          return Center(
+                              child: Lottie.asset(
+                                  'assets/animation/loading.json',
+                                  height: 145));
                         }
                         var dataTgs = snapshot.data!;
                         return SingleChildScrollView(
@@ -301,26 +305,9 @@ class BerandaView extends GetView<BerandaController> {
                         height: 4.h,
                       ),
                       IconButton(
-                          onPressed: () {
-                            Get.dialog(Dialog(
-                              child: Container(
-                                padding: EdgeInsets.all(1.h),
-                                height: 40.h,
-                                child: SfDateRangePicker(
-                                  view: DateRangePickerView.year,
-                                  selectionMode:
-                                      DateRangePickerSelectionMode.range,
-                                  showActionButtons: true,
-                                  onCancel: () => Get.back(),
-                                  onSubmit: (obj) {},
-                                ),
-                              ),
-                            ));
-                          },
-                          icon: Icon(
-                            PhosphorIcons.slidersHorizontal,
-                            color: HexColor("#0B0C2B"),
-                          ))
+                          onPressed: () {},
+                          icon: Icon(PhosphorIcons.slidersHorizontal,
+                              color: white))
                     ],
                   ),
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -328,7 +315,10 @@ class BerandaView extends GetView<BerandaController> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Loading();
+                          return Center(
+                              child: Lottie.asset(
+                                  'assets/animation/loading.json',
+                                  height: 145));
                         }
 
                         var dataRiwayat = snapshot.data!;

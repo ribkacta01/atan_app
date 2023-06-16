@@ -31,12 +31,13 @@ class TambahItemController extends GetxController {
   Future<void> addItem(
       String docName, String nama, String jumlah, String ket) async {
     try {
-      CollectionReference perencanaan = firestore
+      var perencanaan = firestore
           .collection("Perencanaan")
           .doc(docName)
           .collection('Kebutuhan');
-      await perencanaan.doc(nama + ' - ' + ket).set(
+      var docRefItem = await perencanaan.add(
           {'Nama Barang': nama, 'Jumlah Barang': jumlah, 'Keterangan': ket});
+      await docRefItem.update({'id': docRefItem.id});
 
       notifC.sendNotificationToAdmin(
           tambahItemTitle, tambahItemMessage, keranjangBosView);

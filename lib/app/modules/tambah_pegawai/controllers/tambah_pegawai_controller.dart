@@ -40,6 +40,7 @@ class TambahPegawaiController extends GetxController {
         'email': email,
         'divisi': divisi,
         'gender': gender,
+        'status': 'true',
         'photoUrl': '',
         'lastSignInTime': '',
         'updatedTime': DateTime.now().toIso8601String(),

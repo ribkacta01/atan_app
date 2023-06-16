@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/color.dart';
 import '../controllers/edit_item_controller.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 class EditItemView extends GetView<EditItemController> {
   const EditItemView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
     final authC = Get.put(AuthController());
     final editC = Get.put(EditItemController());
 
@@ -22,8 +24,9 @@ class EditItemView extends GetView<EditItemController> {
     var doc = Get.arguments[0];
     //argument dari Perencanaan view
     var docP = Get.arguments[1];
-    var docName = '${doc['Nama Barang']} - ${doc['Keterangan']}';
-    var docNameP = '${docP['nama']} - ${docP['date']}';
+    var docName = '${doc['id']}';
+    var docNameP =
+        '${docP['nama']} - ${dateFormatterDefault.format(DateTime.parse(docP['date']))}';
 
     editC.namaEdit.text = doc['Nama Barang'];
     editC.jmldit.text = doc['Jumlah Barang'];
@@ -41,7 +44,9 @@ class EditItemView extends GetView<EditItemController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(

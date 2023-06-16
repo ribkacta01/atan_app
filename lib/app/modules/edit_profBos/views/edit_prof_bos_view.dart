@@ -4,11 +4,10 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../controller/auth_controller.dart';
-import '../../../util/Loading.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/edit_prof_bos_controller.dart';
 
@@ -16,22 +15,23 @@ class EditProfBosView extends GetView<EditProfBosController> {
   const EditProfBosView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final authC = Get.put(AuthController());
     final editBosC = Get.put(EditProfBosController());
     final home = Get.put(BerandaBosController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 6,
+          left: 3.w,
+          right: 3.w,
+          top: 1.h,
         ),
         child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             stream: home.berandaBos(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Loading();
+                return Center(
+                    child: Lottie.asset('assets/animation/loading.json',
+                        height: 145));
               }
               var data = snapshot.data!;
               controller.namaEdit.text = data.get('name');

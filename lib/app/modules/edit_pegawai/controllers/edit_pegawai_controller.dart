@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+
 import 'package:sizer/sizer.dart';
 
 import '../../../util/color.dart';
@@ -61,7 +61,7 @@ class EditPegawaiController extends GetxController {
                   height: 3.h,
                 ),
                 Text(
-                  'Data Pegawai Ditambahkan!',
+                  'Data Pegawai Berhasil Diubah!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: bluePrimary,

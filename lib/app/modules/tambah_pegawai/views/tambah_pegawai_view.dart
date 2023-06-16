@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/color.dart';
 import '../controllers/tambah_pegawai_controller.dart';
 
@@ -22,15 +22,17 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
             padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 6,
+              left: 3.w,
+              right: 3.w,
+              top: 1.h,
             ),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -50,9 +52,9 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 17,
-                                right: 20,
-                                top: 6,
+                                left: 3.w,
+                                right: 3.w,
+                                top: 1.h,
                               ),
                               child: Column(
                                 mainAxisAlignment:
@@ -62,7 +64,7 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                                   Text(
                                     "Halo ${data.get('name')}",
                                     style: TextStyle(
-                                      fontSize: 19,
+                                      fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -80,12 +82,11 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 5),
+                              padding: EdgeInsets.only(right: 3.w),
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  height: 45,
-                                  width: 45,
+                                  width: 11.w,
                                 ),
                               ),
                             ),
@@ -93,11 +94,11 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                         ),
                         SizedBox(height: 7.h),
                         Padding(
-                          padding: EdgeInsets.only(left: 17),
+                          padding: EdgeInsets.only(left: 3.w),
                           child: Text(
                             "Tambahkan Data Pegawai",
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 18.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w600,
                             ),
@@ -189,7 +190,7 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                                     clearButtonProps: ClearButtonProps(
                                         isVisible: true,
                                         color: HexColor("#0B0C2B")),
-                                    items: [
+                                    items: const [
                                       'Divisi Jahit',
                                       'Divisi Cetak',
                                       'Divisi Desain',
@@ -254,7 +255,7 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                                             ],
                                           );
                                         },
-                                        scrollbarProps: ScrollbarProps(
+                                        scrollbarProps: const ScrollbarProps(
                                             trackVisibility: true,
                                             trackColor: Colors.black),
                                         constraints: BoxConstraints(
@@ -272,7 +273,7 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                               child: DropdownSearch<String>(
                                 clearButtonProps: ClearButtonProps(
                                     isVisible: true, color: bluePrimary),
-                                items: [
+                                items: const [
                                   'Laki-Laki',
                                   'Perempuan',
                                 ],
@@ -327,7 +328,7 @@ class TambahPegawaiView extends GetView<TambahPegawaiController> {
                                         ],
                                       );
                                     },
-                                    scrollbarProps: ScrollbarProps(
+                                    scrollbarProps: const ScrollbarProps(
                                         trackVisibility: true,
                                         trackColor: Colors.black),
                                     constraints: BoxConstraints(

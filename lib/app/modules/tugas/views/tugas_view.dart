@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../berandaBos/controllers/beranda_bos_controller.dart';
 import '../controllers/tugas_controller.dart';
 
@@ -24,6 +23,7 @@ class TugasView extends GetView<TugasController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.only(
           left: 3.w,
           right: 3.w,
@@ -33,7 +33,9 @@ class TugasView extends GetView<TugasController> {
             stream: home.berandaBos(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Loading();
+                return Center(
+                    child: Lottie.asset('assets/animation/loading.json',
+                        height: 145));
               }
               var data = snapshot.data!;
               return Column(
@@ -86,7 +88,10 @@ class TugasView extends GetView<TugasController> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Loading();
+                          return Center(
+                              child: Lottie.asset(
+                                  'assets/animation/loading.json',
+                                  height: 145));
                         }
                         var dataFoto = snapshot.data!;
                         if (dataFoto.docs.isEmpty) {

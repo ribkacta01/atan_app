@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/color.dart';
 import '../controllers/tambah_tugas_controller.dart';
 
@@ -31,7 +31,9 @@ class TambahTugasView extends GetView<TambahTugasController> {
                 stream: authC.getUserRoles(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Loading();
+                    return Center(
+                        child: Lottie.asset('assets/animation/loading.json',
+                            height: 145));
                   }
                   var data = snapshot.data!;
                   return Column(
@@ -177,7 +179,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                               ],
                                             );
                                           },
-                                          scrollbarProps: ScrollbarProps(
+                                          scrollbarProps: const ScrollbarProps(
                                               trackVisibility: true,
                                               trackColor: Colors.black),
                                           constraints: BoxConstraints(
@@ -238,7 +240,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                                     ),
                                                   ));
                                                 },
-                                                icon: Icon(
+                                                icon: const Icon(
                                                     PhosphorIcons.calendar),
                                                 color: HexColor("#0B0C2B"),
                                               ),
@@ -328,7 +330,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                                     ),
                                                   ));
                                                 },
-                                                icon: Icon(
+                                                icon: const Icon(
                                                     PhosphorIcons.calendar),
                                                 color: HexColor("#0B0C2B"),
                                               ),
@@ -379,7 +381,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                           clearButtonProps: ClearButtonProps(
                                               isVisible: true,
                                               color: bluePrimary),
-                                          items: [
+                                          items: const [
                                             'Divisi Jahit',
                                             'Divisi Cetak',
                                             'Divisi Desain',
@@ -449,9 +451,10 @@ class TambahTugasView extends GetView<TambahTugasController> {
                                                   ],
                                                 );
                                               },
-                                              scrollbarProps: ScrollbarProps(
-                                                  trackVisibility: true,
-                                                  trackColor: Colors.black),
+                                              scrollbarProps:
+                                                  const ScrollbarProps(
+                                                      trackVisibility: true,
+                                                      trackColor: Colors.black),
                                               constraints: BoxConstraints(
                                                 maxHeight: 20.h,
                                               )),

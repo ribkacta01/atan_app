@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+
 import 'package:rxdart/rxdart.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,8 +17,6 @@ class OlahDataPegawaiController extends GetxController {
       if (query.isEmpty) {
         return firestore.collection("users").snapshots();
       } else {
-        String lowerCaseQuery = query.toLowerCase();
-        String upperCaseQuery = query.toUpperCase();
         return firestore
             .collection("users")
             .where("name", isGreaterThanOrEqualTo: query)
@@ -96,7 +94,7 @@ class OlahDataPegawaiController extends GetxController {
                       onPressed: () async {
                         CollectionReference users =
                             firestore.collection("users");
-                        await users.doc(docName).delete();
+                        await users.doc(docName).update({'status': 'false'});
                         Get.back();
                       },
                       child: Padding(

@@ -2,15 +2,16 @@ import 'package:atan_app/app/modules/beranda/controllers/beranda_controller.dart
 import 'package:atan_app/app/util/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../controllers/beranda_bos_controller.dart';
 
 class BerandaBosView extends GetView<BerandaBosController> {
@@ -26,7 +27,9 @@ class BerandaBosView extends GetView<BerandaBosController> {
           stream: home.berandaBos(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Loading();
+              return Center(
+                  child: Lottie.asset('assets/animation/loading.json',
+                      height: 145));
             }
             var data = snapshot.data!;
             return SingleChildScrollView(
@@ -91,8 +94,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                     ),
                     SizedBox(height: 2.h),
                     SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(
-                          decelerationRate: ScrollDecelerationRate.normal),
+                      physics: NeverScrollableScrollPhysics(),
                       child: Container(
                         height: 200.h,
                         child: ContainedTabBarView(
@@ -129,7 +131,10 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return const Loading();
+                                      return Center(
+                                          child: Lottie.asset(
+                                              'assets/animation/loading.json',
+                                              height: 145));
                                     }
 
                                     return SingleChildScrollView(
@@ -155,7 +160,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                   child: Container(
                                                     margin: EdgeInsets.only(
                                                         right: 4.w, left: 4.w),
-                                                    height: 70.h,
+                                                    height: 43.h,
                                                     decoration: BoxDecoration(
                                                       color:
                                                           HexColor("#BFC0D2"),
@@ -166,144 +171,64 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                     child: Column(
                                                       children: [
                                                         ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(16
-                                                                          .sp),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          16.sp)),
-                                                          child: dataPoto[
-                                                                      'photo'] !=
-                                                                  ''
-                                                              ? Image.network(
-                                                                  "${dataPoto['photo']}",
-                                                                  width: 90.w,
-                                                                )
-                                                              : Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          top: 25
-                                                                              .h),
-                                                                      child: Icon(
-                                                                          PhosphorIcons
-                                                                              .cameraSlashBold,
-                                                                          color:
-                                                                              bluePrimary,
-                                                                          size:
-                                                                              55.sp),
+                                                            borderRadius: BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        16.sp),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        16.sp)),
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      top: 2.h),
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  Get.dialog(
+                                                                      Dialog(
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(16.sp)),
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.all(
+                                                                              Radius.circular(16.sp)),
+                                                                      child: Container(
+                                                                          width: 85.w,
+                                                                          child: Image.network(
+                                                                            "${dataPoto['photo']}",
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          )),
                                                                     ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            2.h),
-                                                                    Text(
-                                                                      "Belum Ada Foto",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              bluePrimary,
-                                                                          fontSize: 13
-                                                                              .sp,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
+                                                                  ));
+                                                                },
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              16.sp)),
+                                                                  child:
+                                                                      Container(
+                                                                    width: 78.w,
+                                                                    height:
+                                                                        25.h,
+                                                                    child: Image
+                                                                        .network(
+                                                                      "${dataPoto['photo']}",
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            1.h),
-                                                                    Text(
-                                                                      "${dataPoto['Divisi']} Belum Mengunggah Progress",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              bluePrimary,
-                                                                          fontSize:
-                                                                              10.sp),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            1.h),
-                                                                    Text(
-                                                                      "Untuk Pesanan ${dataPoto['Nama Pemesan']}",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              bluePrimary,
-                                                                          fontSize:
-                                                                              10.sp),
-                                                                    ),
-                                                                  ],
+                                                                  ),
                                                                 ),
-                                                        ),
+                                                              ),
+                                                            )),
                                                         Padding(
                                                           padding:
                                                               EdgeInsets.only(
                                                                   top: 1.h,
-                                                                  right: 5.w,
-                                                                  left: 5.w),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  dataPoto['photo'] !=
-                                                                          ''
-                                                                      ? Padding(
-                                                                          padding:
-                                                                              EdgeInsets.only(top: 2.h),
-                                                                          child:
-                                                                              Text(
-                                                                            "${dataPoto['Divisi']}",
-                                                                            style: TextStyle(
-                                                                                fontSize: 12.sp,
-                                                                                color: HexColor("#0B0C2B"),
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                        )
-                                                                      : const Text(
-                                                                          ''),
-                                                                ],
-                                                              ),
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        top: 2
-                                                                            .h),
-                                                                child: dataPoto[
-                                                                            'photo'] !=
-                                                                        ''
-                                                                    ? Text(
-                                                                        "${dataPoto['photoDateTime']}",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10.sp,
-                                                                            color: HexColor("#0B0C2B"),
-                                                                            fontWeight: FontWeight.w500),
-                                                                      )
-                                                                    : const Text(
-                                                                        ''),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
                                                                   right: 5.w,
                                                                   left: 5.w),
                                                           child: Column(
@@ -314,61 +239,93 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              SizedBox(
-                                                                height: 1.5.h,
-                                                              ),
                                                               Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
-                                                                  dataPoto['photo'] !=
-                                                                          ''
-                                                                      ? Container(
-                                                                          height:
-                                                                              0.5.h,
-                                                                          width:
-                                                                              72.w,
-                                                                          color:
-                                                                              bluePrimary,
-                                                                        )
-                                                                      : const Text(
-                                                                          ''),
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 1.5.h,
-                                                              ),
-                                                              dataPoto['photo'] !=
-                                                                      ''
-                                                                  ? Text(
-                                                                      "Pesanan ${dataPoto['Nama Pemesan']}",
+                                                                  Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                2.h),
+                                                                    child: Text(
+                                                                      "${dataPoto['Divisi']}",
                                                                       style: TextStyle(
                                                                           fontSize: 12
                                                                               .sp,
                                                                           color: HexColor(
                                                                               "#0B0C2B"),
                                                                           fontWeight:
-                                                                              FontWeight.w400),
-                                                                    )
-                                                                  : Text(''),
-                                                              SizedBox(
-                                                                height: 1.h,
-                                                              ),
-                                                              dataPoto['photo'] !=
-                                                                      ''
-                                                                  ? Text(
-                                                                      "${dataPoto['detail']}",
+                                                                              FontWeight.w500),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                2.h),
+                                                                    child: Text(
+                                                                      "${dataPoto['photoDateTime']}",
                                                                       style: TextStyle(
                                                                           fontSize: 10
                                                                               .sp,
                                                                           color: HexColor(
                                                                               "#0B0C2B"),
                                                                           fontWeight:
-                                                                              FontWeight.w400),
-                                                                    )
-                                                                  : const Text(
-                                                                      ''),
+                                                                              FontWeight.w500),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        top: 1.5
+                                                                            .h,
+                                                                        bottom:
+                                                                            1.5.h),
+                                                                child:
+                                                                    DottedDashedLine(
+                                                                  height: 0,
+                                                                  width: 100.w,
+                                                                  axis: Axis
+                                                                      .horizontal,
+                                                                  dashColor:
+                                                                      grey2,
+                                                                  dashSpace: 5,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                "Pesanan ${dataPoto['Nama Pemesan']}",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        12.sp,
+                                                                    color: HexColor(
+                                                                        "#0B0C2B"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 1.h),
+                                                              Text(
+                                                                "${dataPoto['detail']}",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        10.sp,
+                                                                    color: HexColor(
+                                                                        "#0B0C2B"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              )
                                                             ],
                                                           ),
-                                                        )
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -384,7 +341,10 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return const Loading();
+                                      return Center(
+                                          child: Lottie.asset(
+                                              'assets/animation/loading.json',
+                                              height: 145));
                                     }
 
                                     return SingleChildScrollView(

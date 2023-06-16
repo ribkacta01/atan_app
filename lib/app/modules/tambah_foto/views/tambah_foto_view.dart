@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../util/Loading.dart';
 import '../../../util/notif.dart';
 import '../../../util/string.dart';
 import '../controllers/tambah_foto_controller.dart';
@@ -36,7 +36,9 @@ class TambahFotoView extends GetView<TambahFotoController> {
               stream: home.berandaBos(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Loading();
+                  return Center(
+                      child: Lottie.asset('assets/animation/loading.json',
+                          height: 145));
                 }
                 var data = snapshot.data!;
                 var divisi = data.get('divisi');
