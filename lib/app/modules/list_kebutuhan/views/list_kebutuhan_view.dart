@@ -8,7 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:intl/intl.dart' show DateFormat;
 import '../controllers/list_kebutuhan_controller.dart';
 
 class ListKebutuhanView extends GetView<ListKebutuhanController> {
@@ -16,7 +16,9 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
   @override
   Widget build(BuildContext context) {
     var doc = Get.arguments;
-    var docName = '${doc['nama']} - ${doc['date']}';
+    final dateFormatterDefault = DateFormat('d MMMM yyyy', 'id-ID');
+    var docName =
+        '${doc['nama']} - ${dateFormatterDefault.format(DateTime.parse(doc['date']))}';
 
     final authC = Get.put(AuthController());
     final listC = Get.put(ListKebutuhanController());
@@ -90,7 +92,7 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  height: 11.w,
+                                  height: 10.w,
                                 ),
                               ),
                             ),
@@ -196,39 +198,110 @@ class ListKebutuhanView extends GetView<ListKebutuhanController> {
                                                     ),
                                                   ),
                                                   SizedBox(width: 1.w),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(height: 1.h),
-                                                      Text(data['Nama Barang'],
-                                                          style: TextStyle(
-                                                            fontSize: 12.sp,
-                                                            color: white,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          )),
-                                                      SizedBox(height: 1.h),
-                                                      Text(data['Keterangan'],
-                                                          style: TextStyle(
-                                                            fontSize: 12.sp,
-                                                            color: white,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          )),
-                                                      SizedBox(height: 1.h),
-                                                      Text(
-                                                          data['Jumlah Barang'],
-                                                          style: TextStyle(
-                                                            fontSize: 12.sp,
-                                                            color: white,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          )),
-                                                    ],
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.8.h,
+                                                        bottom: 1.h),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        SizedBox(height: 1.h),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                                "Nama Barang  : ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                            SizedBox(
+                                                                width: 2.w),
+                                                            Text(
+                                                                data[
+                                                                    'Nama Barang'],
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 1.h),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                                "Jumlah             : ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                            SizedBox(
+                                                                width: 2.w),
+                                                            Text(
+                                                                data[
+                                                                    'Jumlah Barang'],
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 1.h),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                                "Keterangan      : ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                            SizedBox(
+                                                                width: 2.w),
+                                                            Text(
+                                                                data[
+                                                                    'Keterangan'],
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      11.sp,
+                                                                  color: white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                )),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                   SizedBox(width: 2.w),
                                                   IconButton(

@@ -87,7 +87,7 @@ class TambahTugasView extends GetView<TambahTugasController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  width: 11.sp,
+                                  width: 10.sp,
                                 ),
                               ),
                             ),

@@ -77,7 +77,7 @@ class BerandaView extends GetView<BerandaController> {
                         child: ClipOval(
                           child: Image.network(
                             data.get('photoUrl'),
-                            width: 11.w,
+                            width: 10.w,
                           ),
                         ),
                       ),
@@ -114,15 +114,23 @@ class BerandaView extends GetView<BerandaController> {
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               child: dataTgs.docs.isEmpty
-                                  ? Center(
-                                      child: Text(
-                                        "Belum Ada Tugas yang Ditambahkan",
-                                        style: TextStyle(
-                                            fontSize: 10.sp,
-                                            color: bluePrimary,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    )
+                                  ? Padding(
+                                      padding: EdgeInsets.only(top: 25.h),
+                                      child: Center(
+                                        child: Column(
+                                          children: [
+                                            Lottie.asset(
+                                                'assets/animation/noData.json',
+                                                width: 30.w),
+                                            // SizedBox(height: 2.h),
+                                            Text("Progres Masih Kosong",
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  color: grey2,
+                                                ))
+                                          ],
+                                        ),
+                                      ))
                                   : Padding(
                                       padding: const EdgeInsets.all(20.0),
                                       child: Column(

@@ -89,7 +89,7 @@ class TambahItemView extends GetView<TambahItemController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  width: 11.w,
+                                  width: 10.w,
                                 ),
                               ),
                             ),

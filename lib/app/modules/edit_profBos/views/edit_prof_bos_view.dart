@@ -62,7 +62,7 @@ class EditProfBosView extends GetView<EditProfBosController> {
                           Text(
                             "Halo ${data.get('name')}",
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 12.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w500,
                             ),
@@ -71,7 +71,7 @@ class EditProfBosView extends GetView<EditProfBosController> {
                           Text(
                             "Halaman Profil Anda",
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 12.sp,
                               color: HexColor("#0B0C2B"),
                               fontWeight: FontWeight.w500,
                             ),

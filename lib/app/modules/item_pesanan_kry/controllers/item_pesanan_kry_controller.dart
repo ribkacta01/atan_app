@@ -77,6 +77,37 @@ class ItemPesananKryController extends GetxController {
                                 .collection('Kebutuhan');
                             await perencanaan.doc(docName).delete();
                             Get.back();
+                            await Get.dialog(
+                                Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  backgroundColor: grey1,
+                                  child: Container(
+                                    width: 68.w,
+                                    height: 32.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Lottie.asset(
+                                            'assets/animation/check.json',
+                                            width: 28.w),
+                                        SizedBox(height: 3.h),
+                                        Text(
+                                          'Data Berhasil Dihapus',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: bluePrimary,
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                transitionDuration:
+                                    Duration(milliseconds: 500));
+                            Get.back();
                           },
                           child: Padding(
                             padding: EdgeInsets.only(top: 1.h, bottom: 1.h),

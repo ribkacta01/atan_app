@@ -85,7 +85,7 @@ class EditItemView extends GetView<EditItemController> {
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    "Item Produksi Anda Disini ",
+                                    "Perbarui Item Produksi Anda Disini ",
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       color: HexColor("#0B0C2B"),
@@ -100,7 +100,7 @@ class EditItemView extends GetView<EditItemController> {
                               child: ClipOval(
                                 child: Image.network(
                                   data.get('photoUrl'),
-                                  width: 11.w,
+                                  width: 10.w,
                                 ),
                               ),
                             ),

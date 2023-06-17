@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class ListKebutuhanController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Stream<QuerySnapshot<Map<String, dynamic>>> list(String docName) {
-    return firestore
+  Stream<QuerySnapshot<Map<String, dynamic>>> list(String docName) async* {
+    yield* firestore
         .collection("Perencanaan")
         .doc(docName)
         .collection('Kebutuhan')

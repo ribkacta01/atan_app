@@ -72,7 +72,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                             ),
                             SizedBox(height: 4.h),
                             Text(
-                              "Daftar Tugas",
+                              "Tugas Pegawai",
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 color: HexColor("#0B0C2B"),
@@ -86,7 +86,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                           child: ClipOval(
                             child: Image.network(
                               data.get('photoUrl'),
-                              width: 11.w,
+                              width: 10.w,
                             ),
                           ),
                         ),
@@ -102,7 +102,7 @@ class BerandaBosView extends GetView<BerandaBosController> {
                               Text(
                                 "Selesai",
                                 style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 11.sp,
                                   color: bluePrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -110,8 +110,8 @@ class BerandaBosView extends GetView<BerandaBosController> {
                               Text(
                                 "Dalam Proses",
                                 style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: HexColor("#0B0C2B"),
+                                  fontSize: 11.sp,
+                                  color: bluePrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -120,7 +120,12 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                 physics: NeverScrollableScrollPhysics()),
                             tabBarProperties: TabBarProperties(
                                 height: 4.h,
-                                indicatorColor: bluePrimary,
+                                indicator: ContainerTabIndicator(
+                                    width: 30.w,
+                                    height: 3.5.h,
+                                    radius: BorderRadius.circular(14.sp),
+                                    color: grey1),
+                                indicatorColor: grey1,
                                 indicatorWeight: 5.0,
                                 labelColor: bluePrimary,
                                 unselectedLabelColor: Colors.grey[400]),
@@ -135,6 +140,26 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                           child: Lottie.asset(
                                               'assets/animation/loading.json',
                                               height: 145));
+                                    }
+                                    if (!snapshot.hasData ||
+                                        snapshot.data!.docs.length == 0) {
+                                      return Padding(
+                                          padding: EdgeInsets.only(top: 33.h),
+                                          child: Center(
+                                            child: Column(
+                                              children: [
+                                                Lottie.asset(
+                                                    'assets/animation/noData.json',
+                                                    width: 30.w),
+                                                // SizedBox(height: 2.h),
+                                                Text("Progres Masih Kosong",
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color: grey1,
+                                                    ))
+                                              ],
+                                            ),
+                                          ));
                                     }
 
                                     return SingleChildScrollView(
@@ -155,179 +180,186 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                                 top: 2.h,
                                               ),
                                               child: Material(
-                                                child: InkWell(
-                                                  onTap: () {},
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 4.w, left: 4.w),
-                                                    height: 43.h,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          HexColor("#BFC0D2"),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.sp),
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        ClipRRect(
-                                                            borderRadius: BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        16.sp),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        16.sp)),
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      top: 2.h),
-                                                              child: InkWell(
-                                                                onTap: () {
-                                                                  Get.dialog(
-                                                                      Dialog(
-                                                                    shape: RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(16.sp)),
-                                                                    child:
-                                                                        ClipRRect(
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 4.w, left: 4.w),
+                                                  height: 43.h,
+                                                  decoration: BoxDecoration(
+                                                    color: HexColor("#BFC0D2"),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.sp),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(16
+                                                                          .sp),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16.sp)),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 2.h),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                Get.dialog(
+                                                                    Dialog(
+                                                                  backgroundColor:
+                                                                      grey1,
+                                                                  shape: RoundedRectangleBorder(
                                                                       borderRadius:
-                                                                          BorderRadius.all(
-                                                                              Radius.circular(16.sp)),
-                                                                      child: Container(
-                                                                          width: 85.w,
-                                                                          child: Image.network(
-                                                                            "${dataPoto['photo']}",
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          )),
-                                                                    ),
-                                                                  ));
-                                                                },
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
+                                                                          BorderRadius.circular(
                                                                               16.sp)),
                                                                   child:
-                                                                      Container(
-                                                                    width: 78.w,
-                                                                    height:
-                                                                        25.h,
-                                                                    child: Image
-                                                                        .network(
-                                                                      "${dataPoto['photo']}",
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(16.sp)),
+                                                                    child: Container(
+                                                                        height: 58.h,
+                                                                        child: Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.start,
+                                                                          children: [
+                                                                            Image.network(
+                                                                              "${dataPoto['photo']}",
+                                                                            ),
+                                                                            SizedBox(height: 2.h),
+                                                                            Text(
+                                                                              "Foto dari:  ${dataPoto['Divisi']}",
+                                                                              style: TextStyle(fontSize: 11.sp, color: HexColor("#0B0C2B"), fontWeight: FontWeight.w500),
+                                                                            ),
+                                                                          ],
+                                                                        )),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            )),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  top: 1.h,
-                                                                  right: 5.w,
-                                                                  left: 5.w),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsets
-                                                                        .only(
-                                                                            top:
-                                                                                2.h),
-                                                                    child: Text(
-                                                                      "${dataPoto['Divisi']}",
-                                                                      style: TextStyle(
-                                                                          fontSize: 12
-                                                                              .sp,
-                                                                          color: HexColor(
-                                                                              "#0B0C2B"),
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsets
-                                                                        .only(
-                                                                            top:
-                                                                                2.h),
-                                                                    child: Text(
-                                                                      "${dataPoto['photoDateTime']}",
-                                                                      style: TextStyle(
-                                                                          fontSize: 10
-                                                                              .sp,
-                                                                          color: HexColor(
-                                                                              "#0B0C2B"),
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        top: 1.5
-                                                                            .h,
-                                                                        bottom:
-                                                                            1.5.h),
+                                                                ));
+                                                              },
+                                                              child: ClipRRect(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            16.sp)),
                                                                 child:
-                                                                    DottedDashedLine(
-                                                                  height: 0,
-                                                                  width: 100.w,
-                                                                  axis: Axis
-                                                                      .horizontal,
-                                                                  dashColor:
-                                                                      grey2,
-                                                                  dashSpace: 5,
+                                                                    Container(
+                                                                  width: 78.w,
+                                                                  height: 25.h,
+                                                                  child: Image
+                                                                      .network(
+                                                                    "${dataPoto['photo']}",
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
                                                                 ),
                                                               ),
-                                                              Text(
-                                                                "Pesanan ${dataPoto['Nama Pemesan']}",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        12.sp,
-                                                                    color: HexColor(
-                                                                        "#0B0C2B"),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                            ),
+                                                          )),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 1.h,
+                                                                right: 5.w,
+                                                                left: 5.w),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          top: 2
+                                                                              .h),
+                                                                  child: Text(
+                                                                    "${dataPoto['Divisi']}",
+                                                                    style: TextStyle(
+                                                                        fontSize: 12
+                                                                            .sp,
+                                                                        color: HexColor(
+                                                                            "#0B0C2B"),
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          top: 2
+                                                                              .h),
+                                                                  child: Text(
+                                                                    "${dataPoto['photoDateTime']}",
+                                                                    style: TextStyle(
+                                                                        fontSize: 10
+                                                                            .sp,
+                                                                        color: HexColor(
+                                                                            "#0B0C2B"),
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      top:
+                                                                          1.5.h,
+                                                                      bottom:
+                                                                          1.5.h),
+                                                              child:
+                                                                  DottedDashedLine(
+                                                                height: 0,
+                                                                width: 100.w,
+                                                                axis: Axis
+                                                                    .horizontal,
+                                                                dashColor:
+                                                                    grey2,
+                                                                dashSpace: 5,
                                                               ),
-                                                              SizedBox(
-                                                                  height: 1.h),
-                                                              Text(
-                                                                "${dataPoto['detail']}",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                    color: HexColor(
-                                                                        "#0B0C2B"),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              )
-                                                            ],
-                                                          ),
+                                                            ),
+                                                            Text(
+                                                              "Pesanan ${dataPoto['Nama Pemesan']}",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  color: HexColor(
+                                                                      "#0B0C2B"),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 1.h),
+                                                            Text(
+                                                              "${dataPoto['detail']}",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      10.sp,
+                                                                  color: HexColor(
+                                                                      "#0B0C2B"),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                            )
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -345,6 +377,26 @@ class BerandaBosView extends GetView<BerandaBosController> {
                                           child: Lottie.asset(
                                               'assets/animation/loading.json',
                                               height: 145));
+                                    }
+                                    if (!snapshot.hasData ||
+                                        snapshot.data!.docs.length == 0) {
+                                      return Padding(
+                                          padding: EdgeInsets.only(top: 33.h),
+                                          child: Center(
+                                            child: Column(
+                                              children: [
+                                                Lottie.asset(
+                                                    'assets/animation/noData.json',
+                                                    width: 30.w),
+                                                // SizedBox(height: 2.h),
+                                                Text("Progres Masih Kosong",
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color: grey1,
+                                                    ))
+                                              ],
+                                            ),
+                                          ));
                                     }
 
                                     return SingleChildScrollView(

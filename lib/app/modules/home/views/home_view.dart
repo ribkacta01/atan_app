@@ -72,12 +72,7 @@ class HomeView extends GetView<HomeController> {
                   );
                 }
                 if (snap.hasData) {
-                  var roles = snap.data!.get("roles");
-                  var email = snap.data!.get("email");
-                  var status = snap.data!.get("status");
-
-                  log("$roles");
-                  if (snap.data!.exists == false) {
+                  if (snap.data?.exists == false) {
                     return Scaffold(
                       backgroundColor: blue1,
                       body: Center(
@@ -108,7 +103,7 @@ class HomeView extends GetView<HomeController> {
                                     height: 1.h,
                                   ),
                                   Text(
-                                    'Akun tidak ada!',
+                                    'Akun tidak terdaftar!',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: bluePrimary,
@@ -137,8 +132,8 @@ class HomeView extends GetView<HomeController> {
                                           color: grey1),
                                       child: TextButton(
                                           onPressed: () {
-                                            Get.back();
-                                            Get.back();
+                                            // Get.toNamed(Routes.LOGIN);
+                                            authC.logout2();
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -156,8 +151,13 @@ class HomeView extends GetView<HomeController> {
                       ),
                     );
                   }
+                  var roles = snap.data!.get("roles");
+                  var email = snap.data!.get("email");
+                  var status = snap.data!.get("status");
+                  log("$roles");
+
                   if (authC.auth.currentUser!.email == email) {
-                    if (status == true) {
+                    if (status == 'true') {
                       if (roles != "pemilik_usaha") {
                         if (fcmC.notificationData != null) {
                           // route btm nav khusus notif onclick user
@@ -288,63 +288,69 @@ class HomeView extends GetView<HomeController> {
                         }
                       }
                     } else {
-                      Get.dialog(Dialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.sp)),
-                        backgroundColor: grey1,
-                        child: Container(
-                          width: 68.w,
-                          height: 32.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Lottie.asset('assets/animation/failed.json',
-                                  width: 28.w),
-                              SizedBox(
-                                height: 1.h,
+                      return Scaffold(
+                        backgroundColor: white,
+                        body: Center(
+                          child: Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.sp)),
+                            backgroundColor: grey1,
+                            child: Container(
+                              width: 68.w,
+                              height: 32.h,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Lottie.asset('assets/animation/failed.json',
+                                      width: 28.w),
+                                  SizedBox(
+                                    height: 1.h,
+                                  ),
+                                  Text(
+                                    'LOGIN GAGAL',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: bluePrimary,
+                                      fontSize: 15.sp,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Periksa kembali akun anda',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: bluePrimary,
+                                      fontSize: 11.sp,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 3.h,
+                                  ),
+                                  Container(
+                                      width: 15.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.sp),
+                                          color: white),
+                                      child: TextButton(
+                                          onPressed: () {
+                                            authC.logout2();
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 1.h, bottom: 1.h),
+                                            child: Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  color: bluePrimary),
+                                            ),
+                                          ))),
+                                ],
                               ),
-                              Text(
-                                'LOGIN GAGAL',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: bluePrimary,
-                                  fontSize: 15.sp,
-                                ),
-                              ),
-                              Text(
-                                'Periksa kembali akun anda',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: bluePrimary,
-                                  fontSize: 11.sp,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              Container(
-                                  width: 15.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.sp),
-                                      color: white),
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 1.h, bottom: 1.h),
-                                        child: Text(
-                                          'OK',
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: bluePrimary),
-                                        ),
-                                      ))),
-                            ],
+                            ),
                           ),
                         ),
-                      ));
+                      );
                     }
                   } else {
                     return Scaffold(

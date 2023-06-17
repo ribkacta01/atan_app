@@ -226,13 +226,13 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                          top: 1.h,
-                                                          right: 2.w,
+                                                          top: 1.5.h,
+                                                          right: 5.w,
                                                         ),
                                                         child: Text(
                                                             data['Nama Barang'],
                                                             style: TextStyle(
-                                                              fontSize: 13.sp,
+                                                              fontSize: 11.sp,
                                                               color: white,
                                                               fontWeight:
                                                                   FontWeight
@@ -240,25 +240,25 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                             )),
                                                       ),
                                                       SizedBox(height: 1.h),
-                                                      Text(data['Keterangan'],
+                                                      Text(
+                                                          data['Jumlah Barang'],
                                                           style: TextStyle(
-                                                            fontSize: 13.sp,
+                                                            fontSize: 11.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
                                                       SizedBox(height: 1.h),
-                                                      Text(
-                                                          data['Jumlah Barang'],
+                                                      Text(data['Keterangan'],
                                                           style: TextStyle(
-                                                            fontSize: 13.sp,
+                                                            fontSize: 11.sp,
                                                             color: white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           )),
                                                     ],
                                                   ),
-                                                  SizedBox(width: 6.w),
+                                                  SizedBox(width: 8.w),
                                                   IconButton(
                                                       enableFeedback: true,
                                                       onPressed: () {
@@ -273,6 +273,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                         PhosphorIcons
                                                             .pencilSimpleFill,
                                                         color: white,
+                                                        size: 13.sp,
                                                       )),
                                                   IconButton(
                                                       enableFeedback: true,
@@ -286,6 +287,7 @@ class ItemPesananKryView extends GetView<ItemPesananKryController> {
                                                       icon: Icon(
                                                         PhosphorIcons.trashFill,
                                                         color: white,
+                                                        size: 13.sp,
                                                       )),
                                                 ],
                                               ),

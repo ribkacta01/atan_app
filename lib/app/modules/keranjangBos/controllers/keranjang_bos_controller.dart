@@ -146,8 +146,8 @@ class KeranjangBosController extends GetxController {
                                       borderRadius: BorderRadius.circular(20)),
                                   backgroundColor: grey1,
                                   child: Container(
-                                    width: 350,
-                                    height: 336,
+                                    width: 68.w,
+                                    height: 32.h,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

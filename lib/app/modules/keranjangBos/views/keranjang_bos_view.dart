@@ -94,38 +94,41 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                             child: ClipOval(
                               child: Image.network(
                                 data.get('photoUrl'),
-                                width: 8.w,
+                                width: 10.w,
                               ),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: 2.5.h),
-                      Form(
-                        child: Container(
-                            height: 5.h,
-                            width: 90.w,
-                            child: TextFormField(
-                              controller: controller.searchController,
-                              onChanged: (value) =>
-                                  keranjangC.searchQuery.add(value),
-                              textCapitalization: TextCapitalization.sentences,
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(PhosphorIcons.magnifyingGlass),
-                                iconColor: HexColor("#0B0C2B"),
-                                fillColor: HexColor("#BFC0D2"),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
+                      Center(
+                        child: Form(
+                          child: Container(
+                              height: 5.h,
+                              width: 90.w,
+                              child: TextFormField(
+                                controller: controller.searchController,
+                                onChanged: (value) =>
+                                    keranjangC.searchQuery.add(value),
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                decoration: InputDecoration(
+                                  suffixIcon:
+                                      Icon(PhosphorIcons.magnifyingGlass),
+                                  iconColor: HexColor("#0B0C2B"),
+                                  fillColor: HexColor("#BFC0D2"),
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                        color: HexColor("#5B5B6E"), width: 2)),
-                                border: OutlineInputBorder(
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(12),
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
-                                labelText: "Cari Pesanan...",
-                              ),
-                            )),
+                                  ),
+                                  labelText: "Cari Pesanan...",
+                                ),
+                              )),
+                        ),
                       ),
                       SizedBox(height: 2.5.h),
                       Row(
@@ -157,33 +160,79 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                             width: 60.w,
                             height: 1.h,
                           ),
-                          IconButton(
-                            icon: Icon(PhosphorIcons.slidersHorizontal,
-                                color: bluePrimary),
-                            onPressed: () {
-                              Get.dialog(Dialog(
-                                child: Container(
-                                  padding: EdgeInsets.all(1.h),
-                                  height: 40.h,
-                                  child: SfDateRangePicker(
-                                    view: DateRangePickerView.year,
-                                    selectionColor: bluePrimary,
-                                    startRangeSelectionColor: bluePrimary,
-                                    endRangeSelectionColor: bluePrimary,
-                                    rangeSelectionColor:
-                                        bluePrimary.withOpacity(0.2),
-                                    selectionMode:
-                                        DateRangePickerSelectionMode.range,
-                                    showActionButtons: true,
-                                    onCancel: () => Get.back(),
-                                    onSubmit: (value) {
-                                      if (value != null) {
-                                        if ((value as PickerDateRange)
-                                                .endDate !=
-                                            null) {
-                                          controller.pickRangeDate(
-                                              value.startDate!, value.endDate!);
-                                          Get.back();
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 1.h),
+                            child: IconButton(
+                              icon: Icon(PhosphorIcons.slidersHorizontal,
+                                  color: bluePrimary),
+                              onPressed: () {
+                                Get.dialog(Dialog(
+                                  child: Container(
+                                    padding: EdgeInsets.all(1.h),
+                                    height: 40.h,
+                                    child: SfDateRangePicker(
+                                      view: DateRangePickerView.year,
+                                      selectionColor: bluePrimary,
+                                      startRangeSelectionColor: bluePrimary,
+                                      endRangeSelectionColor: bluePrimary,
+                                      rangeSelectionColor:
+                                          bluePrimary.withOpacity(0.2),
+                                      selectionMode:
+                                          DateRangePickerSelectionMode.range,
+                                      showActionButtons: true,
+                                      onCancel: () => Get.back(),
+                                      onSubmit: (value) {
+                                        if (value != null) {
+                                          if ((value as PickerDateRange)
+                                                  .endDate !=
+                                              null) {
+                                            controller.pickRangeDate(
+                                                value.startDate!,
+                                                value.endDate!);
+                                            Get.back();
+                                          } else {
+                                            Get.dialog(Dialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.sp)),
+                                              backgroundColor: grey1,
+                                              child: Container(
+                                                width: 55.w,
+                                                height: 28.h,
+                                                child: Column(
+                                                  children: [
+                                                    Lottie.asset(
+                                                        'assets/animation/alert.json',
+                                                        width: 28.w),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    Text(
+                                                      "Terjadi Kesalahan!",
+                                                      style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                          color: bluePrimary,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    Center(
+                                                      child: Text(
+                                                        "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
+                                                        style: TextStyle(
+                                                          fontSize: 8.sp,
+                                                          color: bluePrimary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ));
+                                          }
                                         } else {
                                           Get.dialog(Dialog(
                                             shape: RoundedRectangleBorder(
@@ -196,87 +245,46 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                               height: 28.h,
                                               child: Column(
                                                 children: [
-                                                  Lottie.asset(
-                                                      'assets/animation/alert.json',
-                                                      width: 28.w),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 2.h),
+                                                      child: Lottie.asset(
+                                                          'assets/animation/alert.json',
+                                                          width: 25.w)),
                                                   SizedBox(
-                                                    height: 1.h,
+                                                    height: 3.h,
                                                   ),
                                                   Text(
                                                     "Terjadi Kesalahan!",
                                                     style: TextStyle(
-                                                        fontSize: 15.sp,
-                                                        color: bluePrimary,
-                                                        fontWeight:
-                                                            FontWeight.w600),
+                                                      fontSize: 15.sp,
+                                                      color: bluePrimary,
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     height: 1.5.h,
                                                   ),
-                                                  Center(
-                                                    child: Text(
-                                                      "Pilih tanggal jangkauan\n(Senin-Sabtu, dsb)\n(tekan tanggal dua kali \nuntuk memilih tanggal yang sama)",
-                                                      style: TextStyle(
-                                                        fontSize: 8.sp,
-                                                        color: bluePrimary,
-                                                      ),
+                                                  Text(
+                                                    "Tanggal Belum Dipilih",
+                                                    style: TextStyle(
+                                                      fontSize: 10.sp,
+                                                      color: bluePrimary,
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 2.h,
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ));
                                         }
-                                      } else {
-                                        Get.dialog(Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.sp)),
-                                          backgroundColor: grey1,
-                                          child: Container(
-                                            width: 55.w,
-                                            height: 28.h,
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 2.h),
-                                                    child: Lottie.asset(
-                                                        'assets/animation/alert.json',
-                                                        width: 25.w)),
-                                                SizedBox(
-                                                  height: 3.h,
-                                                ),
-                                                Text(
-                                                  "Terjadi Kesalahan!",
-                                                  style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: bluePrimary,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 1.5.h,
-                                                ),
-                                                Text(
-                                                  "Tanggal Belum Dipilih",
-                                                  style: TextStyle(
-                                                    fontSize: 10.sp,
-                                                    color: bluePrimary,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 2.h,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ));
-                                      }
-                                    },
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ));
-                            },
+                                ));
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -302,7 +310,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                             'assets/animation/search.json',
                                             width: 25.w),
                                         // SizedBox(height: 2.h),
-                                        Text("Pencarian Tidak Ditemukan",
+                                        Text("Data Kosong",
                                             style: TextStyle(
                                               fontSize: 10.sp,
                                               color: grey1,
@@ -386,7 +394,7 @@ class KeranjangBosView extends GetView<KeranjangBosController> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                right: 1.w,
+                                                                right: 1.5.w,
                                                                 bottom: 1.w),
                                                         child: IconButton(
                                                           onPressed: () {

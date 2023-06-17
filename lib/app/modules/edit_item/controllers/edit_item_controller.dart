@@ -41,7 +41,7 @@ class EditItemController extends GetxController {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/animation/check.json', width: 35.w),
+                Lottie.asset('assets/animation/check.json', width: 28.w),
                 SizedBox(
                   height: 3.h,
                 ),

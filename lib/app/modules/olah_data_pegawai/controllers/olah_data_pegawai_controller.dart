@@ -15,10 +15,14 @@ class OlahDataPegawaiController extends GetxController {
         .debounceTime(Duration(milliseconds: 300))
         .switchMap((query) {
       if (query.isEmpty) {
-        return firestore.collection("users").snapshots();
+        return firestore
+            .collection("users")
+            .where('status', isEqualTo: 'true')
+            .snapshots();
       } else {
         return firestore
             .collection("users")
+            .where('status', isEqualTo: 'true')
             .where("name", isGreaterThanOrEqualTo: query)
             .where("name", isLessThanOrEqualTo: query + 'z')
             .snapshots();
@@ -95,6 +99,34 @@ class OlahDataPegawaiController extends GetxController {
                         CollectionReference users =
                             firestore.collection("users");
                         await users.doc(docName).update({'status': 'false'});
+                        Get.back();
+                        await Get.dialog(
+                            Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              backgroundColor: grey1,
+                              child: Container(
+                                width: 68.w,
+                                height: 32.h,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Lottie.asset('assets/animation/check.json',
+                                        width: 28.w),
+                                    SizedBox(height: 3.h),
+                                    Text(
+                                      'Data Berhasil Dihapus',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: bluePrimary,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            transitionDuration: Duration(milliseconds: 500));
                         Get.back();
                       },
                       child: Padding(

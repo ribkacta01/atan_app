@@ -170,12 +170,13 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    CollectionReference users = firestore.collection("users");
-    String emailUser = auth.currentUser!.email.toString();
-    final checkuser = await users.doc(emailUser).get();
-    final checkUserData = checkuser.data() as Map<String, dynamic>;
-    unregisterFromNotificationTopic(checkUserData['roles']);
     await _googleSignIn.disconnect();
+    await _googleSignIn.signOut();
+    Get.offAllNamed(Routes.LOGIN);
+  }
+
+  Future<void> logout2() async {
+    // await _googleSignIn.disconnect();
     await _googleSignIn.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }

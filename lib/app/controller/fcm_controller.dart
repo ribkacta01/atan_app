@@ -69,40 +69,43 @@ class FCMController extends GetxController {
       android: androidPlatformChannelSpecifics,
     );
 
-    if (message.notification?.title == tambahPemesanTitle) {
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, notificationDetails,
-          payload: 'KERANJANG');
-      notificationData = message.data;
-    } else if (message.notification?.title == tambahTugasTitle) {
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, notificationDetails,
-          payload: 'BERANDA');
-      notificationData = message.data;
-    } else if (message.notification?.title == tambahItemTitle) {
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, notificationDetails,
-          payload: 'KERANJANG_BOS');
-      notificationData = message.data;
-    } else if (message.notification?.title == tambahFotoJahitTitle ||
-        message.notification?.title == tambahFotoCetakTitle ||
-        message.notification?.title == tambahFotoDesainTitle ||
-        message.notification?.title == tambahFotoQAPAckingTitle) {
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, notificationDetails,
-          payload: 'BERANDA_BOS');
-      notificationData = message.data;
-    } else if (message.notification?.title == tugasSelesaiTitle) {
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, notificationDetails,
-          payload: 'BERANDA');
-      notificationData = message.data;
-    }
-
-    // await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    // if (message.notification?.title == tambahPemesanTitle) {
+    //   await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
     //       message.notification?.body, notificationDetails,
-    //       );
+    //       payload: 'KERANJANG');
     //   notificationData = message.data;
+    // } else if (message.notification?.title == tambahTugasTitle) {
+    //   await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    //       message.notification?.body, notificationDetails,
+    //       payload: 'BERANDA');
+    //   notificationData = message.data;
+    // } else if (message.notification?.title == tambahItemTitle) {
+    //   await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    //       message.notification?.body, notificationDetails,
+    //       payload: 'KERANJANG_BOS');
+    //   notificationData = message.data;
+    // } else if (message.notification?.title == tambahFotoJahitTitle ||
+    //     message.notification?.title == tambahFotoCetakTitle ||
+    //     message.notification?.title == tambahFotoDesainTitle ||
+    //     message.notification?.title == tambahFotoQAPAckingTitle) {
+    //   await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    //       message.notification?.body, notificationDetails,
+    //       payload: 'BERANDA_BOS');
+    //   notificationData = message.data;
+    // } else if (message.notification?.title == tugasSelesaiTitle) {
+    //   await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+    //       message.notification?.body, notificationDetails,
+    //       payload: 'BERANDA');
+    //   notificationData = message.data;
+    // }
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      message.notification?.title,
+      message.notification?.body,
+      notificationDetails,
+    );
+    notificationData = message.data;
 
     // if (fcmC.notificationData['id'] == berandaView) {
     //   controller.currentIndex2.value = 1;
@@ -138,90 +141,101 @@ class FCMController extends GetxController {
   }
 
   Future<List<String>> getAllUserToken() async {
-    List<String> jahitFCMToken = [];
+    List<String>? jahitFCMToken = [];
     var snapshot = await firestore
         .collection('users')
         .where('roles', isEqualTo: 'user')
         .get();
     var document = snapshot.docs;
     for (var doc in document) {
-      String token = doc.data()['fcmToken'];
+      var token = doc.data()['fcmToken'];
       if (kDebugMode) {
         print('ALL USER TOKEN EMAIL ${doc.data()['email']}');
+        print('ALL USER TOKEN EMAIL ${doc.data()['fcmToken']}');
       }
-      jahitFCMToken.add(token);
+      if (token != null) {
+        jahitFCMToken.add(token);
+      }
     }
 
     return jahitFCMToken;
   }
 
   Future<List<String>> getJahitToken() async {
-    List<String> jahitFCMToken = [];
+    List<String>? jahitFCMToken = [];
     var snapshot = await firestore
         .collection('users')
         .where('divisi', isEqualTo: 'Divisi Jahit')
         .get();
     var document = snapshot.docs;
     for (var doc in document) {
-      String token = doc.data()['fcmToken'];
+      var token = doc.data()['fcmToken'];
       if (kDebugMode) {
         print('JAHIT TOKEN EMAIL ${doc.data()['email']}');
       }
-      jahitFCMToken.add(token);
+      if (token != null) {
+        jahitFCMToken.add(token);
+      }
     }
 
     return jahitFCMToken;
   }
 
   Future<List<String>> getCetakToken() async {
-    List<String> jahitFCMToken = [];
+    List<String>? jahitFCMToken = [];
     var snapshot = await firestore
         .collection('users')
         .where('divisi', isEqualTo: 'Divisi Cetak')
         .get();
     var document = snapshot.docs;
     for (var doc in document) {
-      String token = doc.data()['fcmToken'];
+      var token = doc.data()['fcmToken'];
       if (kDebugMode) {
         print('CETAK TOKEN EMAIL ${doc.data()['email']}');
       }
-      jahitFCMToken.add(token);
+      if (token != null) {
+        jahitFCMToken.add(token);
+      }
     }
 
     return jahitFCMToken;
   }
 
   Future<List<String>> getDesainToken() async {
-    List<String> jahitFCMToken = [];
+    List<String>? jahitFCMToken = [];
     var snapshot = await firestore
         .collection('users')
         .where('divisi', isEqualTo: 'Divisi Desain')
         .get();
     var document = snapshot.docs;
     for (var doc in document) {
-      String token = doc.data()['fcmToken'];
+      var token = doc.data()['fcmToken'];
       if (kDebugMode) {
         print('DESAIN TOKEN EMAIL ${doc.data()['email']}');
       }
-      jahitFCMToken.add(token);
+      if (token != null) {
+        jahitFCMToken.add(token);
+      }
     }
 
     return jahitFCMToken;
   }
 
   Future<List<String>> getQAPackingToken() async {
-    List<String> jahitFCMToken = [];
+    List<String>? jahitFCMToken = [];
     var snapshot = await firestore
         .collection('users')
         .where('divisi', isEqualTo: 'Divisi QA & Packing')
         .get();
     var document = snapshot.docs;
     for (var doc in document) {
-      String token = doc.data()['fcmToken'];
+      var token = doc.data()['fcmToken'];
       if (kDebugMode) {
         print('QA PACKING TOKEN EMAIL ${doc.data()['email']}');
       }
-      jahitFCMToken.add(token);
+      if (token != null) {
+        jahitFCMToken.add(token);
+      }
     }
 
     return jahitFCMToken;

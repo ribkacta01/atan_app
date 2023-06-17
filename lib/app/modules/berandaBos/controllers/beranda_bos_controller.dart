@@ -64,13 +64,18 @@ class BerandaBosController extends GetxController {
     return firestore
         .collection("Tugas")
         .where('photo', isEqualTo: '')
+        .where('Status', isEqualTo: 'Belum Selesai')
         .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> tugasPegDone() {
     return firestore
         .collection("Tugas")
-        .where('photo', isNotEqualTo: '')
+        .where('photo',
+            isGreaterThanOrEqualTo: 'https://firebasestorage.googleapis.com')
+        .where('photo',
+            isLessThan: 'https://firebasestorage.googleapis.com' + 'z')
+        .where('Status', isEqualTo: 'Belum Selesai')
         .snapshots();
   }
 

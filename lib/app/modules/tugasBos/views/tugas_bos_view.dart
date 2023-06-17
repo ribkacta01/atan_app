@@ -105,7 +105,7 @@ class TugasBosView extends GetView<TugasBosController> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 6.h),
+                        SizedBox(height: 4.h),
                         Row(
                           children: [
                             Text(
@@ -260,6 +260,27 @@ class TugasBosView extends GetView<TugasBosController> {
                                         height: 145));
                               }
 
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.length == 0) {
+                                return Padding(
+                                    padding: EdgeInsets.only(top: 33.h),
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          Lottie.asset(
+                                              'assets/animation/noData.json',
+                                              width: 30.w),
+                                          // SizedBox(height: 2.h),
+                                          Text("Progres Masih Kosong",
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color: grey1,
+                                              ))
+                                        ],
+                                      ),
+                                    ));
+                              }
+
                               tugasC.allData.assignAll(snapshot.data!);
                               for (var doc in tugasC.allData) {
                                 tugasC.uniqueNames.add(doc['Nama Pemesan']);
@@ -274,7 +295,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                       Text(
                                         "Dalam Proses",
                                         style: TextStyle(
-                                          fontSize: 13.sp,
+                                          fontSize: 11.sp,
                                           color: bluePrimary,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -282,19 +303,28 @@ class TugasBosView extends GetView<TugasBosController> {
                                       Text(
                                         "Selesai",
                                         style: TextStyle(
-                                          fontSize: 13.sp,
+                                          fontSize: 11.sp,
                                           color: HexColor("#0B0C2B"),
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ],
+                                    tabBarViewProperties:
+                                        const TabBarViewProperties(
+                                            physics:
+                                                NeverScrollableScrollPhysics()),
                                     tabBarProperties: TabBarProperties(
-                                      height: 5.h,
-                                      indicatorColor: bluePrimary,
-                                      indicatorWeight: 6.0,
-                                      labelColor: bluePrimary,
-                                      unselectedLabelColor: Colors.grey[400],
-                                    ),
+                                        height: 4.h,
+                                        indicator: ContainerTabIndicator(
+                                            width: 30.w,
+                                            height: 3.5.h,
+                                            radius:
+                                                BorderRadius.circular(14.sp),
+                                            color: grey1),
+                                        indicatorColor: grey1,
+                                        indicatorWeight: 5.0,
+                                        labelColor: bluePrimary,
+                                        unselectedLabelColor: Colors.grey[400]),
                                     views: [
                                       SingleChildScrollView(
                                         child: Obx(() => ListView.builder(
@@ -451,14 +481,11 @@ class TugasBosView extends GetView<TugasBosController> {
                                                                         ),
                                                                       ),
                                                                       onPressed:
-                                                                          () {
-                                                                        tugasC.editStatus(
-                                                                            docs,
-                                                                            'Selesai');
-                                                                        notifC.sendNotificationToAllUser(
-                                                                            '$tugasSelesaiTitle dari Pesanan ${doc['Nama Pemesan']}',
+                                                                          () async {
+                                                                        await tugasC.editStatus(docs, 'Selesai').then((value) => notifC.sendNotificationToAllUser(
+                                                                            tugasSelesaiTitle,
                                                                             tugasSelesaiMessage,
-                                                                            berandaView);
+                                                                            berandaView));
                                                                       },
                                                                     ),
                                                                     SizedBox(
@@ -661,7 +688,7 @@ class TugasBosView extends GetView<TugasBosController> {
                                                       ),
                                                     ));
                                               } else {
-                                                return SizedBox();
+                                                return SizedBox.shrink();
                                               }
                                             })),
                                       )
